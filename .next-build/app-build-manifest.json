@@ -1,0 +1,55 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/chunks/app/_not-found/page-bef8d061b9215eb4.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/css/243d1e8fda54cd6f.css",
+      "static/chunks/app/layout-a8d51fbdf7062e86.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/chunks/312-7ed59eb514b7ada0.js",
+      "static/chunks/144-59eb93087e64d1bf.js",
+      "static/chunks/app/page-393063972e3a2b9f.js"
+    ],
+    "/cyber-and-data-security/page": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/chunks/312-7ed59eb514b7ada0.js",
+      "static/chunks/878-efbb01f24323b53c.js",
+      "static/chunks/app/cyber-and-data-security/page-ae444b65869d7f20.js"
+    ],
+    "/it-infrastructure/page": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/chunks/312-7ed59eb514b7ada0.js",
+      "static/chunks/878-efbb01f24323b53c.js",
+      "static/chunks/app/it-infrastructure/page-0d322ce6eecd5b8e.js"
+    ],
+    "/managed-it-services/page": [
+      "static/chunks/webpack-1c3e976e129e3a7d.js",
+      "static/chunks/fd9d1056-1f1f859026f5f0fa.js",
+      "static/chunks/117-ea738a636dc559b9.js",
+      "static/chunks/main-app-73904eb037aeac72.js",
+      "static/chunks/312-7ed59eb514b7ada0.js",
+      "static/chunks/878-efbb01f24323b53c.js",
+      "static/chunks/app/managed-it-services/page-8162d8a4a25a2037.js"
+    ]
+  }
+}
