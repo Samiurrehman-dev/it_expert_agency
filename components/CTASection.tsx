@@ -34,13 +34,13 @@ export function CTASection({
           <h2 className="text-balance text-3xl font-extrabold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
             {heading}
           </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-blue-100/80 sm:text-base">
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-100/80 sm:text-base">
             {description}
           </p>
         </div>
         <Link
           href={buttonHref}
-          className="group inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-primary-950 shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-accent-300"
+          className="group inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-white shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:bg-accent-300"
         >
           {buttonLabel}
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

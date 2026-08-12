@@ -35,7 +35,7 @@ export function SectionHeading({
         <p
           className={[
             "mt-5 text-pretty text-base leading-8 sm:text-lg",
-            light ? "text-blue-100" : "text-slate-600",
+            light ? "text-slate-100" : "text-slate-600",
           ].join(" ")}
         >
           {description}

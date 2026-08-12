@@ -76,7 +76,7 @@ function DesktopDropdown({
       </button>
 
       <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-        <div className="rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_-18px_rgba(11,25,48,0.28)]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_-18px_rgba(54,56,57,0.28)]">
           {items.map((item) => {
             const Icon = item.icon;
 
@@ -191,7 +191,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky inset-x-0 top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_24px_-20px_rgba(11,25,48,0.45)] backdrop-blur-xl">
+      <header className="sticky inset-x-0 top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_24px_-20px_rgba(54,56,57,0.45)] backdrop-blur-xl">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-5 sm:px-8">
           <a href="/" aria-label="IT Experts home" className="shrink-0">
             <Logo />

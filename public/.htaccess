@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^(?:managed-it-solutions-toronto|manage-it-services|managed-it-servuces)/?$ /managed-it-services/ [R=301,L]

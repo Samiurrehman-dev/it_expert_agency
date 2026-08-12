@@ -140,7 +140,7 @@ export default function Home() {
               <p className="mt-14 text-6xl font-extrabold tracking-[-0.06em] text-white">
                 10+
               </p>
-              <p className="mt-2 max-w-xs text-sm font-bold uppercase tracking-[0.15em] text-blue-200">
+              <p className="mt-2 max-w-xs text-sm font-bold uppercase tracking-[0.15em] text-slate-200">
                 Years of specialist experience across our team
               </p>
               <div className="mt-10 flex flex-wrap gap-2">
@@ -148,7 +148,7 @@ export default function Home() {
                   (item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-blue-100"
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-100"
                     >
                       {item}
                     </span>
@@ -203,7 +203,7 @@ export default function Home() {
                 className="h-full"
               >
                 <article className="group h-full rounded-2xl border border-slate-200/80 bg-white p-8 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-soft">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-accent-50 text-accent-700 transition-colors group-hover:bg-accent-400 group-hover:text-primary-950">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-accent-50 text-accent-700 transition-colors group-hover:bg-accent-400 group-hover:text-white">
                     <reason.icon className="size-5" />
                   </span>
                   <h3 className="mt-6 text-xl font-extrabold tracking-[-0.025em] text-ink">

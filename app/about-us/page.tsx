@@ -134,10 +134,10 @@ export default function AboutUsPage() {
                 <p className="mt-16 text-6xl font-extrabold tracking-[-0.06em] text-white">
                   10+
                 </p>
-                <p className="mt-2 max-w-sm text-sm font-bold uppercase leading-6 tracking-[0.15em] text-blue-200">
+                <p className="mt-2 max-w-sm text-sm font-bold uppercase leading-6 tracking-[0.15em] text-slate-200">
                   Years of specialist experience across every discipline
                 </p>
-                <div className="mt-9 grid grid-cols-2 gap-3 border-t border-white/10 pt-7 text-sm font-bold text-blue-100">
+                <div className="mt-9 grid grid-cols-2 gap-3 border-t border-white/10 pt-7 text-sm font-bold text-slate-100">
                   <span>24/7 support</span>
                   <span>Remote & on-site</span>
                   <span>Cloud expertise</span>
@@ -204,7 +204,7 @@ export default function AboutUsPage() {
                         <h3 className="mt-5 font-extrabold text-white">
                           {value.title}
                         </h3>
-                        <p className="mt-3 text-sm leading-6 text-blue-100/70">
+                        <p className="mt-3 text-sm leading-6 text-slate-100/70">
                           {value.description}
                         </p>
                       </article>

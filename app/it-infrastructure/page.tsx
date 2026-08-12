@@ -262,7 +262,7 @@ export default function ITInfrastructurePage() {
               <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                 IT Infrastructure
               </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-blue-100/85 sm:text-xl sm:leading-9">
+              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-100/85 sm:text-xl sm:leading-9">
                 Infrastructure that can monitor, anticipate, and respond to the
                 changing needs of your business.
               </p>
@@ -375,7 +375,7 @@ export default function ITInfrastructurePage() {
                 Turn infrastructure data into uptime, performance, and business
                 value.
               </h2>
-              <p className="mt-5 text-base leading-8 text-blue-100/75">
+              <p className="mt-5 text-base leading-8 text-slate-100/75">
                 Monitoring brings physical and virtual infrastructure into view,
                 from servers and storage to networks, software, and virtual
                 machines.
@@ -395,7 +395,7 @@ export default function ITInfrastructurePage() {
                     <h3 className="mt-5 text-xl font-extrabold">
                       {area.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-blue-100/70">
+                    <p className="mt-3 text-sm leading-7 text-slate-100/70">
                       {area.description}
                     </p>
                   </article>

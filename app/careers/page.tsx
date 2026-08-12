@@ -216,14 +216,14 @@ export default function CareersPage() {
               <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-[-0.04em] text-white sm:text-4xl lg:text-5xl">
                 Bring your experience to IT Experts.
               </h2>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-blue-100/75">
+              <p className="mt-4 max-w-2xl text-base leading-8 text-slate-100/75">
                 Introduce yourself and tell us what kind of problems you love to
                 solve.
               </p>
             </div>
             <a
               href="mailto:careers@itexpertsagency.com?subject=General application"
-              className="group inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-primary-950 transition-all hover:-translate-y-1 hover:bg-accent-300"
+              className="group inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-white transition-all hover:-translate-y-1 hover:bg-accent-300"
             >
               Send your résumé
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

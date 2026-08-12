@@ -264,7 +264,7 @@ export default function MicrosoftSolutionsPage() {
               <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                 Microsoft Solutions
               </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-blue-100/85 sm:text-xl sm:leading-9">
+              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-100/85 sm:text-xl sm:leading-9">
                 Get the latest in cloud solutions from ITExperts Agency that
                 puts you first !
               </p>
@@ -404,7 +404,7 @@ export default function MicrosoftSolutionsPage() {
                 <h2 className="mt-7 text-balance text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl">
                   Azure: A cloud platform that grows with the business
                 </h2>
-                <div className="mt-6 space-y-5 text-base leading-8 text-blue-100/75">
+                <div className="mt-6 space-y-5 text-base leading-8 text-slate-100/75">
                   <p>
                     Microsoft Azure is a global, scalable cloud infrastructure
                     supporting all your customers’ computing and application
@@ -425,7 +425,7 @@ export default function MicrosoftSolutionsPage() {
                   {azureFeatures.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-start gap-3 text-sm leading-7 text-blue-100/75 sm:text-base"
+                      className="flex items-start gap-3 text-sm leading-7 text-slate-100/75 sm:text-base"
                     >
                       <CheckCircle2 className="mt-1.5 size-4 shrink-0 text-accent-300" />
                       <span>{feature}</span>
@@ -582,7 +582,7 @@ export default function MicrosoftSolutionsPage() {
                     <h2 className="mt-5 text-lg font-extrabold">
                       {outcome.title}
                     </h2>
-                    <p className="mt-3 text-sm leading-7 text-blue-100/70">
+                    <p className="mt-3 text-sm leading-7 text-slate-100/70">
                       {outcome.description}
                     </p>
                   </article>

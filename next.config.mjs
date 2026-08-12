@@ -1,26 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  trailingSlash: true,
   reactStrictMode: true,
-  async redirects() {
-    return [
-      {
-        source: "/managed-it-solutions-toronto",
-        destination: "/managed-it-services",
-        permanent: true,
-      },
-      {
-        source: "/manage-it-services",
-        destination: "/managed-it-services",
-        permanent: true,
-      },
-      {
-        source: "/managed-it-servuces",
-        destination: "/managed-it-services",
-        permanent: true,
-      },
-    ];
-  },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

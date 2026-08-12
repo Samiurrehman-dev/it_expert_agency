@@ -52,12 +52,12 @@ export function HeroVisual() {
         <div className="rounded-2xl bg-primary-950 p-4 text-white sm:p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="flex gap-3">
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-400 text-primary-950">
+              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent-400 text-white">
                 <Server className="size-5" />
               </span>
               <div>
                 <p className="text-sm font-bold">Proactive monitoring</p>
-                <p className="mt-1 text-xs leading-5 text-blue-200">
+                <p className="mt-1 text-xs leading-5 text-slate-200">
                   Protection that never clocks out.
                 </p>
               </div>

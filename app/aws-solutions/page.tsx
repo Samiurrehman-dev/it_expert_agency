@@ -218,7 +218,7 @@ export default function AWSSolutionsPage() {
               <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                 AWS Solutions
               </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-blue-100/85 sm:text-xl sm:leading-9">
+              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-100/85 sm:text-xl sm:leading-9">
                 {
                   "Leverage the full benefits of AWS Services and boost your business's growth"
                 }
@@ -321,7 +321,7 @@ export default function AWSSolutionsPage() {
                   {cloudMigrationServices.map((service) => (
                     <div
                       key={service}
-                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold leading-6 text-blue-100/80"
+                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold leading-6 text-slate-100/80"
                     >
                       <CheckCircle2 className="size-4 shrink-0 text-[#ffb84d]" />
                       {service}
@@ -415,7 +415,7 @@ export default function AWSSolutionsPage() {
                   <h2 className="mt-7 text-balance text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl lg:text-5xl">
                     AWS DevOps Service
                   </h2>
-                  <div className="mt-6 space-y-5 text-base leading-8 text-blue-100/75">
+                  <div className="mt-6 space-y-5 text-base leading-8 text-slate-100/75">
                     <p>
                       AWS DevOps Services allow you to improve your business
                       agility as it supports various DevOps principles and
@@ -441,7 +441,7 @@ export default function AWSSolutionsPage() {
                   {devOpsFeatures.map((feature) => (
                     <div
                       key={feature}
-                      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm font-bold text-blue-100/80"
+                      className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm font-bold text-slate-100/80"
                     >
                       <CheckCircle2 className="size-4 shrink-0 text-[#ffb84d]" />
                       {feature}
@@ -553,7 +553,7 @@ export default function AWSSolutionsPage() {
               <h2 className="text-balance text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl lg:text-5xl">
                 What we’ll deliver
               </h2>
-              <p className="mt-6 text-base leading-8 text-blue-100/75 sm:text-lg">
+              <p className="mt-6 text-base leading-8 text-slate-100/75 sm:text-lg">
                 IT Expert Agency is more than just a solution provider. It would
                 help if you considered us when looking for a technical partner
                 to support your business.
@@ -573,7 +573,7 @@ export default function AWSSolutionsPage() {
                     <h3 className="mt-5 text-xl font-extrabold">
                       {feature.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-blue-100/70">
+                    <p className="mt-3 text-sm leading-7 text-slate-100/70">
                       {feature.description}
                     </p>
                   </article>

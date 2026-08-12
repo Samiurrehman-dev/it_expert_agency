@@ -20,7 +20,7 @@
   }
 
   ::selection {
-    @apply bg-accent-200 text-primary-950;
+    @apply bg-accent-200 text-ink;
   }
 
   :focus-visible {
@@ -39,8 +39,8 @@
 
   .bg-grid {
     background-image:
-      linear-gradient(rgba(11, 61, 145, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(11, 61, 145, 0.055) 1px, transparent 1px);
+      linear-gradient(rgba(229, 122, 37, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(229, 122, 37, 0.055) 1px, transparent 1px);
     background-size: 48px 48px;
   }
 }

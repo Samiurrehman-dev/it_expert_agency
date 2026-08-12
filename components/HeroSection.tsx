@@ -57,7 +57,7 @@ export function HeroSection({
           <div className="mt-9 flex flex-col gap-3 [animation-delay:300ms] [animation-fill-mode:both] motion-safe:animate-fade-up sm:flex-row">
             <Link
               href={primaryCta.href}
-              className="group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-primary-950 shadow-lg shadow-accent-500/20 transition-all hover:-translate-y-0.5 hover:bg-accent-300"
+              className="group inline-flex h-14 items-center justify-center gap-2 rounded-full bg-accent-400 px-7 text-sm font-extrabold text-white shadow-lg shadow-accent-500/20 transition-all hover:-translate-y-0.5 hover:bg-accent-300"
             >
               {primaryCta.label}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

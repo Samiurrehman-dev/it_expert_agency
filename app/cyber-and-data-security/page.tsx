@@ -215,7 +215,7 @@ export default function CyberAndDataSecurityPage() {
               <h1 className="text-balance text-4xl font-extrabold leading-[1.06] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
                 Cyber & Data Security
               </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-blue-100/85 sm:text-xl sm:leading-9">
+              <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-100/85 sm:text-xl sm:leading-9">
                 Round-the-clock monitoring, layered protection, and experienced
                 security guidance for a threat landscape that never stands
                 still.
@@ -359,7 +359,7 @@ export default function CyberAndDataSecurityPage() {
                     <h3 className="mt-5 text-lg font-extrabold">
                       {outcome.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-6 text-blue-100/70">
+                    <p className="mt-3 text-sm leading-6 text-slate-100/70">
                       {outcome.description}
                     </p>
                   </article>

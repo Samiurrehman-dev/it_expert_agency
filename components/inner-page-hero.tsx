@@ -25,7 +25,7 @@ export function InnerPageHero({
           <h1 className="text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
             {title}
           </h1>
-          <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-blue-100/85 sm:text-xl sm:leading-9">
+          <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-slate-100/85 sm:text-xl sm:leading-9">
             {description}
           </p>
         </div>
