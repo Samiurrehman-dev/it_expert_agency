@@ -494,7 +494,7 @@ export default function ITInfrastructurePage() {
           heading="Scale with confidence while a dedicated team watches your infrastructure."
           description="Talk with an IT expert about improving availability, simplifying operations, and planning the next stage of your technology environment."
           buttonLabel="Get Free Consultation"
-          buttonHref="/#contact"
+          buttonHref="/contact-us"
         />
       </main>
 

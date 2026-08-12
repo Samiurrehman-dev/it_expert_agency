@@ -13,6 +13,11 @@ const nextConfig = {
         destination: "/managed-it-services",
         permanent: true,
       },
+      {
+        source: "/managed-it-servuces",
+        destination: "/managed-it-services",
+        permanent: true,
+      },
     ];
   },
   images: {

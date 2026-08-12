@@ -1,35 +1,56 @@
-import type { ReactNode } from "react";
+import Image from "next/image";
 
 export type ClientLogo = {
   name: string;
-  logo?: ReactNode;
+  src: string;
   href?: string;
-  colorClass?: string;
 };
 
 export type ClientLogosProps = {
   logos?: ClientLogo[];
   label?: string;
+  description?: string;
 };
 
 const defaultLogos: ClientLogo[] = [
-  { name: "Microsoft", colorClass: "group-hover/logo:text-[#00A4EF]" },
-  { name: "AWS", colorClass: "group-hover/logo:text-[#FF9900]" },
-  { name: "Cisco", colorClass: "group-hover/logo:text-[#049FD9]" },
-  { name: "VMware", colorClass: "group-hover/logo:text-[#607078]" },
-  { name: "Veeam", colorClass: "group-hover/logo:text-[#00B336]" },
-  { name: "Dell", colorClass: "group-hover/logo:text-[#0672CE]" },
+  {
+    name: "Performance Solution",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Performance-Solution.png",
+  },
+  {
+    name: "Modern Sense Furniture",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Modern-Sense-Furniture.png",
+  },
+  {
+    name: "Meetpoint",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Meetpoint.png",
+  },
+  {
+    name: "Orion Technologies",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Orion-Technologies.png",
+  },
+  {
+    name: "Diesel Truck",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Diesel-Truck.png",
+  },
+  {
+    name: "Premium Sweets",
+    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Premium-Sweets.png",
+  },
 ];
 
 function LogoItem({ item }: { item: ClientLogo }) {
   const content = (
-    <span
-      className={[
-        "group/logo flex h-16 w-40 shrink-0 items-center justify-center rounded-2xl border border-slate-200/70 bg-white px-5 text-lg font-extrabold tracking-[-0.03em] text-slate-400 grayscale transition-all duration-300 hover:border-slate-300 hover:grayscale-0",
-        item.colorClass ?? "group-hover/logo:text-primary-800",
-      ].join(" ")}
-    >
-      {item.logo ?? item.name}
+    <span className="group/logo flex h-28 w-52 shrink-0 items-center justify-center rounded-2xl bg-white px-6 transition-transform duration-300 hover:-translate-y-1">
+      <Image
+        src={item.src}
+        alt={`${item.name} logo`}
+        width={190}
+        height={120}
+        unoptimized
+        loading="eager"
+        className="h-20 w-full object-contain opacity-80 transition-all duration-300 group-hover/logo:opacity-100"
+      />
     </span>
   );
 
@@ -44,16 +65,29 @@ function LogoItem({ item }: { item: ClientLogo }) {
 
 export function ClientLogos({
   logos = defaultLogos,
-  label = "Technology partners",
+  label = "Our clients",
+  description = "Belonging to IT Experts Group International, IT Experts is engaged in IT support and services, equipment leasing and integrating IT system.",
 }: ClientLogosProps) {
   return (
-    <section className="overflow-hidden bg-white py-9" aria-label={label}>
-      <p className="mb-7 text-center text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400">
-        {label}
-      </p>
+    <section
+      className="overflow-hidden bg-white py-14 sm:py-20"
+      aria-label={label}
+    >
+      <div className="mx-auto mb-10 max-w-3xl px-5 text-center sm:px-8">
+        <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-primary-700">
+          Trusted relationships
+        </p>
+        <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
+          {label}
+        </h2>
+        <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
+          {description}
+        </p>
+      </div>
+
       <div className="relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-white to-transparent sm:w-36" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-white to-transparent sm:w-36" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-36" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-36" />
         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] motion-reduce:animate-none">
           {[0, 1].map((group) => (
             <div

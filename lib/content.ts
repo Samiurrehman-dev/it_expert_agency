@@ -46,7 +46,7 @@ export const services = [
   {
     icon: Wrench,
     title: "IT consulting",
-    href: "/#contact",
+    href: "/contact-us",
     description:
       "A practical technology roadmap that aligns investment, operations, and security with your goals.",
   },

@@ -210,10 +210,16 @@ export function Header() {
             <DesktopDropdown label="IT Services" items={serviceLinks} />
             <DesktopDropdown label="IT Solutions" items={solutionLinks} />
             <a
-              href="/#about"
+              href="/about-us"
               className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
             >
               About
+            </a>
+            <a
+              href="/careers"
+              className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
+            >
+              Careers
             </a>
             <a
               href="/blog"
@@ -232,7 +238,7 @@ export function Header() {
               +1 909 545 6727
             </a>
             <a
-              href="/#contact"
+              href="/contact-us"
               className="inline-flex h-11 items-center justify-center rounded-full bg-primary-900 px-5 text-sm font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-800"
             >
               Free Consultation
@@ -316,11 +322,18 @@ export function Header() {
             onNavigate={closeDrawer}
           />
           <a
-            href="/#about"
+            href="/about-us"
             onClick={closeDrawer}
             className="block border-b border-slate-100 py-4 text-base font-extrabold text-ink"
           >
             About
+          </a>
+          <a
+            href="/careers"
+            onClick={closeDrawer}
+            className="block border-b border-slate-100 py-4 text-base font-extrabold text-ink"
+          >
+            Careers
           </a>
           <a
             href="/blog"
@@ -340,7 +353,7 @@ export function Header() {
             +1 909 545 6727
           </a>
           <a
-            href="/#contact"
+            href="/contact-us"
             onClick={closeDrawer}
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-900 px-5 text-sm font-extrabold text-white"
           >

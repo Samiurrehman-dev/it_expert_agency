@@ -184,7 +184,7 @@ export function ServicePageTemplate({
           heading={ctaText}
           description="Start with a no-pressure conversation about your goals, challenges, and the right next step for your technology."
           buttonLabel="Get Free Consultation"
-          buttonHref="/#contact"
+          buttonHref="/contact-us"
         />
       </main>
 

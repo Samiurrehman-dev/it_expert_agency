@@ -61,7 +61,7 @@ const homepageServices: ServiceCardProps[] = [
     title: "Technology Partners",
     description:
       "Proven solutions from trusted technology leaders including Microsoft, AWS, Cisco, VMware, Veeam, and Dell.",
-    href: "#partners",
+    href: "#clients",
   },
 ];
 
@@ -219,10 +219,8 @@ export default function Home() {
         </div>
       </section>
 
-      <div id="partners" className="bg-white py-10 sm:py-14">
-        <ScrollReveal distance={16}>
-          <ClientLogos label="Trusted technology partners" />
-        </ScrollReveal>
+      <div id="clients" className="bg-white py-6 sm:py-8">
+        <ClientLogos />
       </div>
 
       <ScrollReveal distance={16}>
@@ -231,7 +229,7 @@ export default function Home() {
           heading="Focus on your business. We’ll take care of the technology."
           description="Start with a no-pressure conversation about your support, infrastructure, cloud, or security needs."
           buttonLabel="Get Free Consultation"
-          buttonHref="/contact"
+          buttonHref="/contact-us"
         />
       </ScrollReveal>
 

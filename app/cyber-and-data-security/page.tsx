@@ -426,7 +426,7 @@ export default function CyberAndDataSecurityPage() {
           heading="Reduce security risk without carrying the cost of a full in-house security operation."
           description="Start with a no-pressure conversation about your risks, compliance needs, and the right next step for protecting your business."
           buttonLabel="Get Free Consultation"
-          buttonHref="/#contact"
+          buttonHref="/contact-us"
         />
       </main>
 
