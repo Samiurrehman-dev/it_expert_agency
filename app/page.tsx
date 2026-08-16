@@ -89,22 +89,9 @@ const reasons = [
 export default function Home() {
   return (
     <main id="top" className="overflow-x-clip">
-      <Header />
+      <Header overlay />
 
-      <HeroSection
-        eyebrow="Your own IT department"
-        heading={
-          <>
-            Managed IT Services{" "}
-            <span className="text-primary-900">
-              built around your business.
-            </span>
-          </>
-        }
-        subheading="Our IT professionals provide 24/7 support, proactive monitoring, and practical technology guidance—so you can stay focused on your business goals."
-        primaryCta={{ label: "Get a free consultation", href: "#contact" }}
-        secondaryCta={{ label: "Explore IT services", href: "#services" }}
-      />
+      <HeroSection />
 
       <section id="services" className="bg-white py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">

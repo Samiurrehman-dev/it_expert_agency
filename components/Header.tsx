@@ -60,15 +60,22 @@ const solutionLinks: NavItem[] = [
 function DesktopDropdown({
   label,
   items,
+  light = false,
 }: {
   label: string;
   items: NavItem[];
+  light?: boolean;
 }) {
   return (
     <div className="group relative">
       <button
         type="button"
-        className="flex h-20 items-center gap-1.5 text-sm font-bold text-slate-700 transition-colors hover:text-primary-900 group-focus-within:text-primary-900"
+        className={[
+          "flex h-20 items-center gap-1.5 text-sm font-bold transition-colors",
+          light
+            ? "text-white/80 hover:text-white group-focus-within:text-white"
+            : "text-slate-700 hover:text-primary-900 group-focus-within:text-primary-900",
+        ].join(" ")}
         aria-haspopup="true"
       >
         {label}
@@ -163,7 +170,7 @@ function MobileNavGroup({
   );
 }
 
-export function Header() {
+export function Header({ overlay = false }: { overlay?: boolean }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(
     "IT Services",
@@ -191,10 +198,17 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky inset-x-0 top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_24px_-20px_rgba(54,56,57,0.45)] backdrop-blur-xl">
+      <header
+        className={[
+          "inset-x-0 top-0 z-50 border-b backdrop-blur-xl",
+          overlay
+            ? "absolute border-white/10 bg-[#05080d]/30"
+            : "sticky border-slate-200/80 bg-white/95 shadow-[0_8px_24px_-20px_rgba(54,56,57,0.45)]",
+        ].join(" ")}
+      >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-5 sm:px-8">
           <a href="/" aria-label="IT Experts home" className="shrink-0">
-            <Logo />
+            <Logo light={overlay} />
           </a>
 
           <nav
@@ -203,27 +217,55 @@ export function Header() {
           >
             <a
               href="/"
-              className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
+              className={[
+                "flex h-20 items-center text-sm font-bold transition-colors",
+                overlay
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-700 hover:text-primary-900",
+              ].join(" ")}
             >
               Home
             </a>
-            <DesktopDropdown label="IT Services" items={serviceLinks} />
-            <DesktopDropdown label="IT Solutions" items={solutionLinks} />
+            <DesktopDropdown
+              label="IT Services"
+              items={serviceLinks}
+              light={overlay}
+            />
+            <DesktopDropdown
+              label="IT Solutions"
+              items={solutionLinks}
+              light={overlay}
+            />
             <a
               href="/about-us"
-              className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
+              className={[
+                "flex h-20 items-center text-sm font-bold transition-colors",
+                overlay
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-700 hover:text-primary-900",
+              ].join(" ")}
             >
               About
             </a>
             <a
               href="/careers"
-              className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
+              className={[
+                "flex h-20 items-center text-sm font-bold transition-colors",
+                overlay
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-700 hover:text-primary-900",
+              ].join(" ")}
             >
               Careers
             </a>
             <a
               href="/blog"
-              className="flex h-20 items-center text-sm font-bold text-slate-700 transition-colors hover:text-primary-900"
+              className={[
+                "flex h-20 items-center text-sm font-bold transition-colors",
+                overlay
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-700 hover:text-primary-900",
+              ].join(" ")}
             >
               Blog
             </a>
@@ -232,14 +274,28 @@ export function Header() {
           <div className="hidden items-center gap-4 lg:flex">
             <a
               href="tel:+19095456727"
-              className="hidden items-center gap-2 whitespace-nowrap text-sm font-extrabold text-primary-900 transition-colors hover:text-primary-700 xl:flex"
+              className={[
+                "hidden items-center gap-2 whitespace-nowrap text-sm font-extrabold transition-colors xl:flex",
+                overlay
+                  ? "text-white/90 hover:text-white"
+                  : "text-primary-900 hover:text-primary-700",
+              ].join(" ")}
             >
-              <Phone className="size-4 text-accent-600" />
+              <Phone
+                className={
+                  overlay ? "size-4 text-sky-300" : "size-4 text-accent-600"
+                }
+              />
               +1 909 545 6727
             </a>
             <a
               href="/contact-us"
-              className="inline-flex h-11 items-center justify-center rounded-full bg-primary-900 px-5 text-sm font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary-800"
+              className={[
+                "inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-extrabold text-white shadow-sm transition-all hover:-translate-y-0.5",
+                overlay
+                  ? "bg-accent-400 hover:bg-accent-300"
+                  : "bg-primary-900 hover:bg-primary-800",
+              ].join(" ")}
             >
               Free Consultation
             </a>
@@ -248,7 +304,12 @@ export function Header() {
           <button
             type="button"
             onClick={() => setIsDrawerOpen(true)}
-            className="grid size-11 place-items-center rounded-full border border-slate-200 bg-white text-ink shadow-sm transition-colors hover:bg-slate-50 lg:hidden"
+            className={[
+              "grid size-11 place-items-center rounded-full border shadow-sm transition-colors lg:hidden",
+              overlay
+                ? "border-white/20 bg-white/10 text-white hover:bg-white/15"
+                : "border-slate-200 bg-white text-ink hover:bg-slate-50",
+            ].join(" ")}
             aria-label="Open navigation"
             aria-expanded={isDrawerOpen}
             aria-controls="mobile-navigation"

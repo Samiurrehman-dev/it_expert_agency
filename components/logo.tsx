@@ -15,7 +15,7 @@ export function Logo({ light = false }: { light?: boolean }) {
       width={610}
       height={191}
       unoptimized
-      className={light ? "h-16 w-auto" : "h-14 w-auto"}
+      className="h-14 w-auto"
     />
   );
 }
