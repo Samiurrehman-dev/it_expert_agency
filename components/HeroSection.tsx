@@ -118,7 +118,7 @@ export function HeroSection() {
       id="private-ai"
       aria-roledescription="carousel"
       aria-label="Private AI transformation"
-      className="relative isolate flex min-h-[100svh] overflow-hidden bg-[#05080d] text-white lg:min-h-[clamp(760px,100svh,940px)]"
+      className="relative isolate flex min-h-[100svh] overflow-hidden bg-[#05080d] text-white"
       onFocusCapture={() => setIsPaused(true)}
       onBlurCapture={() => setIsPaused(false)}
     >
