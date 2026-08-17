@@ -1,11 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
+  ArrowRight,
+  ArrowUpRight,
   BadgeCheck,
-  Blocks,
-  Cloud,
-  Handshake,
   Headphones,
-  Network,
   RefreshCcw,
   ShieldCheck,
 } from "lucide-react";
@@ -17,51 +16,88 @@ import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/section-heading";
-import { ServiceCard, type ServiceCardProps } from "@/components/ServiceCard";
 import { StatsCounter } from "@/components/StatsCounter";
 
-const homepageServices: ServiceCardProps[] = [
+const latestUpdates = [
   {
-    icon: Headphones,
-    title: "Managed IT Services",
-    description:
-      "Responsive 24/7 support, proactive monitoring, and ongoing maintenance that keep your team productive.",
-    href: "/managed-it-services",
+    category: "Private AI",
+    title: "Keep your data, models, and decisions under your control",
+    summary:
+      "Build enterprise AI around your own infrastructure, policies, and business goals—without giving up control of sensitive data.",
+    href: "/contact-us",
+    image: "/images/hero-ai-poster.jpg",
+    imageClass: "object-cover object-[68%_center]",
+    overlay: "from-sky-950/30 via-transparent to-black/30",
   },
   {
-    icon: Blocks,
-    title: "Microsoft Solutions",
-    description:
-      "Simplify Microsoft 365, email, cloud migration, and business workflows while reducing cost and complexity.",
-    href: "/microsoft-solutions",
-  },
-  {
-    icon: Cloud,
-    title: "AWS Solutions",
-    description:
-      "Flexible, scalable AWS environments that help your business innovate faster and operate more efficiently.",
-    href: "/aws-solutions",
-  },
-  {
-    icon: Network,
-    title: "IT Infrastructure",
-    description:
-      "Networks, servers, endpoints, and cloud systems monitored around the clock for uptime and continuity.",
+    category: "IT Operations",
+    title: "Turn infrastructure signals into faster, smarter action",
+    summary:
+      "Connect monitoring, automation, and decision-making so your IT operation can identify issues early and respond with confidence.",
     href: "/it-infrastructure",
+    image: "/images/hero-slide-data.jpg",
+    imageClass: "object-cover object-center",
+    overlay: "from-violet-950/35 via-transparent to-black/30",
   },
   {
-    icon: ShieldCheck,
-    title: "Cyber & Data Security",
-    description:
-      "Continuous alert monitoring, risk reduction, and rapid response that protect your systems and business data.",
+    category: "Cybersecurity",
+    title: "A practical security checklist for growing businesses",
+    summary:
+      "Strengthen everyday security with practical controls that reduce risk while keeping your people productive and your business moving.",
+    href: "/blog",
+    image: "/images/hero-slide-control.jpg",
+    imageClass: "object-cover object-[63%_center]",
+    overlay: "from-emerald-950/30 via-transparent to-black/35",
+  },
+  {
+    category: "Managed IT",
+    title: "What proactive IT support should look like in practice",
+    summary:
+      "Move beyond reactive fixes with continuous monitoring, preventive maintenance, and responsive support designed around your team.",
+    href: "/managed-it-services",
+    image: "/images/hero-ai-poster.jpg",
+    imageClass: "object-cover object-[38%_center]",
+    overlay: "from-orange-950/25 via-transparent to-black/35",
+  },
+  {
+    category: "Cloud",
+    title: "When is it time to move your business systems to the cloud?",
+    summary:
+      "Explore the key signs, tradeoffs, and planning questions that can help you make your next cloud move with clarity.",
+    href: "/aws-solutions",
+    image: "/images/hero-slide-data.jpg",
+    imageClass: "object-cover object-[72%_center]",
+    overlay: "from-indigo-950/35 via-transparent to-black/35",
+  },
+  {
+    category: "Microsoft 365",
+    title: "A safer path to modern collaboration across your team",
+    summary:
+      "Bring communication, productivity, and security together with a Microsoft 365 environment designed for the way your team works.",
+    href: "/microsoft-solutions",
+    image: "/images/hero-slide-control.jpg",
+    imageClass: "object-cover object-[35%_center]",
+    overlay: "from-blue-950/35 via-transparent to-black/30",
+  },
+  {
+    category: "Business Continuity",
+    title: "Backups are only useful when recovery is tested",
+    summary:
+      "Create a resilient backup and recovery process that helps your organization return to work quickly after disruption.",
     href: "/cyber-and-data-security",
+    image: "/images/hero-ai-poster.jpg",
+    imageClass: "object-cover object-[82%_center]",
+    overlay: "from-fuchsia-950/30 via-transparent to-black/35",
   },
   {
-    icon: Handshake,
-    title: "Technology Partners",
-    description:
-      "Proven solutions from trusted technology leaders including Microsoft, AWS, Cisco, VMware, Veeam, and Dell.",
-    href: "#clients",
+    category: "Infrastructure",
+    title: "Five warning signs your network is holding your team back",
+    summary:
+      "Spot the performance, coverage, and reliability issues that quietly slow down a growing business and affect daily work.",
+    href: "/it-infrastructure",
+    image: "/images/hero-slide-data.jpg",
+    imageClass: "object-cover object-[32%_center]",
+    overlay: "from-cyan-950/30 via-transparent to-black/35",
   },
 ];
 
@@ -93,28 +129,97 @@ export default function Home() {
 
       <HeroSection />
 
-      <section id="services" className="bg-white py-24 sm:py-32">
+      <section id="services" className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <ScrollReveal>
-            <SectionHeading
-              eyebrow="What we do"
-              title="Complete IT support for a more resilient business."
-              description="From daily support to cloud transformation and cybersecurity, one experienced team manages the technology behind your growth."
-              centered
-            />
+            <div className="flex items-end justify-between gap-6">
+              <h2 className="text-4xl font-extrabold tracking-[-0.045em] text-ink sm:text-5xl lg:text-6xl">
+                Latest Updates
+              </h2>
+              <Link
+                href="/blog"
+                className="group hidden items-center gap-2 pb-1 text-sm font-extrabold text-primary-800 transition-colors hover:text-primary-600 sm:inline-flex"
+              >
+                View all insights
+                <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
           </ScrollReveal>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {homepageServices.map((service, index) => (
+          <div className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {latestUpdates.map((update, index) => (
               <ScrollReveal
-                key={service.title}
-                delay={index * 0.06}
+                key={update.title}
+                delay={(index % 4) * 0.06}
                 className="h-full"
               >
-                <ServiceCard {...service} />
+                <Link
+                  href={update.href}
+                  className="group block h-full rounded-2xl"
+                >
+                  <article className="relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl bg-slate-900 shadow-card transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-soft">
+                    <div className="relative min-h-0 flex-[1.45] overflow-hidden bg-slate-950">
+                      <Image
+                        src={update.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1280px) 290px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className={`${update.imageClass} transition-transform duration-700 ease-out group-hover:scale-105`}
+                      />
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${update.overlay}`}
+                      />
+                    </div>
+
+                    <div className="relative flex min-h-[174px] flex-1 flex-col p-6 sm:p-7">
+                      <div className="mb-4 flex items-center justify-between gap-3">
+                        <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-slate-300">
+                          {update.category}
+                        </p>
+                        <ArrowUpRight className="size-4 text-slate-500 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-300" />
+                      </div>
+                      <h3 className="text-xl font-extrabold leading-[1.28] tracking-[-0.025em] text-white">
+                        {update.title}
+                      </h3>
+                      <span className="mt-auto block h-0.5 w-0 bg-accent-300 transition-all duration-500 group-hover:mt-6 group-hover:w-12" />
+                    </div>
+
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 z-20 flex translate-y-8 flex-col bg-[linear-gradient(180deg,#fb5b24_0%,#e65d88_48%,#ca67df_100%)] p-7 text-white opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transform-none sm:p-8"
+                    >
+                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-white/95">
+                        {update.category}
+                      </p>
+                      <h3 className="mt-7 text-[1.4rem] font-extrabold leading-[1.18] tracking-[-0.035em] text-white">
+                        {update.title}
+                      </h3>
+                      <p className="mt-4 text-sm font-semibold leading-6 text-white/90">
+                        {update.summary}
+                      </p>
+
+                      <div className="mt-auto flex items-center gap-4 text-lg font-extrabold">
+                        <span className="shrink-0">Read more</span>
+                        <span className="h-px flex-1 bg-white/90" />
+                        <ArrowRight
+                          className="size-6 shrink-0"
+                          strokeWidth={1.8}
+                        />
+                      </div>
+                    </div>
+                  </article>
+                </Link>
               </ScrollReveal>
             ))}
           </div>
+
+          <Link
+            href="/blog"
+            className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-primary-800 sm:hidden"
+          >
+            View all insights
+            <ArrowUpRight className="size-4" />
+          </Link>
         </div>
       </section>
 
