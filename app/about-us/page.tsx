@@ -132,7 +132,7 @@ export default function AboutUsPage() {
                 <div className="absolute -right-16 -top-16 size-48 rounded-full border-[42px] border-white/5" />
                 <UsersRound className="size-11 text-accent-300" />
                 <p className="mt-16 text-6xl font-extrabold tracking-[-0.06em] text-white">
-                  10+
+                  20+
                 </p>
                 <p className="mt-2 max-w-sm text-sm font-bold uppercase leading-6 tracking-[0.15em] text-slate-200">
                   Years of specialist experience across every discipline

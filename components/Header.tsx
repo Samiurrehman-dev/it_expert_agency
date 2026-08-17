@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
+  BookOpen,
+  Briefcase,
   ChevronDown,
   Cloud,
+  FileText,
   Menu,
   Phone,
   ServerCog,
@@ -54,6 +57,27 @@ const solutionLinks: NavItem[] = [
     href: "/aws-solutions",
     description: "Secure, scalable AWS cloud services",
     icon: Cloud,
+  },
+];
+
+const updateLinks: NavItem[] = [
+  {
+    label: "Ebooks",
+    href: "/ebooks",
+    description: "In-depth guides for smarter IT decisions",
+    icon: BookOpen,
+  },
+  {
+    label: "Blog",
+    href: "/blog",
+    description: "Practical ideas, news, and expert guidance",
+    icon: FileText,
+  },
+  {
+    label: "Case Studies",
+    href: "/case-studies",
+    description: "Real challenges, solutions, and outcomes",
+    icon: Briefcase,
   },
 ];
 
@@ -236,6 +260,11 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               items={solutionLinks}
               light={overlay}
             />
+            <DesktopDropdown
+              label="Updates"
+              items={updateLinks}
+              light={overlay}
+            />
             <a
               href="/about-us"
               className={[
@@ -257,17 +286,6 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
               ].join(" ")}
             >
               Careers
-            </a>
-            <a
-              href="/blog"
-              className={[
-                "flex h-20 items-center text-sm font-bold transition-colors",
-                overlay
-                  ? "text-white/80 hover:text-white"
-                  : "text-slate-700 hover:text-primary-900",
-              ].join(" ")}
-            >
-              Blog
             </a>
           </nav>
 
@@ -396,13 +414,17 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           >
             Careers
           </a>
-          <a
-            href="/blog"
-            onClick={closeDrawer}
-            className="block border-b border-slate-100 py-4 text-base font-extrabold text-ink"
-          >
-            Blog
-          </a>
+          <MobileNavGroup
+            label="Updates"
+            items={updateLinks}
+            isOpen={openMobileMenu === "Updates"}
+            onToggle={() =>
+              setOpenMobileMenu((value) =>
+                value === "Updates" ? null : "Updates",
+              )
+            }
+            onNavigate={closeDrawer}
+          />
         </nav>
 
         <div className="border-t border-slate-100 p-5">

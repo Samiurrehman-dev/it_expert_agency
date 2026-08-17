@@ -20,84 +20,76 @@ import { StatsCounter } from "@/components/StatsCounter";
 
 const latestUpdates = [
   {
-    category: "Private AI",
+    contentType: "Ebook",
     title: "Keep your data, models, and decisions under your control",
     summary:
       "Build enterprise AI around your own infrastructure, policies, and business goals—without giving up control of sensitive data.",
-    href: "/contact-us",
+    href: "/ebooks",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[68%_center]",
-    imageShape: "rounded-[1.4rem_1.4rem_4.75rem_1.4rem]",
   },
   {
-    category: "IT Operations",
+    contentType: "Case Study",
     title: "Turn infrastructure signals into faster, smarter action",
     summary:
       "Connect monitoring, automation, and decision-making so your IT operation can identify issues early and respond with confidence.",
-    href: "/it-infrastructure",
+    href: "/case-studies",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-center",
-    imageShape: "rounded-[4.75rem_1.4rem_1.4rem_1.4rem]",
   },
   {
-    category: "Cybersecurity",
+    contentType: "Ebook",
     title: "A practical security checklist for growing businesses",
     summary:
       "Strengthen everyday security with practical controls that reduce risk while keeping your people productive and your business moving.",
-    href: "/blog",
+    href: "/ebooks",
     image: "/images/hero-slide-control.jpg",
     imageClass: "object-cover object-[63%_center]",
-    imageShape: "rounded-[1.4rem_4.75rem_1.4rem_1.4rem]",
   },
   {
-    category: "Managed IT",
+    contentType: "Blog",
     title: "What proactive IT support should look like in practice",
     summary:
       "Move beyond reactive fixes with continuous monitoring, preventive maintenance, and responsive support designed around your team.",
-    href: "/managed-it-services",
+    href: "/blog",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[38%_center]",
-    imageShape: "rounded-[1.4rem_1.4rem_1.4rem_4.75rem]",
   },
   {
-    category: "Cloud",
+    contentType: "Blog",
     title: "When is it time to move your business systems to the cloud?",
     summary:
       "Explore the key signs, tradeoffs, and planning questions that can help you make your next cloud move with clarity.",
-    href: "/aws-solutions",
+    href: "/blog",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-[72%_center]",
-    imageShape: "rounded-[1.4rem_1.4rem_4.75rem_1.4rem]",
   },
   {
-    category: "Microsoft 365",
+    contentType: "Case Study",
     title: "A safer path to modern collaboration across your team",
     summary:
       "Bring communication, productivity, and security together with a Microsoft 365 environment designed for the way your team works.",
-    href: "/microsoft-solutions",
+    href: "/case-studies",
     image: "/images/hero-slide-control.jpg",
     imageClass: "object-cover object-[35%_center]",
-    imageShape: "rounded-[4.75rem_1.4rem_1.4rem_1.4rem]",
   },
   {
-    category: "Business Continuity",
+    contentType: "Case Study",
     title: "Backups are only useful when recovery is tested",
     summary:
       "Create a resilient backup and recovery process that helps your organization return to work quickly after disruption.",
-    href: "/cyber-and-data-security",
+    href: "/case-studies",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[82%_center]",
-    imageShape: "rounded-[1.4rem_4.75rem_1.4rem_1.4rem]",
   },
   {
-    category: "Infrastructure",
+    contentType: "Blog",
     title: "Five warning signs your network is holding your team back",
     summary:
       "Spot the performance, coverage, and reliability issues that quietly slow down a growing business and affect daily work.",
-    href: "/it-infrastructure",
+    href: "/blog",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-[32%_center]",
-    imageShape: "rounded-[1.4rem_1.4rem_1.4rem_4.75rem]",
   },
 ];
 
@@ -151,7 +143,7 @@ export default function Home() {
                 href="/blog"
                 className="group hidden items-center gap-2 rounded-full border border-primary-200 bg-white px-5 py-3 text-sm font-extrabold text-primary-800 shadow-card transition-all hover:border-primary-400 hover:text-primary-600 sm:inline-flex"
               >
-                View all insights
+                View all updates
                 <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
@@ -169,9 +161,7 @@ export default function Home() {
                   className="group block h-full rounded-[2rem] focus-visible:ring-offset-[#fcfaf7]"
                 >
                   <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white p-3 shadow-card transition-all duration-500 group-hover:-translate-y-1.5 group-hover:border-primary-200 group-hover:shadow-soft">
-                    <div
-                      className={`relative aspect-[4/3] shrink-0 overflow-hidden bg-slate-950 ${update.imageShape}`}
-                    >
+                    <div className="relative aspect-[4/3] shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-950">
                       <Image
                         src={update.image}
                         alt=""
@@ -180,8 +170,8 @@ export default function Home() {
                         className={`${update.imageClass} transition-transform duration-700 ease-out group-hover:scale-105`}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
-                      <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-slate-950/55 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white backdrop-blur-md">
-                        {update.category}
+                      <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-primary-500 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
+                        {update.contentType}
                       </span>
                       <span className="absolute bottom-4 left-5 text-xs font-bold tracking-[0.12em] text-white/75">
                         {String(index + 1).padStart(2, "0")}
@@ -197,7 +187,7 @@ export default function Home() {
                       </p>
 
                       <div className="mt-auto flex items-center gap-3 pt-6 text-sm font-extrabold text-slate-800">
-                        <span>Read insight</span>
+                        <span>View Updates</span>
                         <span className="h-px flex-1 bg-slate-200 transition-colors group-hover:bg-primary-200" />
                         <span className="grid size-11 shrink-0 place-items-center rounded-full bg-slate-950 text-white transition-all duration-300 group-hover:rotate-[-8deg] group-hover:bg-primary-500">
                           <ArrowUpRight className="size-5" strokeWidth={1.8} />
@@ -216,7 +206,7 @@ export default function Home() {
             href="/blog"
             className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-primary-800 sm:hidden"
           >
-            View all insights
+            View all updates
             <ArrowUpRight className="size-4" />
           </Link>
         </div>
@@ -229,7 +219,7 @@ export default function Home() {
               <div className="absolute -right-16 -top-16 size-48 rounded-full border-[42px] border-white/5" />
               <ShieldCheck className="size-10 text-accent-300" />
               <p className="mt-14 text-6xl font-extrabold tracking-[-0.06em] text-white">
-                10+
+                20+
               </p>
               <p className="mt-2 max-w-xs text-sm font-bold uppercase tracking-[0.15em] text-slate-200">
                 Years of specialist experience across our team

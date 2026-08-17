@@ -18,7 +18,7 @@ const defaultStats: Stat[] = [
   { value: 500, suffix: "+", label: "Satisfied clients" },
   { value: 10000, suffix: "+", label: "Requests resolved" },
   { value: 24, suffix: "/7", label: "Support coverage" },
-  { value: 10, suffix: "+", label: "Years of expertise" },
+  { value: 20, suffix: "+", label: "Years of expertise" },
 ];
 
 function AnimatedNumber({
