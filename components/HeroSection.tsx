@@ -38,7 +38,7 @@ const slides: HeroSlide[] = [
       "text-[clamp(3.25rem,14vw,5.7rem)] lg:text-[clamp(5rem,6.6vw,6.5rem)]",
     description:
       "Deploy enterprise AI on infrastructure you own—keeping your data private, governed, and completely under your control.",
-    cta: { label: "Explore Private AI", href: "#services" },
+    cta: { label: "Explore Private AI", href: "#insights" },
     media: "video",
     background: "/images/hero-ai-poster.jpg",
     backgroundClass: "object-cover object-[67%_center]",
@@ -60,7 +60,7 @@ const slides: HeroSlide[] = [
       "text-[clamp(2.65rem,11.5vw,5.2rem)] lg:text-[clamp(4.4rem,5.5vw,5.5rem)]",
     description:
       "Bring intelligence into monitoring, automation, and decision-making to make every part of your IT operation work smarter.",
-    cta: { label: "See Intelligent Operations", href: "#services" },
+    cta: { label: "See Intelligent Operations", href: "#insights" },
     media: "image",
     background: "/images/hero-slide-data.jpg",
     backgroundClass: "object-cover object-center",

@@ -43,6 +43,15 @@
       linear-gradient(90deg, rgba(229, 122, 37, 0.055) 1px, transparent 1px);
     background-size: 48px 48px;
   }
+
+  .services-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .services-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

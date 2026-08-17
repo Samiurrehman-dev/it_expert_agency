@@ -14,6 +14,7 @@ import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
+import { OurServicesSection } from "@/components/OurServicesSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/section-heading";
 import { StatsCounter } from "@/components/StatsCounter";
@@ -129,7 +130,7 @@ export default function Home() {
 
       <HeroSection />
 
-      <section id="services" className="bg-white py-20 sm:py-28">
+      <section id="insights" className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <ScrollReveal>
             <div className="flex items-end justify-between gap-6">
@@ -271,6 +272,8 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
+
+      <OurServicesSection />
 
       <ScrollReveal distance={16}>
         <StatsCounter />
