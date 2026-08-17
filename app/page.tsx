@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight,
   ArrowUpRight,
   BadgeCheck,
   Headphones,
@@ -28,7 +27,7 @@ const latestUpdates = [
     href: "/contact-us",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[68%_center]",
-    overlay: "from-sky-950/30 via-transparent to-black/30",
+    imageShape: "rounded-[1.4rem_1.4rem_4.75rem_1.4rem]",
   },
   {
     category: "IT Operations",
@@ -38,7 +37,7 @@ const latestUpdates = [
     href: "/it-infrastructure",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-center",
-    overlay: "from-violet-950/35 via-transparent to-black/30",
+    imageShape: "rounded-[4.75rem_1.4rem_1.4rem_1.4rem]",
   },
   {
     category: "Cybersecurity",
@@ -48,7 +47,7 @@ const latestUpdates = [
     href: "/blog",
     image: "/images/hero-slide-control.jpg",
     imageClass: "object-cover object-[63%_center]",
-    overlay: "from-emerald-950/30 via-transparent to-black/35",
+    imageShape: "rounded-[1.4rem_4.75rem_1.4rem_1.4rem]",
   },
   {
     category: "Managed IT",
@@ -58,7 +57,7 @@ const latestUpdates = [
     href: "/managed-it-services",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[38%_center]",
-    overlay: "from-orange-950/25 via-transparent to-black/35",
+    imageShape: "rounded-[1.4rem_1.4rem_1.4rem_4.75rem]",
   },
   {
     category: "Cloud",
@@ -68,7 +67,7 @@ const latestUpdates = [
     href: "/aws-solutions",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-[72%_center]",
-    overlay: "from-indigo-950/35 via-transparent to-black/35",
+    imageShape: "rounded-[1.4rem_1.4rem_4.75rem_1.4rem]",
   },
   {
     category: "Microsoft 365",
@@ -78,7 +77,7 @@ const latestUpdates = [
     href: "/microsoft-solutions",
     image: "/images/hero-slide-control.jpg",
     imageClass: "object-cover object-[35%_center]",
-    overlay: "from-blue-950/35 via-transparent to-black/30",
+    imageShape: "rounded-[4.75rem_1.4rem_1.4rem_1.4rem]",
   },
   {
     category: "Business Continuity",
@@ -88,7 +87,7 @@ const latestUpdates = [
     href: "/cyber-and-data-security",
     image: "/images/hero-ai-poster.jpg",
     imageClass: "object-cover object-[82%_center]",
-    overlay: "from-fuchsia-950/30 via-transparent to-black/35",
+    imageShape: "rounded-[1.4rem_4.75rem_1.4rem_1.4rem]",
   },
   {
     category: "Infrastructure",
@@ -98,7 +97,7 @@ const latestUpdates = [
     href: "/it-infrastructure",
     image: "/images/hero-slide-data.jpg",
     imageClass: "object-cover object-[32%_center]",
-    overlay: "from-cyan-950/30 via-transparent to-black/35",
+    imageShape: "rounded-[1.4rem_1.4rem_1.4rem_4.75rem]",
   },
 ];
 
@@ -130,16 +129,27 @@ export default function Home() {
 
       <HeroSection />
 
-      <section id="insights" className="bg-white py-20 sm:py-28">
+      <section
+        id="insights"
+        className="relative isolate overflow-hidden bg-[#fcfaf7] py-20 sm:py-28"
+      >
+        <div className="pointer-events-none absolute -right-32 top-10 -z-10 size-80 rounded-full border-[56px] border-primary-100/60" />
+        <div className="pointer-events-none absolute -left-24 bottom-24 -z-10 size-56 rounded-full border border-primary-200/60" />
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <ScrollReveal>
             <div className="flex items-end justify-between gap-6">
-              <h2 className="text-4xl font-extrabold tracking-[-0.045em] text-ink sm:text-5xl lg:text-6xl">
-                Latest Updates
-              </h2>
+              <div>
+                <div className="mb-4 flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-primary-700">
+                  <span className="h-px w-9 bg-primary-500" />
+                  Ideas for smarter IT
+                </div>
+                <h2 className="text-4xl font-extrabold tracking-[-0.045em] text-ink sm:text-5xl lg:text-6xl">
+                  Latest Updates
+                </h2>
+              </div>
               <Link
                 href="/blog"
-                className="group hidden items-center gap-2 pb-1 text-sm font-extrabold text-primary-800 transition-colors hover:text-primary-600 sm:inline-flex"
+                className="group hidden items-center gap-2 rounded-full border border-primary-200 bg-white px-5 py-3 text-sm font-extrabold text-primary-800 shadow-card transition-all hover:border-primary-400 hover:text-primary-600 sm:inline-flex"
               >
                 View all insights
                 <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -156,10 +166,12 @@ export default function Home() {
               >
                 <Link
                   href={update.href}
-                  className="group block h-full rounded-2xl"
+                  className="group block h-full rounded-[2rem] focus-visible:ring-offset-[#fcfaf7]"
                 >
-                  <article className="relative flex h-full min-h-[440px] flex-col overflow-hidden rounded-2xl bg-slate-900 shadow-card transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-soft">
-                    <div className="relative min-h-0 flex-[1.45] overflow-hidden bg-slate-950">
+                  <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white p-3 shadow-card transition-all duration-500 group-hover:-translate-y-1.5 group-hover:border-primary-200 group-hover:shadow-soft">
+                    <div
+                      className={`relative aspect-[4/3] shrink-0 overflow-hidden bg-slate-950 ${update.imageShape}`}
+                    >
                       <Image
                         src={update.image}
                         alt=""
@@ -167,47 +179,33 @@ export default function Home() {
                         sizes="(min-width: 1280px) 290px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                         className={`${update.imageClass} transition-transform duration-700 ease-out group-hover:scale-105`}
                       />
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${update.overlay}`}
-                      />
-                    </div>
-
-                    <div className="relative flex min-h-[174px] flex-1 flex-col p-6 sm:p-7">
-                      <div className="mb-4 flex items-center justify-between gap-3">
-                        <p className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-slate-300">
-                          {update.category}
-                        </p>
-                        <ArrowUpRight className="size-4 text-slate-500 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-300" />
-                      </div>
-                      <h3 className="text-xl font-extrabold leading-[1.28] tracking-[-0.025em] text-white">
-                        {update.title}
-                      </h3>
-                      <span className="mt-auto block h-0.5 w-0 bg-accent-300 transition-all duration-500 group-hover:mt-6 group-hover:w-12" />
-                    </div>
-
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 z-20 flex translate-y-8 flex-col bg-[linear-gradient(180deg,#fb5b24_0%,#e65d88_48%,#ca67df_100%)] p-7 text-white opacity-0 transition-[opacity,transform] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transform-none sm:p-8"
-                    >
-                      <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-white/95">
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+                      <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-slate-950/55 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-white backdrop-blur-md">
                         {update.category}
-                      </p>
-                      <h3 className="mt-7 text-[1.4rem] font-extrabold leading-[1.18] tracking-[-0.035em] text-white">
+                      </span>
+                      <span className="absolute bottom-4 left-5 text-xs font-bold tracking-[0.12em] text-white/75">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+
+                    <div className="relative flex flex-1 flex-col px-4 pb-4 pt-6 sm:px-5 sm:pb-5">
+                      <h3 className="text-xl font-extrabold leading-[1.25] tracking-[-0.03em] text-ink transition-colors group-hover:text-primary-700">
                         {update.title}
                       </h3>
-                      <p className="mt-4 text-sm font-semibold leading-6 text-white/90">
+                      <p className="mt-3 line-clamp-3 text-sm font-medium leading-6 text-slate-600">
                         {update.summary}
                       </p>
 
-                      <div className="mt-auto flex items-center gap-4 text-lg font-extrabold">
-                        <span className="shrink-0">Read more</span>
-                        <span className="h-px flex-1 bg-white/90" />
-                        <ArrowRight
-                          className="size-6 shrink-0"
-                          strokeWidth={1.8}
-                        />
+                      <div className="mt-auto flex items-center gap-3 pt-6 text-sm font-extrabold text-slate-800">
+                        <span>Read insight</span>
+                        <span className="h-px flex-1 bg-slate-200 transition-colors group-hover:bg-primary-200" />
+                        <span className="grid size-11 shrink-0 place-items-center rounded-full bg-slate-950 text-white transition-all duration-300 group-hover:rotate-[-8deg] group-hover:bg-primary-500">
+                          <ArrowUpRight className="size-5" strokeWidth={1.8} />
+                        </span>
                       </div>
                     </div>
+
+                    <div className="pointer-events-none absolute bottom-0 left-10 h-1 w-14 rounded-t-full bg-primary-500 opacity-0 transition-all duration-500 group-hover:left-6 group-hover:w-24 group-hover:opacity-100" />
                   </article>
                 </Link>
               </ScrollReveal>
