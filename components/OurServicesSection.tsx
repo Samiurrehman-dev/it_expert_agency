@@ -261,7 +261,7 @@ export function OurServicesSection() {
           Auto exploring services
         </div>
         <Link
-          href="/contact-us"
+          href="/services"
           className="group inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.08em] text-white transition-colors hover:text-primary-300 sm:text-sm"
         >
           View all capabilities

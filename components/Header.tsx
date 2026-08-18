@@ -6,16 +6,17 @@ import {
   BookOpen,
   Briefcase,
   ChevronDown,
-  Cloud,
   FileText,
   Menu,
   Phone,
   ServerCog,
-  ShieldCheck,
   X,
 } from "lucide-react";
 
+import { serviceCategories } from "@/lib/services-data";
+
 import { Logo } from "./logo";
+import { ServicesMegaMenu } from "./ServicesMegaMenu";
 
 type NavItem = {
   label: string;
@@ -23,42 +24,6 @@ type NavItem = {
   description?: string;
   icon?: typeof ServerCog;
 };
-
-const serviceLinks: NavItem[] = [
-  {
-    label: "Managed IT Services",
-    href: "/managed-it-services",
-    description: "Proactive support and monitoring",
-    icon: ServerCog,
-  },
-  {
-    label: "Cyber & Data Security",
-    href: "/cyber-and-data-security",
-    description: "Protection, compliance, and recovery",
-    icon: ShieldCheck,
-  },
-  {
-    label: "IT Infrastructure",
-    href: "/it-infrastructure",
-    description: "Networks, servers, cloud, and devices",
-    icon: Cloud,
-  },
-];
-
-const solutionLinks: NavItem[] = [
-  {
-    label: "Microsoft Solutions",
-    href: "/microsoft-solutions",
-    description: "Microsoft 365, Azure, and modern work",
-    icon: ServerCog,
-  },
-  {
-    label: "AWS Solutions",
-    href: "/aws-solutions",
-    description: "Secure, scalable AWS cloud services",
-    icon: Cloud,
-  },
-];
 
 const updateLinks: NavItem[] = [
   {
@@ -140,6 +105,84 @@ function DesktopDropdown({
   );
 }
 
+function MobileServicesGroup({
+  isOpen,
+  onToggle,
+  onNavigate,
+}: {
+  isOpen: boolean;
+  onToggle: () => void;
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="border-b border-slate-100">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-center justify-between py-4 text-left text-base font-extrabold text-ink"
+        aria-expanded={isOpen}
+        aria-controls="mobile-services-list"
+      >
+        Services
+        <ChevronDown
+          className={`size-5 text-slate-400 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        id="mobile-services-list"
+        className={[
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-300",
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+        ].join(" ")}
+      >
+        <div className="min-h-0">
+          <div className="space-y-5 pb-5 pl-3">
+            {serviceCategories.map((category) => (
+              <section key={category.slug}>
+                <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
+                  {category.number} / {category.shortTitle}
+                </p>
+                <ul className="mt-2 grid gap-0.5 border-l border-primary-200 pl-2">
+                  {category.services.map((service) => (
+                    <li key={service.slug}>
+                      <a
+                        href={`/services#${service.slug}`}
+                        onClick={onNavigate}
+                        className="block rounded-lg px-2 py-1.5 text-xs font-semibold leading-5 text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-900"
+                      >
+                        {service.title}
+                      </a>
+                    </li>
+                  ))}
+                  {category.extraChips && (
+                    <li>
+                      <a
+                        href="/services#os-level-msp-services"
+                        onClick={onNavigate}
+                        className="block rounded-lg px-2 py-1.5 text-xs font-semibold leading-5 text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-900"
+                      >
+                        OS-Level MSP Services
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </section>
+            ))}
+            <a
+              href="/services"
+              onClick={onNavigate}
+              className="inline-flex items-center gap-2 rounded-full bg-primary-950 px-4 py-2.5 text-xs font-extrabold text-white"
+            >
+              View all services
+              <ArrowRight className="size-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MobileNavGroup({
   label,
   items,
@@ -196,9 +239,7 @@ function MobileNavGroup({
 
 export function Header({ overlay = false }: { overlay?: boolean }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(
-    "IT Services",
-  );
+  const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
 
   useEffect(() => {
     document.body.style.overflow = isDrawerOpen ? "hidden" : "";
@@ -250,16 +291,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             >
               Home
             </a>
-            <DesktopDropdown
-              label="IT Services"
-              items={serviceLinks}
-              light={overlay}
-            />
-            <DesktopDropdown
-              label="IT Solutions"
-              items={solutionLinks}
-              light={overlay}
-            />
+            <ServicesMegaMenu light={overlay} />
             <DesktopDropdown
               label="Updates"
               items={updateLinks}
@@ -378,24 +410,11 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           >
             Home
           </a>
-          <MobileNavGroup
-            label="IT Services"
-            items={serviceLinks}
-            isOpen={openMobileMenu === "IT Services"}
+          <MobileServicesGroup
+            isOpen={openMobileMenu === "Services"}
             onToggle={() =>
               setOpenMobileMenu((value) =>
-                value === "IT Services" ? null : "IT Services",
-              )
-            }
-            onNavigate={closeDrawer}
-          />
-          <MobileNavGroup
-            label="IT Solutions"
-            items={solutionLinks}
-            isOpen={openMobileMenu === "IT Solutions"}
-            onToggle={() =>
-              setOpenMobileMenu((value) =>
-                value === "IT Solutions" ? null : "IT Solutions",
+                value === "Services" ? null : "Services",
               )
             }
             onNavigate={closeDrawer}
