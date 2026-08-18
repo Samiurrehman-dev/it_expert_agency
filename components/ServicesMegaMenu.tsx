@@ -36,7 +36,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
 
   return (
     <div
-      className="flex h-full items-center"
+      className="group flex h-full items-center"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
       onFocus={() => setIsOpen(true)}
@@ -58,7 +58,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
         aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls={menuId}
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen((open) => !open)}
       >
         Services
         <ChevronDown
@@ -70,10 +70,10 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
         id={menuId}
         aria-hidden={!isOpen}
         className={[
-          "fixed left-1/2 top-20 w-[min(calc(100vw-2rem),80rem)] -translate-x-1/2 pt-3 transition-all duration-200 ease-out",
+          "pointer-events-none invisible fixed left-1/2 top-20 z-[80] w-[min(calc(100vw-2rem),80rem)] -translate-x-1/2 -translate-y-2 pt-3 opacity-0 transition-all duration-200 ease-out group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100",
           isOpen
-            ? "visible translate-y-0 opacity-100"
-            : "pointer-events-none invisible -translate-y-2 opacity-0",
+            ? "!pointer-events-auto !visible !translate-y-0 !opacity-100"
+            : "",
         ].join(" ")}
       >
         <div className="relative max-h-[calc(100vh-6.75rem)] overflow-y-auto rounded-2xl border border-white/10 bg-primary-950 p-5 text-white shadow-[0_28px_70px_-28px_rgba(54,56,57,0.8)] xl:p-6">
