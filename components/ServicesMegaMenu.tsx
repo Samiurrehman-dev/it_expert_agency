@@ -85,11 +85,15 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
                 key={category.slug}
                 aria-labelledby={`menu-${category.slug}`}
               >
-                <h2
-                  id={`menu-${category.slug}`}
-                  className="min-h-10 text-sm font-extrabold leading-5 text-white"
-                >
-                  {category.title}
+                <h2 id={`menu-${category.slug}`} className="min-h-10">
+                  <Link
+                    href={`/services/${category.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className="inline-flex items-start gap-1.5 text-sm font-extrabold leading-5 text-white transition hover:text-primary-300"
+                  >
+                    {category.title}
+                    <ArrowRight className="mt-0.5 size-3.5 shrink-0" />
+                  </Link>
                 </h2>
                 <ul
                   className={`mt-3 gap-x-3 ${
@@ -101,7 +105,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
                   {category.services.map((service) => (
                     <li key={service.slug}>
                       <Link
-                        href={`/services#${service.slug}`}
+                        href={`/services/${category.slug}#${service.slug}`}
                         onClick={() => setIsOpen(false)}
                         className="group/link flex items-center gap-2 rounded-lg py-1.5 text-[11px] font-semibold leading-4 text-slate-300 transition-all hover:translate-x-1 hover:bg-white/[0.04] hover:px-2 hover:text-primary-300 focus:translate-x-1 focus:bg-white/[0.04] focus:px-2 focus:text-primary-300"
                       >
@@ -113,7 +117,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
                   {category.extraChips && (
                     <li>
                       <Link
-                        href="/services#os-level-msp-services"
+                        href={`/services/${category.slug}#category-capabilities`}
                         onClick={() => setIsOpen(false)}
                         className="group/link flex items-center gap-2 rounded-lg py-1.5 text-[11px] font-semibold leading-4 text-slate-300 transition-all hover:translate-x-1 hover:bg-white/[0.04] hover:px-2 hover:text-primary-300 focus:translate-x-1 focus:bg-white/[0.04] focus:px-2 focus:text-primary-300"
                       >
@@ -131,7 +135,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
               eyebrow="Featured capability"
               title="Full-stack MSP staffing"
               description="Infrastructure to SIEM — certified, toolchain-ready engineers for dedicated or shared delivery teams."
-              href="/services#why-us"
+              href="/services/managed-services-msp-toolchain"
               linkLabel="Explore delivery"
               variant="featured"
             />

@@ -139,14 +139,19 @@ function MobileServicesGroup({
           <div className="space-y-5 pb-5 pl-3">
             {serviceCategories.map((category) => (
               <section key={category.slug}>
-                <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
+                <a
+                  href={`/services/${category.slug}`}
+                  onClick={onNavigate}
+                  className="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-[0.18em] text-primary-700"
+                >
                   {category.number} / {category.shortTitle}
-                </p>
+                  <ArrowRight className="size-3" />
+                </a>
                 <ul className="mt-2 grid gap-0.5 border-l border-primary-200 pl-2">
                   {category.services.map((service) => (
                     <li key={service.slug}>
                       <a
-                        href={`/services#${service.slug}`}
+                        href={`/services/${category.slug}#${service.slug}`}
                         onClick={onNavigate}
                         className="block rounded-lg px-2 py-1.5 text-xs font-semibold leading-5 text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-900"
                       >
@@ -157,7 +162,7 @@ function MobileServicesGroup({
                   {category.extraChips && (
                     <li>
                       <a
-                        href="/services#os-level-msp-services"
+                        href={`/services/${category.slug}#category-capabilities`}
                         onClick={onNavigate}
                         className="block rounded-lg px-2 py-1.5 text-xs font-semibold leading-5 text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-900"
                       >

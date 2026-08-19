@@ -66,7 +66,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
     number: "01",
     title: "Infrastructure & Cloud Platforms",
     shortTitle: "Infrastructure & Cloud",
-    slug: "infrastructure-cloud",
+    slug: "infrastructure-cloud-platforms",
     accent: "bg-primary-400",
     services: [
       {
@@ -143,7 +143,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
     number: "02",
     title: "Operating Systems & Endpoint Management",
     shortTitle: "Operating Systems",
-    slug: "operating-systems",
+    slug: "operating-systems-endpoint-management",
     accent: "bg-primary-500",
     services: [
       {
@@ -211,7 +211,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
     number: "03",
     title: "Application & Platform Engineering",
     shortTitle: "Application & Platform",
-    slug: "application-platform",
+    slug: "application-platform-engineering",
     accent: "bg-primary-600",
     services: [
       {
@@ -328,7 +328,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
     number: "04",
     title: "Managed Services & MSP Toolchain",
     shortTitle: "Managed Services & MSP",
-    slug: "managed-services",
+    slug: "managed-services-msp-toolchain",
     accent: "bg-accent-700",
     services: [
       {
@@ -451,7 +451,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
     number: "05",
     title: "Observability & Reliability Engineering",
     shortTitle: "Observability & Reliability",
-    slug: "observability-reliability",
+    slug: "observability-reliability-engineering",
     accent: "bg-primary-400",
     services: [
       {

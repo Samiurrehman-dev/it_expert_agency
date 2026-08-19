@@ -1,4 +1,5 @@
-import { BadgeCheck, Check, Clock3, Globe2 } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, BadgeCheck, Check, Clock3, Globe2 } from "lucide-react";
 
 import { markets, serviceCategories, valueProps } from "@/lib/services-data";
 
@@ -55,11 +56,14 @@ export function ServicesSection() {
                       <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary-700">
                         Category {category.number}
                       </p>
-                      <h3
-                        id={`${category.slug}-heading`}
-                        className="mt-2 max-w-3xl text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl"
-                      >
-                        {category.title}
+                      <h3 id={`${category.slug}-heading`} className="mt-2">
+                        <Link
+                          href={`/services/${category.slug}`}
+                          className="group inline-flex max-w-3xl items-center gap-3 text-3xl font-extrabold tracking-[-0.04em] text-ink transition hover:text-primary-700 sm:text-4xl"
+                        >
+                          {category.title}
+                          <ArrowRight className="size-6 shrink-0 transition-transform group-hover:translate-x-1" />
+                        </Link>
                       </h3>
                     </div>
                     <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-slate-400">
@@ -92,7 +96,7 @@ export function ServicesSection() {
                               >
                                 <ServiceCard
                                   {...service}
-                                  href={`/services#${service.slug}`}
+                                  href={`/services/${category.slug}#${service.slug}`}
                                   eyebrow={subgroup}
                                   accentIndex={categoryIndex}
                                   headingLevel="h5"
@@ -113,7 +117,7 @@ export function ServicesSection() {
                       >
                         <ServiceCard
                           {...service}
-                          href={`/services#${service.slug}`}
+                          href={`/services/${category.slug}#${service.slug}`}
                           accentIndex={categoryIndex}
                           headingLevel="h4"
                         />
