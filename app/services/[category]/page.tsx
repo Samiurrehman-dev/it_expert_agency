@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CategoryPillarPage } from "@/components/CategoryPillarPage";
+import { OperatingSystemsLandingPage } from "@/components/OperatingSystemsLandingPage";
 import {
   categoryPageContent,
   getCategoryPageContent,
@@ -119,6 +120,16 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       },
     })),
   };
+
+  if (content.slug === "operating-systems-endpoint-management") {
+    return (
+      <OperatingSystemsLandingPage
+        category={category}
+        content={content}
+        schemas={[serviceSchema, breadcrumbSchema]}
+      />
+    );
+  }
 
   return (
     <CategoryPillarPage

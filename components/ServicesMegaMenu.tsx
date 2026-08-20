@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, ServerCog } from "lucide-react";
 
-import { serviceCategories } from "@/lib/services-data";
+import { getServiceHref, serviceCategories } from "@/lib/services-data";
 
 import { ServiceCard } from "./ServiceCard";
 
@@ -70,13 +70,13 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
         id={menuId}
         aria-hidden={!isOpen}
         className={[
-          "pointer-events-none invisible fixed left-1/2 top-20 z-[80] w-[min(calc(100vw-2rem),80rem)] -translate-x-1/2 -translate-y-2 pt-3 opacity-0 transition-all duration-200 ease-out group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100",
+          "pointer-events-none invisible fixed left-1/2 top-20 z-[80] w-[min(calc(100vw-2rem),80rem)] -translate-x-1/2 -translate-y-2 opacity-0 transition-all duration-200 ease-out group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100",
           isOpen
             ? "!pointer-events-auto !visible !translate-y-0 !opacity-100"
             : "",
         ].join(" ")}
       >
-        <div className="relative max-h-[calc(100vh-6.75rem)] overflow-y-auto rounded-2xl border border-white/10 bg-primary-950 p-5 text-white shadow-[0_28px_70px_-28px_rgba(54,56,57,0.8)] xl:p-6">
+        <div className="relative max-h-[calc(100vh-6.75rem)] overflow-y-auto rounded-b-2xl border border-white/10 bg-primary-950 p-5 text-white shadow-[0_28px_70px_-28px_rgba(54,56,57,0.8)] xl:p-6">
           <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent shadow-[0_0_18px_rgba(229,122,37,0.7)]" />
 
           <div className="grid gap-x-6 gap-y-8 lg:grid-cols-4">
@@ -105,7 +105,7 @@ export function ServicesMegaMenu({ light = false }: { light?: boolean }) {
                   {category.services.map((service) => (
                     <li key={service.slug}>
                       <Link
-                        href={`/services/${category.slug}#${service.slug}`}
+                        href={getServiceHref(category.slug, service.slug)}
                         onClick={() => setIsOpen(false)}
                         className="group/link flex items-center gap-2 rounded-lg py-1.5 text-[11px] font-semibold leading-4 text-slate-300 transition-all hover:translate-x-1 hover:bg-white/[0.04] hover:px-2 hover:text-primary-300 focus:translate-x-1 focus:bg-white/[0.04] focus:px-2 focus:text-primary-300"
                       >

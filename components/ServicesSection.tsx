@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, Check, Clock3, Globe2 } from "lucide-react";
 
-import { markets, serviceCategories, valueProps } from "@/lib/services-data";
+import {
+  getServiceHref,
+  markets,
+  serviceCategories,
+  valueProps,
+} from "@/lib/services-data";
 
 import { ScrollReveal } from "./ScrollReveal";
 import { ServiceCard } from "./ServiceCard";
@@ -96,7 +101,10 @@ export function ServicesSection() {
                               >
                                 <ServiceCard
                                   {...service}
-                                  href={`/services/${category.slug}#${service.slug}`}
+                                  href={getServiceHref(
+                                    category.slug,
+                                    service.slug,
+                                  )}
                                   eyebrow={subgroup}
                                   accentIndex={categoryIndex}
                                   headingLevel="h5"
@@ -117,7 +125,7 @@ export function ServicesSection() {
                       >
                         <ServiceCard
                           {...service}
-                          href={`/services/${category.slug}#${service.slug}`}
+                          href={getServiceHref(category.slug, service.slug)}
                           accentIndex={categoryIndex}
                           headingLevel="h4"
                         />

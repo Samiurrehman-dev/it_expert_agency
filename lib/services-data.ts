@@ -191,20 +191,14 @@ export const serviceCategories: readonly ServiceCategory[] = [
         ],
         icon: Smartphone,
       },
-    ],
-    extraChips: [
-      "Vulnerability Patching",
-      "Kernel Hardening",
-      "CIS Benchmarking",
-      "OS Lifecycle Management",
-      "Performance Tuning",
-      "SELinux/AppArmor",
-      "Endpoint Management",
-      "Patch Automation",
-      "Compliance Reporting",
-      "Gold Image Management",
-      "Log Configuration",
-      "OS Upgrade Paths",
+      {
+        title: "OS-Level MSP Services",
+        slug: "os-level-msp-services",
+        description:
+          "Unified patching, hardening, monitoring, and lifecycle operations across mixed server and endpoint estates.",
+        tools: ["RMM", "Patch Orchestration", "SIEM", "ITSM"],
+        icon: Server,
+      },
     ],
   },
   {
@@ -586,6 +580,12 @@ export const serviceCategories: readonly ServiceCategory[] = [
     ],
   },
 ] as const;
+
+export function getServiceHref(categorySlug: string, serviceSlug: string) {
+  return categorySlug === "operating-systems-endpoint-management"
+    ? `/services/${categorySlug}/${serviceSlug}`
+    : `/services/${categorySlug}#${serviceSlug}`;
+}
 
 export const markets = [
   {

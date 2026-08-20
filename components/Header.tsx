@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import {
   ArrowRight,
   BookOpen,
@@ -13,7 +14,7 @@ import {
   X,
 } from "lucide-react";
 
-import { serviceCategories } from "@/lib/services-data";
+import { getServiceHref, serviceCategories } from "@/lib/services-data";
 
 import { Logo } from "./logo";
 import { ServicesMegaMenu } from "./ServicesMegaMenu";
@@ -71,34 +72,81 @@ function DesktopDropdown({
         <ChevronDown className="size-4 transition-transform duration-200 group-focus-within:rotate-180 group-hover:rotate-180" />
       </button>
 
-      <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-        <div className="rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_-18px_rgba(54,56,57,0.28)]">
-          {items.map((item) => {
-            const Icon = item.icon;
-
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                className="group/item flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-slate-50 focus:bg-slate-50"
-              >
-                {Icon && (
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-800">
-                    <Icon className="size-5" />
-                  </span>
-                )}
-                <span className="min-w-0">
-                  <span className="flex items-center gap-2 text-sm font-extrabold text-ink">
-                    {item.label}
-                    <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition-all group-hover/item:translate-x-0 group-hover/item:opacity-100" />
-                  </span>
-                  <span className="mt-1 block text-xs leading-5 text-slate-500">
-                    {item.description}
-                  </span>
+      <div className="invisible fixed left-1/2 top-20 z-[80] w-[min(calc(100vw-2rem),80rem)] -translate-x-1/2 -translate-y-2 opacity-0 transition-all duration-200 ease-out group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="relative overflow-hidden rounded-b-2xl border border-white/10 bg-primary-950 p-5 text-white shadow-[0_28px_70px_-28px_rgba(54,56,57,0.8)] xl:p-6">
+          <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent shadow-[0_0_18px_rgba(229,122,37,0.7)]" />
+          <div className="grid gap-5 lg:grid-cols-[0.85fr_1.4fr]">
+            <a
+              href="/blog"
+              className="group/feature overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] transition-colors hover:border-primary-400/50 hover:bg-white/[0.065]"
+            >
+              <div className="relative h-36 overflow-hidden">
+                <Image
+                  src="/images/hero-slide-data.jpg"
+                  alt="Digital data connections"
+                  fill
+                  sizes="(min-width: 1024px) 34vw, 90vw"
+                  className="object-cover transition-transform duration-500 group-hover/feature:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/70 to-transparent" />
+              </div>
+              <div className="p-5">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary-300">
+                  Featured updates
+                </p>
+                <h2 className="mt-2 text-xl font-extrabold tracking-[-0.025em] text-white">
+                  Ideas for stronger, smarter IT
+                </h2>
+                <p className="mt-2 text-xs leading-5 text-slate-300">
+                  Explore practical insights, technology guidance, and expert
+                  perspectives for modern IT teams.
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs font-extrabold text-primary-300">
+                  Learn More
+                  <ArrowRight className="size-3.5 transition-transform group-hover/feature:translate-x-1" />
                 </span>
-              </a>
-            );
-          })}
+              </div>
+            </a>
+
+            <div className="flex flex-col">
+              <div className="mb-4">
+                <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary-300">
+                  Latest resources
+                </p>
+                <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-white">
+                  Explore our updates
+                </h2>
+              </div>
+              <div className="grid flex-1 content-start gap-1">
+                {items.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="group/item flex items-start gap-4 rounded-xl p-4 transition-all hover:bg-white/[0.06] focus:bg-white/[0.06]"
+                    >
+                      {Icon && (
+                        <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/[0.07] text-primary-300 transition-colors group-hover/item:bg-primary-500 group-hover/item:text-white">
+                          <Icon className="size-5" />
+                        </span>
+                      )}
+                      <span className="min-w-0">
+                        <span className="flex items-center gap-2 text-sm font-extrabold text-white transition-colors group-hover/item:text-primary-300">
+                          {item.label}
+                          <ArrowRight className="size-3.5 -translate-x-1 opacity-0 transition-all group-hover/item:translate-x-0 group-hover/item:opacity-100" />
+                        </span>
+                        <span className="mt-1 block text-xs leading-5 text-slate-300">
+                          {item.description}
+                        </span>
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -151,7 +199,7 @@ function MobileServicesGroup({
                   {category.services.map((service) => (
                     <li key={service.slug}>
                       <a
-                        href={`/services/${category.slug}#${service.slug}`}
+                        href={getServiceHref(category.slug, service.slug)}
                         onClick={onNavigate}
                         className="block rounded-lg px-2 py-1.5 text-xs font-semibold leading-5 text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-900"
                       >
