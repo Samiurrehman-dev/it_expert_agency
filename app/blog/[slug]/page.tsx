@@ -13,6 +13,7 @@ import {
 
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { BlogTableOfContents } from "@/components/blog-table-of-contents";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import {
   UpdateAccentPill,
@@ -372,29 +373,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </aside>
             </article>
 
-            <aside className="hidden lg:block">
-              <nav
-                aria-label="On this page"
-                className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain rounded-3xl border border-slate-200 bg-white p-6 shadow-card"
-              >
-                <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary-700">
-                  On this page
-                </p>
-                <ol className="mt-5 space-y-3 border-l border-primary-200 pl-4">
-                  {post.sections
-                    .filter((section) => section.showInToc !== false)
-                    .map((section) => (
-                      <li key={section.id}>
-                        <a
-                          href={`#${section.id}`}
-                          className="block text-xs font-bold leading-5 text-slate-500 transition-colors hover:text-primary-800"
-                        >
-                          {section.title}
-                        </a>
-                      </li>
-                    ))}
-                </ol>
-              </nav>
+            <aside className="hidden self-stretch lg:block">
+              <BlogTableOfContents
+                sections={post.sections.filter(
+                  (section) => section.showInToc !== false,
+                )}
+              />
             </aside>
           </div>
         </section>
