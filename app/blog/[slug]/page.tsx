@@ -375,7 +375,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             <aside className="hidden lg:block">
               <nav
                 aria-label="On this page"
-                className="sticky top-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-card"
+                className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain rounded-3xl border border-slate-200 bg-white p-6 shadow-card"
               >
                 <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary-700">
                   On this page
