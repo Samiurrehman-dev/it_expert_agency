@@ -110,11 +110,12 @@ export const updatePosts: UpdatePost[] = [
     type: "Blog",
     icon: Network,
     category: "Infrastructure",
-    title: "Five warning signs your network is holding your team back",
+    title: "Five Warning Signs Your Network Is Holding Your Team Back",
     excerpt:
-      "Spot the performance and reliability issues that tend to hide inside a growing environment.",
+      "Spot the performance and reliability issues that tend to hide inside a growing environment — before they become costly business disruptions.",
     meta: "5 min read",
     color: "from-indigo-950 to-primary-600",
+    href: "/blog/five-warning-signs-network-holding-team-back",
   },
   {
     type: "Blog",

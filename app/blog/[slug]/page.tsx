@@ -81,6 +81,17 @@ function ArticleBlock({ block }: { block: BlogBlock }) {
   }
 
   if (block.type === "callout") {
+    if (block.compact) {
+      return (
+        <p className="border-l-2 border-primary-500 pl-4 text-sm leading-7 text-slate-600">
+          <span className="mr-1 font-extrabold text-primary-800">
+            {block.label ?? "Highlight"}:
+          </span>
+          {block.text}
+        </p>
+      );
+    }
+
     return (
       <aside className="rounded-r-2xl border-l-4 border-primary-500 bg-primary-50 px-5 py-5 sm:px-6">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
@@ -135,7 +146,12 @@ function ArticleBlock({ block }: { block: BlogBlock }) {
   }
 
   return (
-    <ul className="grid gap-3 sm:grid-cols-2" role="list">
+    <ul
+      className={`grid gap-3 ${
+        block.columns === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"
+      }`}
+      role="list"
+    >
       {block.items.map((item) => (
         <li
           key={item.label}

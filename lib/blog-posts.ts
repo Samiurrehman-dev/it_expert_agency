@@ -2,7 +2,7 @@ export type BlogBlock =
   | { type: "paragraph"; text: string }
   | { type: "checklist"; items: string[] }
   | { type: "subheading"; title: string }
-  | { type: "callout"; text: string; label?: string }
+  | { type: "callout"; text: string; label?: string; compact?: boolean }
   | {
       type: "contrast";
       items: Array<{ title: string; text?: string }>;
@@ -14,6 +14,7 @@ export type BlogBlock =
   | {
       type: "priorities";
       items: Array<{ label: string; detail: string }>;
+      columns?: 2 | 3;
     };
 
 export type BlogSection = {
@@ -1849,6 +1850,218 @@ export const blogPosts: BlogPost[] = [
       heading: "Build AI around the way your organization works.",
       description:
         "Design governed AI, automation, and intelligent workflows around your infrastructure, policies, data, and business objectives.",
+    },
+  },
+  {
+    slug: "five-warning-signs-network-holding-team-back",
+    category: "Infrastructure",
+    title: "Five Warning Signs Your Network Is Holding Your Team Back",
+    author: "IT Experts Agency",
+    publishedDate: "2026-08-22",
+    publishedLabel: "August 22, 2026",
+    readTime: "5 min read",
+    excerpt:
+      "Spot the performance and reliability issues that tend to hide inside a growing environment — before they become costly business disruptions.",
+    intro: [
+      "As your business grows, your network infrastructure can quietly become a bottleneck. What once felt fast and reliable may start causing delays, interruptions, and frustration that are easy to blame on software, devices, or people.",
+      "The problem is that network issues do not always announce themselves with a complete outage. More often, they show up as small performance, coverage, and reliability problems that gradually slow your team down.",
+      "Here are five warning signs your network may be holding your growing business back.",
+    ],
+    sections: [
+      {
+        id: "employees-waiting-for-things-to-load",
+        title: "1. Employees Are Constantly Waiting for Things to Load",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Slow file transfers, sluggish cloud applications, delayed video calls, and websites that take longer than they should are more than minor annoyances.",
+          },
+          {
+            type: "paragraph",
+            text: "When several employees experience these issues at the same time, your network may be struggling with bandwidth, congestion, outdated equipment, or poor traffic management.",
+          },
+          {
+            type: "paragraph",
+            text: 'The key warning sign is consistency: if your team regularly says, "The internet is slow," especially during busy periods, your network may no longer have enough capacity for the way your business operates today.',
+          },
+          {
+            type: "callout",
+            compact: true,
+            label: "What it costs",
+            text: "Lost productivity, slower collaboration, and employees spending valuable time waiting instead of working.",
+          },
+        ],
+      },
+      {
+        id: "wifi-dead-zones-unreliable-coverage",
+        title: "2. Your Wi-Fi Has Dead Zones or Unreliable Coverage",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A strong internet connection means little if employees cannot reliably connect where they need to work.",
+          },
+          {
+            type: "paragraph",
+            text: "Dropped connections in meeting rooms, weak signals in offices, unstable Wi-Fi in larger spaces, or unreliable performance in high-traffic areas can indicate that your wireless network was designed for yesterday's workforce rather than today's.",
+          },
+          {
+            type: "paragraph",
+            text: "As teams grow, more laptops, phones, printers, cameras, access points, and other connected devices compete for wireless capacity.",
+          },
+          {
+            type: "callout",
+            compact: true,
+            label: "What it costs",
+            text: "Interrupted meetings, dropped calls, difficulty accessing cloud services, and employees moving around just to find a usable connection.",
+          },
+        ],
+      },
+      {
+        id: "network-problems-keep-coming-back",
+        title: "3. Network Problems Keep Coming Back",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "One of the clearest warning signs is a network that works most of the time — but fails often enough to disrupt the business.",
+          },
+          {
+            type: "paragraph",
+            text: "You may see recurring outages, devices that randomly disconnect, applications that become unreachable, or employees who regularly need to restart equipment to get back online.",
+          },
+          {
+            type: "paragraph",
+            text: "Repeated problems can point to aging hardware, configuration issues, insufficient redundancy, or infrastructure that was never built to support your current business requirements.",
+          },
+          {
+            type: "callout",
+            compact: true,
+            label: "What it costs",
+            text: "Disruption, IT firefighting, and a growing sense that employees cannot depend on the systems they need.",
+          },
+        ],
+      },
+      {
+        id: "network-cannot-keep-up-during-peak-hours",
+        title: "4. Your Network Cannot Keep Up During Peak Hours",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Does everything seem fine early in the morning but slow down when everyone is online?",
+          },
+          {
+            type: "paragraph",
+            text: "Peak-hour performance issues can reveal a capacity problem that is easy to overlook. More employees working remotely, increased use of cloud applications, larger file transfers, video conferencing, and growing numbers of connected devices can dramatically increase network demand.",
+          },
+          {
+            type: "paragraph",
+            text: "A network that performed perfectly for 20 employees may struggle with 50 — or even 30 — depending on how your business uses technology.",
+          },
+          {
+            type: "callout",
+            compact: true,
+            label: "What it costs",
+            text: "Bottlenecks at the exact times when your team needs the network most.",
+          },
+        ],
+      },
+      {
+        id: "growth-creates-new-network-problems",
+        title: "5. Adding People or Technology Creates New Network Problems",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A healthy network should support growth, not make every expansion feel like an infrastructure project.",
+          },
+          {
+            type: "paragraph",
+            text: "If adding a few employees requires new workarounds, if new devices frequently cause connectivity problems, or if introducing a new application suddenly affects network performance, your infrastructure may lack the scalability your business needs.",
+          },
+          {
+            type: "paragraph",
+            text: "Growth exposes weaknesses. Systems that were barely adequate before can become major constraints as your team, locations, devices, and applications increase.",
+          },
+          {
+            type: "callout",
+            compact: true,
+            label: "What it costs",
+            text: "Slower growth, higher support costs, and technology decisions driven by network limitations rather than business priorities.",
+          },
+        ],
+      },
+      {
+        id: "performance-coverage-reliability",
+        title:
+          "Performance, Coverage, and Reliability: The Three Areas to Watch",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "These warning signs usually fall into three categories:",
+          },
+          {
+            type: "priorities",
+            columns: 3,
+            items: [
+              {
+                label: "Performance",
+                detail:
+                  "Is the network fast enough for the applications and workloads your team relies on?",
+              },
+              {
+                label: "Coverage",
+                detail:
+                  "Can employees and devices get a strong, stable connection wherever they need one?",
+              },
+              {
+                label: "Reliability",
+                detail:
+                  "Can your business depend on the network consistently, including during busy periods and unexpected failures?",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A network can appear healthy while falling short in one — or all — of these areas.",
+          },
+        ],
+      },
+      {
+        id: "network-should-enable-growth",
+        title: "Your Network Should Enable Growth, Not Slow It Down",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "When network issues become routine, the biggest risk is not just slower internet. It is the cumulative effect on productivity, collaboration, customer service, and employee experience.",
+          },
+          {
+            type: "contrast",
+            items: [
+              {
+                title:
+                  'The right question is not simply: "Is the network working?"',
+              },
+              {
+                title:
+                  'It is: "Is our network performing at the level our growing business requires?"',
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Regularly reviewing capacity, wireless coverage, hardware health, traffic patterns, and reliability can help identify problems before they become costly business disruptions.",
+          },
+          {
+            type: "paragraph",
+            text: "Your network should be an engine for growth — not an invisible bottleneck holding your team back.",
+          },
+        ],
+      },
+    ],
+    relatedService: {
+      label: "View our Networking services",
+      href: "/services/infrastructure-cloud-platforms/#networking",
+      heading: "Build a network that keeps pace with your business.",
+      description:
+        "Improve network performance, wireless coverage, reliability, capacity, and scalability across your growing environment.",
     },
   },
 ];
