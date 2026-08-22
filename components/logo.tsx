@@ -1,20 +1,17 @@
 import Image from "next/image";
 
 const logoSources = {
-  color:
-    "https://itexpertsagency.com/wp-content/uploads/2023/12/IT-Experts-Logo-With-Color.svg",
-  white:
-    "https://itexpertsagency.com/wp-content/uploads/2023/12/IT-Experts-Logo-White-Color.svg",
+  onLight: "/images/it-experts-logo-on-light.png",
+  onDark: "/images/it-experts-logo-on-dark.png",
 };
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Image
-      src={light ? logoSources.white : logoSources.color}
+      src={light ? logoSources.onDark : logoSources.onLight}
       alt="IT Experts Agency"
-      width={610}
-      height={191}
-      unoptimized
+      width={1220}
+      height={382}
       className="h-14 w-auto"
     />
   );
