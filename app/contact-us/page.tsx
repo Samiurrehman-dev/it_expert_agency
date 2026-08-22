@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock3, Mail, MapPin, Navigation, Phone } from "lucide-react";
+import { Mail, MapPin, Navigation, Phone } from "lucide-react";
 
 import { ContactForm } from "@/components/contact-form";
 import { Footer } from "@/components/Footer";
@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { InnerPageHero } from "@/components/inner-page-hero";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/section-heading";
+import { WhatsAppLink } from "@/components/whatsapp-link";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -15,23 +16,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact-us" },
 };
 
-const contactMethods = [
+const contactActions = [
   {
     icon: Phone,
     label: "Call us",
-    value: "+1 909 545 6727",
     href: "tel:+19095456727",
   },
   {
     icon: Mail,
     label: "Email us",
-    value: "info@itexpertsagency.com",
     href: "mailto:info@itexpertsagency.com",
-  },
-  {
-    icon: Clock3,
-    label: "Support availability",
-    value: "24 hours a day, 7 days a week",
   },
 ];
 
@@ -79,41 +73,22 @@ export default function ContactUsPage() {
 
             <ScrollReveal delay={0.1}>
               <div className="lg:pt-2">
-                <div className="grid gap-4">
-                  {contactMethods.map((method) => {
-                    const content = (
-                      <>
-                        <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-50 text-accent-700">
-                          <method.icon className="size-5" />
-                        </span>
-                        <span>
-                          <span className="block text-xs font-extrabold uppercase tracking-[0.12em] text-slate-400">
-                            {method.label}
-                          </span>
-                          <span className="mt-1 block text-sm font-extrabold text-ink">
-                            {method.value}
-                          </span>
-                        </span>
-                      </>
-                    );
-
-                    return method.href ? (
-                      <a
-                        key={method.label}
-                        href={method.href}
-                        className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-card transition-all hover:-translate-y-0.5 hover:border-primary-200"
-                      >
-                        {content}
-                      </a>
-                    ) : (
-                      <div
-                        key={method.label}
-                        className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-card"
-                      >
-                        {content}
-                      </div>
-                    );
-                  })}
+                <div className="flex flex-wrap items-center gap-3">
+                  {contactActions.map((action) => (
+                    <a
+                      key={action.label}
+                      href={action.href}
+                      aria-label={action.label}
+                      title={action.label}
+                      className="inline-flex h-12 items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 text-accent-700 shadow-card transition-all duration-300 hover:border-primary-200 hover:shadow-soft motion-safe:hover:scale-105"
+                    >
+                      <action.icon className="size-5" aria-hidden="true" />
+                      <span className="text-sm font-extrabold text-ink">
+                        {action.label}
+                      </span>
+                    </a>
+                  ))}
+                  <WhatsAppLink />
                 </div>
 
                 <div className="bg-grid relative mt-6 min-h-[330px] overflow-hidden rounded-3xl border border-primary-100 bg-primary-50 p-6 shadow-card sm:p-8">

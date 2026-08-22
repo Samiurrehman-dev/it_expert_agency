@@ -9,7 +9,6 @@ import {
   ChevronDown,
   FileText,
   Menu,
-  Phone,
   ServerCog,
   X,
 } from "lucide-react";
@@ -18,6 +17,7 @@ import { getServiceHref, serviceCategories } from "@/lib/services-data";
 
 import { Logo } from "./logo";
 import { ServicesMegaMenu } from "./ServicesMegaMenu";
+import { WhatsAppLink } from "./whatsapp-link";
 
 type NavItem = {
   label: string;
@@ -375,22 +375,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
           </nav>
 
           <div className="hidden items-center gap-4 lg:flex">
-            <a
-              href="tel:+19095456727"
-              className={[
-                "hidden items-center gap-2 whitespace-nowrap text-sm font-extrabold transition-colors xl:flex",
-                overlay
-                  ? "text-white/90 hover:text-white"
-                  : "text-primary-900 hover:text-primary-700",
-              ].join(" ")}
-            >
-              <Phone
-                className={
-                  overlay ? "size-4 text-sky-300" : "size-4 text-accent-600"
-                }
-              />
-              +1 909 545 6727
-            </a>
+            <WhatsAppLink variant="header" />
             <a
               href="/contact-us"
               className={[
@@ -500,13 +485,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
         </nav>
 
         <div className="border-t border-slate-100 p-5">
-          <a
-            href="tel:+19095456727"
-            className="mb-4 flex items-center justify-center gap-2 text-sm font-extrabold text-primary-900"
-          >
-            <Phone className="size-4 text-accent-600" />
-            +1 909 545 6727
-          </a>
+          <WhatsAppLink variant="mobile" onClick={closeDrawer} />
           <a
             href="/contact-us"
             onClick={closeDrawer}
