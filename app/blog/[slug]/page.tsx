@@ -1,0 +1,389 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  ArrowRight,
+  CalendarDays,
+  Check,
+  ChevronRight,
+  Clock3,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
+
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import {
+  UpdateAccentPill,
+  UpdatePostCard,
+} from "@/components/update-post-card";
+import { blogPosts, getBlogPost, type BlogBlock } from "@/lib/blog-posts";
+import { updatePosts } from "@/lib/updates";
+
+type BlogPostPageProps = {
+  params: { slug: string };
+};
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }));
+}
+
+export function generateMetadata({ params }: BlogPostPageProps): Metadata {
+  const post = getBlogPost(params.slug);
+  if (!post) return {};
+
+  const canonical = `/blog/${post.slug}`;
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url: canonical,
+      siteName: "IT Experts Agency",
+      publishedTime: post.publishedDate,
+      authors: [post.author],
+    },
+  };
+}
+
+function ArticleBlock({ block }: { block: BlogBlock }) {
+  if (block.type === "paragraph") {
+    return <p className="text-base leading-8 text-slate-600">{block.text}</p>;
+  }
+
+  if (block.type === "subheading") {
+    return (
+      <h3 className="pt-2 text-lg font-extrabold tracking-[-0.02em] text-ink">
+        {block.title}
+      </h3>
+    );
+  }
+
+  if (block.type === "checklist") {
+    return (
+      <ul className="space-y-3" role="list">
+        {block.items.map((item) => (
+          <li key={item} className="flex items-start gap-3 text-slate-600">
+            <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-md border border-primary-300 bg-primary-50 text-primary-800">
+              <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
+            </span>
+            <span className="text-[15px] leading-7">{item}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (block.type === "callout") {
+    return (
+      <aside className="rounded-r-2xl border-l-4 border-primary-500 bg-primary-50 px-5 py-5 sm:px-6">
+        <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
+          Practical control
+        </p>
+        <p className="mt-2 text-[15px] font-semibold leading-7 text-slate-700">
+          {block.text}
+        </p>
+      </aside>
+    );
+  }
+
+  return (
+    <ul className="grid gap-3 sm:grid-cols-2" role="list">
+      {block.items.map((item) => (
+        <li
+          key={item.label}
+          className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+        >
+          <p className="flex items-center gap-2 font-extrabold text-ink">
+            <ArrowRight
+              className="size-4 shrink-0 text-primary-600"
+              aria-hidden="true"
+            />
+            {item.label}
+          </p>
+          <p className="mt-2 pl-6 text-sm leading-6 text-slate-600">
+            {item.detail}
+          </p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = getBlogPost(params.slug);
+  if (!post) notFound();
+
+  const relatedPosts = updatePosts
+    .filter(
+      (candidate) =>
+        candidate.type === "Blog" && candidate.href !== `/blog/${post.slug}`,
+    )
+    .slice(0, 3);
+  const pageUrl = `https://itexpertsagency.com/blog/${post.slug}`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.publishedDate,
+    dateModified: post.publishedDate,
+    mainEntityOfPage: pageUrl,
+    author: {
+      "@type": "Organization",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "IT Experts Agency",
+      url: "https://itexpertsagency.com",
+    },
+  };
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://itexpertsagency.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blog",
+        item: "https://itexpertsagency.com/blog",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.category,
+        item: `https://itexpertsagency.com/blog#${post.category.toLowerCase()}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: post.title,
+        item: pageUrl,
+      },
+    ],
+  };
+
+  return (
+    <div className="overflow-x-clip bg-white">
+      <Header />
+
+      <main>
+        <header className="bg-grid relative isolate overflow-hidden bg-primary-950 py-16 sm:py-20 lg:py-24">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-br from-primary-950 via-primary-950 to-primary-900/80" />
+          <div className="absolute -right-24 -top-28 -z-10 size-80 rounded-full border-[64px] border-white/5" />
+          <div className="absolute -bottom-40 left-1/3 -z-10 size-80 rounded-full bg-accent-400/10 blur-3xl" />
+
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <nav aria-label="Breadcrumb">
+              <ol className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-300">
+                <li>
+                  <Link href="/" className="transition-colors hover:text-white">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight className="size-3.5 text-slate-500" />
+                </li>
+                <li>
+                  <Link
+                    href="/blog"
+                    className="transition-colors hover:text-white"
+                  >
+                    Blog
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight className="size-3.5 text-slate-500" />
+                </li>
+                <li className="text-slate-200">{post.category}</li>
+                <li aria-hidden="true">
+                  <ChevronRight className="size-3.5 text-slate-500" />
+                </li>
+                <li
+                  className="max-w-full truncate text-white"
+                  aria-current="page"
+                >
+                  {post.title}
+                </li>
+              </ol>
+            </nav>
+
+            <div className="mt-9 max-w-4xl [animation-fill-mode:both] motion-safe:animate-fade-up">
+              <UpdateAccentPill>{post.category}</UpdateAccentPill>
+              <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+                {post.title}
+              </h1>
+              <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-slate-100/85 sm:text-lg">
+                {post.excerpt}
+              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-bold text-slate-200">
+                <span className="inline-flex items-center gap-2">
+                  <UserRound
+                    className="size-4 text-accent-300"
+                    aria-hidden="true"
+                  />
+                  {post.author}
+                </span>
+                <time
+                  dateTime={post.publishedDate}
+                  className="inline-flex items-center gap-2"
+                >
+                  <CalendarDays
+                    className="size-4 text-accent-300"
+                    aria-hidden="true"
+                  />
+                  {post.publishedLabel}
+                </time>
+                <span className="inline-flex items-center gap-2">
+                  <Clock3
+                    className="size-4 text-accent-300"
+                    aria-hidden="true"
+                  />
+                  {post.readTime}
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section className="bg-slate-50 py-14 sm:py-20">
+          <div className="mx-auto grid max-w-7xl items-start gap-8 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:gap-12">
+            <article className="rounded-[2rem] border border-slate-200/80 bg-white px-6 py-9 shadow-card sm:px-10 sm:py-12 lg:px-12">
+              <div className="space-y-5 border-b border-slate-200 pb-10">
+                {post.intro.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="text-base leading-8 text-slate-600 first:text-lg first:font-semibold first:leading-9 first:text-slate-700"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              <div>
+                {post.sections.map((section) => (
+                  <section
+                    key={section.id}
+                    aria-labelledby={section.id}
+                    className="border-b border-slate-200 py-10 last:border-b-0 last:pb-0 sm:py-12"
+                  >
+                    <h2
+                      id={section.id}
+                      className="scroll-mt-28 text-balance text-2xl font-extrabold tracking-[-0.035em] text-ink sm:text-3xl"
+                    >
+                      {section.title}
+                    </h2>
+                    <div className="mt-6 space-y-6">
+                      {section.blocks.map((block, index) => (
+                        <ArticleBlock
+                          key={`${section.id}-${index}`}
+                          block={block}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+
+              <aside className="mt-12 overflow-hidden rounded-3xl border border-primary-200 bg-primary-50 shadow-card">
+                <div className="p-6 sm:p-8">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-primary-950 text-white">
+                    <ShieldCheck className="size-6" aria-hidden="true" />
+                  </span>
+                  <p className="mt-5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
+                    Related service
+                  </p>
+                  <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-ink">
+                    Strengthen your everyday security controls.
+                  </h2>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    Get practical support for managed detection, vulnerability
+                    management, endpoint security, and SIEM operations.
+                  </p>
+                  <Link
+                    href={post.relatedService.href}
+                    className="group mt-6 inline-flex items-center gap-2 rounded-full bg-primary-900 px-5 py-3 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-800"
+                  >
+                    {post.relatedService.label}
+                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </aside>
+            </article>
+
+            <aside className="hidden lg:block">
+              <nav
+                aria-label="On this page"
+                className="sticky top-28 rounded-3xl border border-slate-200 bg-white p-6 shadow-card"
+              >
+                <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-primary-700">
+                  On this page
+                </p>
+                <ol className="mt-5 space-y-3 border-l border-primary-200 pl-4">
+                  {post.sections.map((section) => (
+                    <li key={section.id}>
+                      <a
+                        href={`#${section.id}`}
+                        className="block text-xs font-bold leading-5 text-slate-500 transition-colors hover:text-primary-800"
+                      >
+                        {section.title}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </aside>
+          </div>
+        </section>
+
+        <section className="bg-white py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8">
+            <ScrollReveal>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-primary-700">
+                Keep reading
+              </p>
+              <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
+                Related posts
+              </h2>
+            </ScrollReveal>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {relatedPosts.map((relatedPost, index) => (
+                <ScrollReveal
+                  key={relatedPost.title}
+                  delay={index * 0.06}
+                  className="h-full"
+                >
+                  <UpdatePostCard post={relatedPost} headingLevel="h3" />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([articleSchema, breadcrumbSchema]),
+        }}
+      />
+    </div>
+  );
+}

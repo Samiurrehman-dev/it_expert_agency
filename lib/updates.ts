@@ -18,6 +18,7 @@ export type UpdatePost = {
   excerpt: string;
   meta: string;
   color: string;
+  href?: string;
 };
 
 export const updatePosts: UpdatePost[] = [
@@ -50,6 +51,17 @@ export const updatePosts: UpdatePost[] = [
       "A practical guide to improving access, sharing, governance, and security across Microsoft 365.",
     meta: "15-page guide",
     color: "from-slate-900 to-primary-600",
+  },
+  {
+    type: "Blog",
+    icon: ShieldCheck,
+    category: "Security",
+    title: "A Practical Security Checklist for a Growing Business",
+    excerpt:
+      "A practical, no-cost-tools-required checklist covering identities, devices, data, backups, cloud apps, vendors, and incident response — the everyday controls that reduce the most common security risks as a business grows.",
+    meta: "9 min read",
+    color: "from-primary-950 to-primary-700",
+    href: "/blog/practical-security-checklist-growing-business",
   },
   {
     type: "Blog",
