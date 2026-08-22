@@ -66,10 +66,16 @@ export function UpdatesPageTemplate({ type }: { type: UpdateType }) {
         <InnerPageHero
           eyebrow={content.heroEyebrow}
           title={
-            <>
-              {content.heroLead}{" "}
-              <span className="text-accent-300">{content.heroAccent}</span>
-            </>
+            type === "Case Study" ? (
+              <>
+                Case <span className="text-accent-300">Studies</span>
+              </>
+            ) : (
+              <>
+                {content.heroLead}{" "}
+                <span className="text-accent-300">{content.heroAccent}</span>
+              </>
+            )
           }
           description={content.heroDescription}
         />

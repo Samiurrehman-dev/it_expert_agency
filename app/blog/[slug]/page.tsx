@@ -7,6 +7,7 @@ import {
   Check,
   ChevronRight,
   Clock3,
+  DatabaseBackup,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
@@ -142,6 +143,47 @@ function ArticleBlock({ block }: { block: BlogBlock }) {
           </div>
         ))}
       </div>
+    );
+  }
+
+  if (block.type === "steps") {
+    return (
+      <ol className="space-y-3" role="list">
+        {block.items.map((item, index) => (
+          <li
+            key={item.label}
+            className="group grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition-colors hover:border-primary-200 hover:bg-primary-50 sm:p-5"
+          >
+            <span className="grid size-10 place-items-center rounded-xl bg-primary-950 text-sm font-extrabold text-white">
+              {index + 1}
+            </span>
+            <div className="pt-0.5">
+              <p className="text-base font-extrabold text-ink">{item.label}</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                {item.detail}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    );
+  }
+
+  if (block.type === "metrics") {
+    return (
+      <dl className="grid gap-4 sm:grid-cols-2">
+        {block.items.map((item) => (
+          <div
+            key={item.label}
+            className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+          >
+            <dt className="font-extrabold leading-6 text-ink">{item.label}</dt>
+            <dd className="mt-2 text-sm leading-6 text-slate-600">
+              {item.detail}
+            </dd>
+          </div>
+        ))}
+      </dl>
     );
   }
 
@@ -387,6 +429,32 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                   </Link>
                 </div>
               </aside>
+
+              {post.relatedCaseStudy && (
+                <aside className="mt-5 overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-card">
+                  <div className="p-6 sm:p-8">
+                    <span className="grid size-12 place-items-center rounded-2xl bg-primary-950 text-white">
+                      <DatabaseBackup className="size-6" aria-hidden="true" />
+                    </span>
+                    <p className="mt-5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
+                      Related case study
+                    </p>
+                    <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-ink">
+                      {post.relatedCaseStudy.heading}
+                    </h2>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      {post.relatedCaseStudy.description}
+                    </p>
+                    <Link
+                      href={post.relatedCaseStudy.href}
+                      className="group mt-6 inline-flex items-center gap-2 rounded-full bg-primary-900 px-5 py-3 text-sm font-extrabold text-white transition-all hover:-translate-y-0.5 hover:bg-primary-800"
+                    >
+                      {post.relatedCaseStudy.label}
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </aside>
+              )}
             </article>
 
             <aside className="hidden self-stretch lg:block">

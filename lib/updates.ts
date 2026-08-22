@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Activity,
   CloudCog,
   DatabaseBackup,
   Headphones,
@@ -129,33 +130,36 @@ export const updatePosts: UpdatePost[] = [
     href: "/blog/what-proactive-it-support-should-look-like-in-practice",
   },
   {
+    type: "Blog",
+    icon: Activity,
+    category: "Observability & Automation",
+    title: "Turn Infrastructure Signals into Faster and Smarter Action",
+    excerpt:
+      "Modern IT environments generate endless telemetry — the real advantage comes from connecting monitoring, intelligent analysis, and automation into a closed detect-to-act loop.",
+    meta: "8 min read",
+    color: "from-primary-950 to-accent-700",
+    href: "/blog/turn-infrastructure-signals-into-faster-smarter-action",
+  },
+  {
+    type: "Case Study",
+    icon: Activity,
+    category: "Professional Services — Monitoring & AIOps",
+    title: "Turn Infrastructure Signals Into Faster, Smarter Action",
+    excerpt:
+      "How a growing professional services firm connected its monitoring, prioritized critical alerts, and automated predictable fixes to prevent disruption.",
+    meta: "Client story",
+    color: "from-primary-950 to-accent-700",
+    href: "/case-studies/turn-infrastructure-signals-into-faster-smarter-action",
+  },
+  {
     type: "Case Study",
     icon: DatabaseBackup,
-    category: "Business Continuity",
-    title: "Building a recovery process a growing team could trust",
+    category: "E-Commerce — Backup & Disaster Recovery",
+    title: "Backups Are Only Useful When Recovery Is Tested",
     excerpt:
-      "How structured backups and recovery testing created a clearer path back to business after disruption.",
-    meta: "Recovery story",
+      "How a growing e-commerce company discovered its nightly backups couldn't actually be restored — and built a tested recovery process before the next failure hit.",
+    meta: "5 min read",
     color: "from-primary-800 to-accent-700",
-  },
-  {
-    type: "Case Study",
-    icon: Headphones,
-    category: "Managed IT",
-    title: "From recurring support issues to a stable IT operation",
-    excerpt:
-      "How proactive maintenance and a consistent support process reduced avoidable interruptions.",
-    meta: "Client story",
-    color: "from-slate-950 to-primary-700",
-  },
-  {
-    type: "Case Study",
-    icon: ShieldCheck,
-    category: "Microsoft 365",
-    title: "Creating a safer foundation for hybrid collaboration",
-    excerpt:
-      "How access controls, device standards, and user guidance strengthened everyday Microsoft 365 use.",
-    meta: "Security story",
-    color: "from-primary-950 to-accent-600",
+    href: "/case-studies/backups-are-only-useful-when-recovery-is-tested",
   },
 ];
