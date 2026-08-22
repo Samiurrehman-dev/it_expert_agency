@@ -2,7 +2,15 @@ export type BlogBlock =
   | { type: "paragraph"; text: string }
   | { type: "checklist"; items: string[] }
   | { type: "subheading"; title: string }
-  | { type: "callout"; text: string }
+  | { type: "callout"; text: string; label?: string }
+  | {
+      type: "contrast";
+      items: Array<{ title: string; text?: string }>;
+    }
+  | {
+      type: "highlights";
+      items: Array<{ title: string; text?: string }>;
+    }
   | {
       type: "priorities";
       items: Array<{ label: string; detail: string }>;
@@ -12,22 +20,27 @@ export type BlogSection = {
   id: string;
   title: string;
   blocks: BlogBlock[];
+  showInToc?: boolean;
 };
 
 export type BlogPost = {
   slug: string;
   category: string;
   title: string;
+  subtitle?: string;
   author: string;
   publishedDate: string;
   publishedLabel: string;
   readTime: string;
   excerpt: string;
   intro: string[];
+  introBlocks?: BlogBlock[];
   sections: BlogSection[];
   relatedService: {
     label: string;
     href: string;
+    heading: string;
+    description: string;
   };
 };
 
@@ -391,6 +404,1216 @@ export const blogPosts: BlogPost[] = [
     relatedService: {
       label: "View our Security & MSSP services",
       href: "/services/managed-services-msp-toolchain/#security-mssp",
+      heading: "Strengthen your everyday security controls.",
+      description:
+        "Get practical support for managed detection, vulnerability management, endpoint security, and SIEM operations.",
+    },
+  },
+  {
+    slug: "safer-path-modern-collaboration-across-your-team",
+    category: "Managed IT",
+    title: "A Safer Path to Modern Collaboration Across Your Team",
+    subtitle:
+      "Bring Communication, Productivity, and Security Together with Microsoft 365",
+    author: "IT Experts Agency",
+    publishedDate: "2026-08-22",
+    publishedLabel: "August 22, 2026",
+    readTime: "8 min read",
+    excerpt:
+      "How Microsoft 365 brings communication, productivity, and security together into one connected environment — helping teams collaborate freely without losing control of business data.",
+    intro: [
+      "The modern workplace has changed. Teams are no longer always working from the same office, information is shared across multiple platforms, and employees expect to collaborate seamlessly from wherever they are.",
+      "But with greater flexibility comes greater complexity.",
+      "Organizations are managing more communication channels, more data, more devices, and more opportunities for sensitive information to be exposed. Employees may be using different tools to communicate, store documents, manage projects, and share information — creating silos that can impact productivity while increasing security risks.",
+      "Microsoft 365 offers a safer, more connected path forward.",
+      "By bringing communication, productivity, collaboration, and security into an integrated Microsoft environment, organizations can empower their people to work better while maintaining greater control over business information.",
+    ],
+    sections: [
+      {
+        id: "smarter-communication",
+        title: "Connect Your People with Smarter Communication",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Great collaboration starts with clear, accessible communication.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft Teams provides a central hub where employees can communicate through chat, meetings, calls, and shared channels. Instead of relying on fragmented conversations across different applications, teams can bring discussions, files, meetings, and collaboration into a more connected workspace.",
+          },
+          {
+            type: "paragraph",
+            text: "Whether employees are working from the office, remotely, or across different locations, Microsoft 365 helps them stay connected and informed.",
+          },
+          {
+            type: "paragraph",
+            text: "With Teams integrated with applications such as Outlook, SharePoint, and OneDrive, employees can move from conversation to action without constantly switching between disconnected tools.",
+          },
+          { type: "subheading", title: "The result?" },
+          {
+            type: "checklist",
+            items: [
+              "Faster communication across departments and teams",
+              "Easier collaboration between remote and office-based employees",
+              "Centralized access to conversations and shared information",
+              "Fewer disconnected communication channels",
+              "A more consistent employee experience",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "When people can easily find the right information and the right people, collaboration becomes simpler and more effective.",
+          },
+        ],
+      },
+      {
+        id: "work-more-productively",
+        title: "Give Your Team the Tools to Work More Productively",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Productivity isn't simply about working faster. It's about removing unnecessary friction from everyday work.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 brings familiar applications such as Word, Excel, PowerPoint, Outlook, OneDrive, SharePoint, and Teams together to create a connected digital workplace.",
+          },
+          {
+            type: "paragraph",
+            text: "Employees can create and edit documents together in real time, securely access files from different devices, share information with colleagues, and collaborate without creating multiple versions of the same document.",
+          },
+          { type: "paragraph", text: "Instead of asking:" },
+          {
+            type: "highlights",
+            items: [{ title: '"Where is the latest version of the file?"' }],
+          },
+          {
+            type: "paragraph",
+            text: "teams can work from a shared, controlled environment where information is easier to access and manage.",
+          },
+          {
+            type: "subheading",
+            title: "From individual tasks to team collaboration",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 can help employees:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Collaborate on documents in real time",
+              "Access work securely from virtually anywhere",
+              "Share files without creating unnecessary duplicates",
+              "Organize information in SharePoint and OneDrive",
+              "Schedule and manage meetings through Outlook and Teams",
+              "Reduce repetitive manual tasks",
+              "Bring conversations and documents closer together",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "And with Microsoft Copilot, organizations can introduce AI capabilities into everyday workflows, helping employees summarize meetings and conversations, draft content, analyze information, find relevant insights, and get more done with less administrative effort.",
+          },
+          {
+            type: "highlights",
+            items: [
+              { title: "The objective isn't simply to add more technology." },
+              {
+                title:
+                  "It's to make the technology your employees already use work better together.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "security-in-everyday-work",
+        title: "Make Security Part of the Way Your Team Works",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Modern collaboration also creates a critical question:",
+          },
+          {
+            type: "highlights",
+            items: [
+              {
+                title:
+                  "How do you give employees the freedom to work from anywhere without losing control of your organization's data?",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Security can no longer be treated as something that happens separately from productivity. It needs to be built into the way people access applications, communicate, share files, and collaborate.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 provides security capabilities designed to help organizations protect users, devices, applications, and information while supporting productive collaboration.",
+          },
+          {
+            type: "paragraph",
+            text: "Organizations can strengthen their security approach through capabilities such as identity and access controls, multifactor authentication, information protection, threat detection, and compliance management.",
+          },
+          {
+            type: "paragraph",
+            text: "This helps create a workplace where security doesn't have to become a barrier to productivity.",
+          },
+          {
+            type: "subheading",
+            title: "Protect what matters while enabling your people",
+          },
+          {
+            type: "paragraph",
+            text: "A modern Microsoft 365 security strategy can help organizations:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Protect user identities and access",
+              "Strengthen authentication and account security",
+              "Safeguard sensitive business information",
+              "Control how data is accessed and shared",
+              "Identify and respond to potential threats",
+              "Improve visibility across the Microsoft environment",
+              "Support regulatory and compliance requirements",
+            ],
+          },
+          {
+            type: "highlights",
+            items: [
+              { title: "The goal is not to lock down collaboration." },
+              { title: "The goal is to enable secure collaboration." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "one-connected-environment",
+        title: "One Connected Environment for Modern Work",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Many organizations have accumulated technology over time. One application handles email, another handles messaging, another stores documents, and yet another is used for meetings or project collaboration.",
+          },
+          {
+            type: "paragraph",
+            text: "While each tool may solve an individual problem, the combination can create a bigger one: complexity.",
+          },
+          {
+            type: "paragraph",
+            text: "Employees have to remember where information lives. IT teams have more systems to manage. Security teams have more environments to monitor. And business leaders have less visibility into how information moves across the organization.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 can help simplify this environment by bringing key workplace capabilities together.",
+          },
+          {
+            type: "priorities",
+            items: [
+              {
+                label: "Communication — Microsoft Teams + Outlook",
+                detail:
+                  "Help employees communicate, meet, and stay connected across locations and departments.",
+              },
+              {
+                label:
+                  "Collaboration & Productivity — Word + Excel + PowerPoint + OneDrive + SharePoint + Teams",
+                detail:
+                  "Help employees create, share, manage, and collaborate on information from a connected environment.",
+              },
+              {
+                label:
+                  "Security & Compliance — Microsoft security and compliance capabilities",
+                detail:
+                  "Help organizations protect identities, devices, applications, and business information while maintaining appropriate controls.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "security-and-productivity",
+        title: "Security and Productivity Don't Have to Compete",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "For many organizations, security and productivity can feel like competing priorities.",
+          },
+          {
+            type: "paragraph",
+            text: "Employees want quick access to information. IT wants appropriate controls. Business leaders want productivity. Security teams want reduced risk.",
+          },
+          {
+            type: "paragraph",
+            text: "A modern Microsoft 365 strategy can help bring these priorities together.",
+          },
+          {
+            type: "paragraph",
+            text: "Instead of creating security processes that employees work around, organizations can build security into the tools and workflows employees already use.",
+          },
+          {
+            type: "paragraph",
+            text: "This approach can help create a better balance:",
+          },
+          {
+            type: "highlights",
+            items: [
+              { title: "Empower your employees." },
+              { title: "Protect your information." },
+              { title: "Simplify your technology environment." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "future-of-work",
+        title: "A Safer Path to the Future of Work",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Modern collaboration is not simply about working from home or using cloud applications. It is about creating a workplace where people, information, applications, and security work together.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 provides a foundation for organizations looking to modernize collaboration while improving productivity and strengthening their security posture.",
+          },
+          {
+            type: "paragraph",
+            text: "With the right strategy, your organization can help employees:",
+          },
+          {
+            type: "highlights",
+            items: [
+              {
+                title: "Communicate better.",
+                text: "Connect teams through a unified collaboration experience.",
+              },
+              {
+                title: "Work smarter.",
+                text: "Give people the tools and AI capabilities to reduce friction and focus on higher-value work.",
+              },
+              {
+                title: "Stay protected.",
+                text: "Build security and data protection into everyday collaboration.",
+              },
+              {
+                title: "Work from anywhere.",
+                text: "Support flexible working without losing visibility and control.",
+              },
+              {
+                title: "Simplify IT.",
+                text: "Reduce unnecessary technology complexity by bringing more capabilities into an integrated ecosystem.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "modernize-collaboration",
+        title: "The Safer Way to Modernize Collaboration",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "The future of work is already here. The question is not whether your teams will collaborate digitally — it is whether your organization has the right foundation to do it productively, securely, and confidently.",
+          },
+          {
+            type: "paragraph",
+            text: "Microsoft 365 brings communication, productivity, collaboration, and security together to help organizations create a more connected modern workplace.",
+          },
+          {
+            type: "highlights",
+            items: [
+              { title: "Give your people the freedom to collaborate." },
+              { title: "Give your business the confidence to stay protected." },
+              { title: "Microsoft 365: A safer path to modern collaboration." },
+            ],
+          },
+        ],
+      },
+    ],
+    relatedService: {
+      label: "Explore our Managed IT Services",
+      href: "/managed-it-services",
+      heading: "Build a safer, more connected workplace.",
+      description:
+        "Bring support, cloud collaboration, endpoint management, and security together with a practical managed IT strategy.",
+    },
+  },
+  {
+    slug: "backups-are-only-useful-when-recovery-is-tested",
+    category: "Backup & Disaster Recovery",
+    title: "Backups Are Only Useful When Recovery Is Tested",
+    subtitle:
+      "Build a Resilient Backup and Recovery Process That Helps Your Organization Return to Work",
+    author: "IT Experts Agency",
+    publishedDate: "2026-08-22",
+    publishedLabel: "August 22, 2026",
+    readTime: "14 min read",
+    excerpt:
+      "A backup is only as valuable as your ability to restore it. A practical framework for RTOs, RPOs, backup resilience, and — most importantly — actually testing recovery before you need it.",
+    intro: [],
+    introBlocks: [
+      {
+        type: "paragraph",
+        text: "A backup is only as valuable as your ability to restore it.",
+      },
+      {
+        type: "paragraph",
+        text: "Organizations often invest significant time, money, and effort in backup technologies. Backup jobs run every day, dashboards show successful completion, and storage capacity is carefully managed. Yet when a major incident occurs — such as ransomware, accidental deletion, hardware failure, system corruption, a cloud outage, or a site-level disaster — the organization may discover that having backups is not the same as being able to recover.",
+      },
+      {
+        type: "paragraph",
+        text: "A backup can be technically successful and still fail the business.",
+      },
+      {
+        type: "contrast",
+        items: [
+          {
+            title:
+              'The real question is not: "Did our backup complete successfully?"',
+          },
+          {
+            title:
+              'The real question is: "Can we recover our critical systems, restore trusted data, and return the organization to normal operations within an acceptable timeframe?"',
+          },
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "This distinction is at the heart of a resilient backup and recovery strategy.",
+      },
+    ],
+    sections: [
+      {
+        id: "start-with-business-recovery",
+        title: "1. Start With Business Recovery, Not Backup Technology",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A resilient recovery program begins with the business.",
+          },
+          {
+            type: "paragraph",
+            text: "Before selecting technologies or configuring backup schedules, the organization should identify which services and information are essential to continued operations. A payroll system, customer database, email platform, manufacturing system, file repository, and website may all have different recovery requirements.",
+          },
+          {
+            type: "paragraph",
+            text: "For each critical service, define:",
+          },
+          { type: "subheading", title: "Recovery Time Objective (RTO)" },
+          {
+            type: "callout",
+            label: "RTO definition",
+            text: "The RTO defines how quickly a system or business service needs to be restored after an outage.",
+          },
+          { type: "paragraph", text: "For example:" },
+          {
+            type: "checklist",
+            items: [
+              "Critical customer-facing application: 2 hours",
+              "Core financial system: 4 hours",
+              "Internal collaboration platform: 8 hours",
+              "Non-critical archive data: 48 hours",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "RTOs help the organization determine how quickly recovery must happen and what recovery capabilities are required.",
+          },
+          { type: "subheading", title: "Recovery Point Objective (RPO)" },
+          {
+            type: "callout",
+            label: "RPO definition",
+            text: "The RPO defines how much recent data the organization can afford to lose.",
+          },
+          {
+            type: "paragraph",
+            text: "For example, an RPO of 15 minutes means the organization should be able to recover data to a point no more than approximately 15 minutes before the incident.",
+          },
+          {
+            type: "paragraph",
+            text: "RPOs influence backup frequency, replication, transaction logging, and other data-protection mechanisms.",
+          },
+          { type: "subheading", title: "Business Owner" },
+          {
+            type: "paragraph",
+            text: "Every critical service should have an accountable business owner who can confirm when the service is actually usable.",
+          },
+          {
+            type: "paragraph",
+            text: "This is important because a server being online does not necessarily mean the business is operational. The application may still have missing data, broken integrations, unavailable permissions, or other dependencies.",
+          },
+        ],
+      },
+      {
+        id: "design-backups-for-resilience",
+        title: "2. Design Backups for Resilience",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A resilient backup strategy should assume that the production environment itself may become unavailable or compromised.",
+          },
+          {
+            type: "paragraph",
+            text: "A widely used foundation is the 3-2-1 backup approach:",
+          },
+          {
+            type: "callout",
+            label: "The 3-2-1 approach",
+            text: "3 copies of important data · 2 different types of storage or media · 1 copy kept offline, isolated, or otherwise protected from the production environment",
+          },
+          {
+            type: "paragraph",
+            text: "For higher-risk environments, organizations should also consider additional protections such as:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Immutable backups that cannot be altered or deleted for a defined retention period",
+              "Offline or air-gapped copies",
+              "Logical separation between production and backup environments",
+              "Geographically separated recovery locations",
+              "Cross-region or cross-site replication",
+              "Separate backup administration accounts",
+              "Strong authentication and privileged access controls",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The objective is straightforward: an incident that compromises production should not automatically compromise the backups.",
+          },
+        ],
+      },
+      {
+        id: "protect-backups-from-production-threats",
+        title: "3. Protect the Backups From the Same Threats as Production",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Backup infrastructure should be treated as a critical security environment, not simply as a storage location.",
+          },
+          {
+            type: "paragraph",
+            text: "Attackers increasingly understand that destroying or encrypting backups can make recovery much more difficult. As a result, backup platforms, management consoles, service accounts, and backup repositories can become targets themselves.",
+          },
+          {
+            type: "paragraph",
+            text: "Organizations should therefore implement appropriate controls around:",
+          },
+          { type: "subheading", title: "Identity and Access" },
+          {
+            type: "paragraph",
+            text: "Limit administrative access to authorized personnel and use strong authentication, including multifactor authentication where supported.",
+          },
+          { type: "subheading", title: "Privileged Accounts" },
+          {
+            type: "paragraph",
+            text: "Separate backup administration from normal user accounts. Avoid unnecessary administrative privileges and regularly review who can create, modify, delete, or restore backups.",
+          },
+          { type: "subheading", title: "Network Security" },
+          {
+            type: "paragraph",
+            text: "Segment backup infrastructure from normal production traffic where practical. Limit unnecessary connectivity and monitor communication between backup systems and production environments.",
+          },
+          { type: "subheading", title: "Immutability and Isolation" },
+          {
+            type: "paragraph",
+            text: "Where possible, maintain copies that cannot easily be modified or deleted by compromised production credentials.",
+          },
+          { type: "subheading", title: "Monitoring and Alerting" },
+          {
+            type: "paragraph",
+            text: "Monitor for unusual activity such as:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Unexpected backup deletions",
+              "Sudden changes to retention policies",
+              "Large-scale restore operations",
+              "Disabled backup jobs",
+              "Unusual administrative logins",
+              "Encryption or deletion activity affecting backup repositories",
+            ],
+          },
+          {
+            type: "callout",
+            label: "Recovery principle",
+            text: "A backup that can be silently deleted by an attacker is not a reliable recovery control.",
+          },
+        ],
+      },
+      {
+        id: "back-up-more-than-data",
+        title: "4. Back Up More Than Just Data",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Recovery frequently fails because organizations back up the obvious data but overlook the systems and dependencies required to use that data.",
+          },
+          {
+            type: "paragraph",
+            text: "A complete recovery strategy should consider:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Databases",
+              "File shares",
+              "Virtual machines",
+              "Physical servers",
+              "Cloud workloads",
+              "SaaS data, where appropriate",
+              "Application configurations",
+              "Network configurations",
+              "Identity and authentication services",
+              "Certificates and keys",
+              "Scripts and automation",
+              "Infrastructure configuration",
+              "System images",
+              "Business-critical endpoints",
+              "Critical documentation and procedures",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "For example, restoring a database may not be enough if the application server, configuration files, service accounts, certificates, or network dependencies are missing.",
+          },
+          {
+            type: "contrast",
+            items: [
+              { title: "The goal is not simply to recover data." },
+              { title: "The goal is to recover a working service." },
+            ],
+          },
+        ],
+      },
+      {
+        id: "document-the-recovery-sequence",
+        title: "5. Document the Recovery Sequence",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "During a major outage, teams should not have to determine the recovery process for the first time. Recovery procedures should clearly document what happens, in what order, and who is responsible.",
+          },
+          {
+            type: "paragraph",
+            text: "A practical recovery sequence might look like this:",
+          },
+          {
+            type: "priorities",
+            items: [
+              {
+                label: "Detect and assess the incident",
+                detail:
+                  "Determine what happened, what is affected, and whether the event is still active.",
+              },
+              {
+                label: "Declare the recovery process",
+                detail:
+                  "Activate the appropriate incident or disaster recovery process and identify decision-makers.",
+              },
+              {
+                label: "Contain the threat",
+                detail:
+                  "Where applicable, isolate compromised systems before starting restoration.",
+              },
+              {
+                label: "Identify the recovery point",
+                detail:
+                  "Determine which backup or recovery copy is appropriate and verify that it is not compromised.",
+              },
+              {
+                label: "Restore foundational services",
+                detail:
+                  "Recover critical infrastructure such as identity, networking, DNS, and other dependencies.",
+              },
+              {
+                label: "Restore critical applications and data",
+                detail:
+                  "Recover systems in the order established by business priorities and technical dependencies.",
+              },
+              {
+                label: "Validate the recovery",
+                detail:
+                  "Confirm that systems, data, integrations, security controls, and business processes work correctly.",
+              },
+              {
+                label: "Return users to normal operations",
+                detail:
+                  "Bring employees, customers, and business processes back online in a controlled manner.",
+              },
+              {
+                label: "Monitor closely",
+                detail:
+                  "Watch for errors, abnormal activity, performance issues, or signs that the original problem remains.",
+              },
+              {
+                label: "Review and improve",
+                detail:
+                  "Document lessons learned and address weaknesses identified during recovery.",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A documented sequence transforms recovery from an improvised response into a repeatable process.",
+          },
+        ],
+      },
+      {
+        id: "test-recovery-not-just-backups",
+        title: "6. Test Recovery — Not Just Backups",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "This is the most important part of the entire process.",
+          },
+          {
+            type: "paragraph",
+            text: "A successful backup job only proves that data was written somewhere. It does not prove that the data can be restored, that it is complete, that it is consistent, or that the organization can use it.",
+          },
+          {
+            type: "paragraph",
+            text: "Recovery testing should therefore happen at multiple levels.",
+          },
+          { type: "subheading", title: "File-Level Recovery Testing" },
+          {
+            type: "paragraph",
+            text: "Select files on a regular basis and restore them to a separate location.",
+          },
+          { type: "paragraph", text: "Verify that:" },
+          {
+            type: "checklist",
+            items: [
+              "The restore completes successfully",
+              "File contents are intact",
+              "Permissions are correct",
+              "Metadata is preserved where required",
+              "Users can actually open and use the restored files",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This is the simplest type of recovery test and should be performed regularly.",
+          },
+          { type: "subheading", title: "Application Recovery Testing" },
+          {
+            type: "paragraph",
+            text: "Restore important applications and databases into a controlled recovery environment.",
+          },
+          { type: "paragraph", text: "Verify:" },
+          {
+            type: "checklist",
+            items: [
+              "The application starts successfully",
+              "The database is consistent",
+              "Required services are available",
+              "Authentication works",
+              "Integrations function",
+              "Transactions can be completed",
+              "Application owners approve the result",
+            ],
+          },
+          { type: "subheading", title: "System Recovery Testing" },
+          {
+            type: "paragraph",
+            text: "Recover complete servers, virtual machines, or cloud workloads.",
+          },
+          { type: "paragraph", text: "Measure:" },
+          {
+            type: "checklist",
+            items: [
+              "Time to begin recovery",
+              "Time to restore the system",
+              "Time required for configuration",
+              "Time to reconnect dependencies",
+              "Time to validate the application",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This helps determine whether the actual recovery process meets the documented RTO.",
+          },
+          { type: "subheading", title: "Disaster Recovery Exercises" },
+          {
+            type: "paragraph",
+            text: "Conduct larger simulations involving IT, cybersecurity, business owners, management, communications, and other relevant teams.",
+          },
+          {
+            type: "paragraph",
+            text: "Examples include:",
+          },
+          {
+            type: "contrast",
+            items: [
+              { title: '"Our primary data center is unavailable."' },
+              { title: '"Ransomware has affected production servers."' },
+              { title: '"A critical database has been corrupted."' },
+              {
+                title:
+                  '"A cloud service is unavailable for an extended period."',
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "The exercise should test both technology and decision-making.",
+          },
+        ],
+      },
+      {
+        id: "validate-business-return-to-work",
+        title: "7. Validate That the Business Can Actually Return to Work",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Technical recovery is only one part of recovery.",
+          },
+          {
+            type: "paragraph",
+            text: "A server may be online while the business is still unable to operate.",
+          },
+          {
+            type: "paragraph",
+            text: "For example, an organization may restore an application successfully but discover that users cannot log in, integrations are unavailable, data from the latest transactions is missing, or a dependent system has not been recovered.",
+          },
+          {
+            type: "paragraph",
+            text: "For this reason, business users should participate in recovery validation.",
+          },
+          {
+            type: "paragraph",
+            text: "A successful recovery test should demonstrate that:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Critical data is available and trustworthy",
+              "Applications are functioning as expected",
+              "Required integrations are operational",
+              "Users can authenticate and access systems",
+              "Critical business transactions can be completed",
+              "Security controls remain effective",
+              "Data is within the required RPO",
+              "Recovery is within the required RTO",
+              "Business owners confirm that the service is usable",
+            ],
+          },
+          {
+            type: "contrast",
+            items: [
+              {
+                title:
+                  'The final measure of recovery is not "the system is running."',
+              },
+              {
+                title:
+                  'It is: "The business can perform its critical work again."',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "test-the-worst-case-scenario",
+        title: "8. Test the Worst-Case Scenario",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Organizations often test easy recovery scenarios because they are simpler to perform. Resilience improves when testing reflects realistic failures.",
+          },
+          {
+            type: "paragraph",
+            text: "For example, a recovery program should consider scenarios such as:",
+          },
+          { type: "subheading", title: "Ransomware" },
+          {
+            type: "paragraph",
+            text: "Assume production systems and some credentials have been compromised. Can the organization access clean backups without relying on potentially affected systems?",
+          },
+          { type: "subheading", title: "Accidental Deletion" },
+          {
+            type: "paragraph",
+            text: "Can a deleted database, folder, or critical record be restored quickly and accurately?",
+          },
+          { type: "subheading", title: "Backup Corruption" },
+          {
+            type: "paragraph",
+            text: "What happens if the most recent backup cannot be restored? Is there another known-good recovery point?",
+          },
+          { type: "subheading", title: "Loss of a Primary Site" },
+          {
+            type: "paragraph",
+            text: "Can critical services operate from an alternative location or recovery environment?",
+          },
+          { type: "subheading", title: "Loss of Key Personnel" },
+          {
+            type: "paragraph",
+            text: "Can another team member execute the recovery process without depending on undocumented knowledge held by one individual?",
+          },
+          { type: "subheading", title: "Extended Outage" },
+          {
+            type: "paragraph",
+            text: "Can the organization continue operating while systems are being recovered over a longer period?",
+          },
+          {
+            type: "paragraph",
+            text: "Testing these situations exposes weaknesses that routine backup checks may never reveal.",
+          },
+        ],
+      },
+      {
+        id: "measure-recovery-performance",
+        title: "9. Measure Recovery Performance",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Recovery testing should produce measurable results.",
+          },
+          {
+            type: "paragraph",
+            text: "For every test, capture information such as:",
+          },
+          {
+            type: "callout",
+            label: "Test result example",
+            text: "Planned RTO: 4 hours · Actual recovery time: 6 hours · Planned RPO: 30 minutes · Actual data loss: 2 hours",
+          },
+          {
+            type: "paragraph",
+            text: "This turns testing into an evidence-based improvement process.",
+          },
+          { type: "paragraph", text: "Track:" },
+          {
+            type: "checklist",
+            items: [
+              "Recovery duration",
+              "Data recovery point",
+              "Number of failed restore attempts",
+              "Missing dependencies",
+              "Security issues",
+              "Manual recovery steps",
+              "Communication gaps",
+              "Documentation gaps",
+              "Resource constraints",
+              "Skills or staffing issues",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "A test that produces no measurable information provides limited value.",
+          },
+        ],
+      },
+      {
+        id: "learn-from-failed-recovery-tests",
+        title: "10. Learn From Failed Recovery Tests",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A failed recovery test should be treated as valuable information — not as something to hide.",
+          },
+          {
+            type: "paragraph",
+            text: "Failures reveal weaknesses while the organization still has time to correct them.",
+          },
+          {
+            type: "paragraph",
+            text: "For every issue identified, establish:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "What went wrong?",
+              "Why did it happen?",
+              "What is the risk to the business?",
+              "What corrective action is required?",
+              "Who owns the action?",
+              "When must it be completed?",
+              "When will the fix be retested?",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Most importantly, corrective actions should be tracked through completion.",
+          },
+          {
+            type: "paragraph",
+            text: "Finding a recovery weakness but never fixing it simply carries the same risk into the next incident.",
+          },
+        ],
+      },
+      {
+        id: "keep-recovery-documentation-current",
+        title: "11. Keep Recovery Documentation Current",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Recovery documentation becomes outdated quickly.",
+          },
+          {
+            type: "paragraph",
+            text: "Applications change. Infrastructure moves to the cloud. Passwords and certificates expire. Vendors change. Employees leave. New dependencies are introduced. Recovery technology is upgraded.",
+          },
+          {
+            type: "paragraph",
+            text: "For this reason, recovery documentation should be reviewed and updated whenever significant changes occur, rather than only once a year.",
+          },
+          {
+            type: "paragraph",
+            text: "Important documents may include:",
+          },
+          {
+            type: "checklist",
+            items: [
+              "Recovery procedures",
+              "Application dependency maps",
+              "System inventories",
+              "Contact lists",
+              "Vendor information",
+              "Backup locations",
+              "Recovery credentials and access procedures",
+              "Network diagrams",
+              "Recovery priorities",
+              "RTO and RPO definitions",
+              "Business validation procedures",
+              "Incident escalation procedures",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "Documentation should be accessible during an incident, including scenarios where normal corporate systems are unavailable.",
+          },
+        ],
+      },
+      {
+        id: "establish-a-continuous-recovery-cycle",
+        title: "12. Establish a Continuous Recovery Cycle",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Resilience is not a one-time project.",
+          },
+          {
+            type: "paragraph",
+            text: "A strong backup and recovery program follows a continuous cycle:",
+          },
+          {
+            type: "callout",
+            label: "Continuous recovery cycle",
+            text: "Protect → Monitor → Test → Recover → Measure → Improve → Retest",
+          },
+          {
+            type: "paragraph",
+            text: "Each stage supports the next.",
+          },
+          {
+            type: "priorities",
+            items: [
+              {
+                label: "Protect",
+                detail: "Protect critical systems and information.",
+              },
+              {
+                label: "Monitor",
+                detail: "Monitor backup health and suspicious activity.",
+              },
+              {
+                label: "Test",
+                detail: "Test whether recovery actually works.",
+              },
+              {
+                label: "Recover",
+                detail: "Recover systems and data in realistic scenarios.",
+              },
+              {
+                label: "Measure",
+                detail: "Measure actual performance against RTO and RPO.",
+              },
+              {
+                label: "Improve",
+                detail: "Improve the process based on test results.",
+              },
+              {
+                label: "Retest",
+                detail: "Retest to confirm that improvements are effective.",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This creates a recovery capability that becomes stronger over time.",
+          },
+        ],
+      },
+      {
+        id: "build-a-recovery-culture",
+        title: "13. Build a Recovery Culture Across the Organization",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Recovery should not be considered an IT-only responsibility.",
+          },
+          {
+            type: "paragraph",
+            text: "IT teams may restore the technology, but business leaders decide priorities, security teams help contain threats, communications teams manage messaging, and business users confirm whether critical processes actually work.",
+          },
+          {
+            type: "paragraph",
+            text: "A resilient organization therefore establishes clear roles across the business.",
+          },
+          { type: "paragraph", text: "Everyone should understand:" },
+          {
+            type: "checklist",
+            items: [
+              "Who declares a disaster",
+              "Who makes recovery decisions",
+              "Who owns each critical service",
+              "Who performs restoration",
+              "Who validates recovered systems",
+              "Who communicates with employees and stakeholders",
+              "Who coordinates with vendors",
+              "Who approves the return to normal operations",
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "When responsibilities are clear, recovery becomes faster and less chaotic.",
+          },
+        ],
+      },
+      {
+        id: "define-back-to-work",
+        title: '14. Define What "Back to Work" Actually Means',
+        blocks: [
+          {
+            type: "paragraph",
+            text: "One of the most important improvements an organization can make is to define recovery in business terms.",
+          },
+          {
+            type: "highlights",
+            items: [{ title: '"System restored" is too vague.' }],
+          },
+          {
+            type: "paragraph",
+            text: "Instead, define recovery in terms of business capability.",
+          },
+          { type: "paragraph", text: "For example:" },
+          {
+            type: "priorities",
+            items: [
+              {
+                label: "Finance",
+                detail:
+                  "Finance is recovered when the finance team can log in, access current financial data, process transactions, and complete critical reporting.",
+              },
+              {
+                label: "Customer service",
+                detail:
+                  "Customer service is recovered when agents can access customer records, update cases, and communicate with customers.",
+              },
+              {
+                label: "Operations",
+                detail:
+                  "Operations are recovered when staff can access the systems and information necessary to continue critical production or service activities.",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "This approach ensures that recovery efforts are focused on restoring business operations — not simply restarting infrastructure.",
+          },
+        ],
+      },
+      {
+        id: "five-recovery-questions",
+        title:
+          "15. The Five Questions Every Organization Should Be Able to Answer",
+        blocks: [
+          {
+            type: "paragraph",
+            text: "A mature backup and recovery program should be able to answer five questions with confidence:",
+          },
+          {
+            type: "highlights",
+            items: [
+              {
+                title: "Do we have the data we need?",
+                text: "Are critical systems and information being protected at the appropriate frequency?",
+              },
+              {
+                title: "Can we access our backups during a major incident?",
+                text: "Can we still access recovery copies if production systems, credentials, or networks are compromised?",
+              },
+              {
+                title: "Can we restore the systems?",
+                text: "Have complete recovery procedures been tested, including dependencies and configurations?",
+              },
+              {
+                title: "Can we verify that recovery is correct?",
+                text: "Can technical teams and business owners confirm that the restored environment is accurate, secure, and usable?",
+              },
+              {
+                title:
+                  "Can the organization return to work within an acceptable timeframe?",
+                text: "Does actual recovery performance meet the business's RTO and RPO requirements?",
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "If the organization cannot confidently answer these questions, there is still recovery risk that needs to be addressed.",
+          },
+        ],
+      },
+      {
+        id: "conclusion",
+        title: "Conclusion",
+        showInToc: false,
+        blocks: [
+          {
+            type: "paragraph",
+            text: "Backups are an essential component of resilience, but backups alone do not create resilience.",
+          },
+          {
+            type: "paragraph",
+            text: "A resilient organization goes beyond scheduling backup jobs. It understands what must be recovered, protects backup copies from compromise, defines realistic RTOs and RPOs, documents recovery procedures, tests restoration regularly, involves business users, measures actual recovery performance, and continuously improves the process.",
+          },
+          {
+            type: "paragraph",
+            text: "Most importantly, it recognizes that recovery is the outcome — not the backup itself.",
+          },
+          {
+            type: "contrast",
+            items: [
+              { title: 'The objective is not to say: "We have backups."' },
+              {
+                title:
+                  'The objective is to say: "We have tested backups, we know they can be restored, we know how long recovery takes, and we are confident that our people can return to work."',
+              },
+            ],
+          },
+          {
+            type: "paragraph",
+            text: "That is what resilient backup and recovery looks like.",
+          },
+          {
+            type: "callout",
+            label: "The finish line",
+            text: "Backup success is not the finish line. Recovery success is.",
+          },
+        ],
+      },
+    ],
+    relatedService: {
+      label: "View our Backup & Disaster Recovery services",
+      href: "/services/managed-services-msp-toolchain/#backup-disaster-recovery",
+      heading: "Build recovery your organization can rely on.",
+      description:
+        "Protect critical systems with resilient backups, tested recovery procedures, and practical disaster recovery planning.",
     },
   },
 ];

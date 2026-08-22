@@ -25,8 +25,6 @@ type BlogPostPageProps = {
   params: { slug: string };
 };
 
-export const dynamicParams = false;
-
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
@@ -85,12 +83,53 @@ function ArticleBlock({ block }: { block: BlogBlock }) {
     return (
       <aside className="rounded-r-2xl border-l-4 border-primary-500 bg-primary-50 px-5 py-5 sm:px-6">
         <p className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-primary-700">
-          Practical control
+          {block.label ?? "Practical control"}
         </p>
         <p className="mt-2 text-[15px] font-semibold leading-7 text-slate-700">
           {block.text}
         </p>
       </aside>
+    );
+  }
+
+  if (block.type === "contrast") {
+    return (
+      <blockquote className="space-y-3 rounded-r-2xl border-l-4 border-primary-500 bg-primary-50 px-5 py-5 sm:px-6">
+        {block.items.map((item) => (
+          <div key={item.title}>
+            <p className="text-lg font-extrabold leading-7 tracking-[-0.02em] text-ink">
+              {item.title}
+            </p>
+            {item.text && (
+              <p className="mt-1 text-[15px] leading-7 text-slate-600">
+                {item.text}
+              </p>
+            )}
+          </div>
+        ))}
+      </blockquote>
+    );
+  }
+
+  if (block.type === "highlights") {
+    return (
+      <div className="space-y-3">
+        {block.items.map((item) => (
+          <div
+            key={item.title}
+            className="rounded-r-2xl border-l-4 border-primary-500 bg-primary-50 px-5 py-4 sm:px-6"
+          >
+            <p className="text-lg font-extrabold leading-7 tracking-[-0.02em] text-ink">
+              {item.title}
+            </p>
+            {item.text && (
+              <p className="mt-1 text-[15px] leading-7 text-slate-600">
+                {item.text}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
     );
   }
 
@@ -166,7 +205,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         "@type": "ListItem",
         position: 3,
         name: post.category,
-        item: `https://itexpertsagency.com/blog#${post.category.toLowerCase()}`,
+        item: `https://itexpertsagency.com/blog#${post.category.toLowerCase().replaceAll(" ", "-")}`,
       },
       {
         "@type": "ListItem",
@@ -227,6 +266,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <h1 className="mt-5 text-balance text-4xl font-extrabold leading-[1.08] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
                 {post.title}
               </h1>
+              {post.subtitle && (
+                <p className="mt-5 max-w-3xl text-pretty text-lg font-extrabold leading-8 text-accent-300 sm:text-xl">
+                  {post.subtitle}
+                </p>
+              )}
               <p className="mt-6 max-w-3xl text-pretty text-base leading-8 text-slate-100/85 sm:text-lg">
                 {post.excerpt}
               </p>
@@ -264,14 +308,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="mx-auto grid max-w-7xl items-start gap-8 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:gap-12">
             <article className="rounded-[2rem] border border-slate-200/80 bg-white px-6 py-9 shadow-card sm:px-10 sm:py-12 lg:px-12">
               <div className="space-y-5 border-b border-slate-200 pb-10">
-                {post.intro.map((paragraph) => (
-                  <p
-                    key={paragraph}
-                    className="text-base leading-8 text-slate-600 first:text-lg first:font-semibold first:leading-9 first:text-slate-700"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+                {post.introBlocks
+                  ? post.introBlocks.map((block, index) => (
+                      <ArticleBlock key={`intro-${index}`} block={block} />
+                    ))
+                  : post.intro.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className="text-base leading-8 text-slate-600 first:text-lg first:font-semibold first:leading-9 first:text-slate-700"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
               </div>
 
               <div>
@@ -308,11 +356,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                     Related service
                   </p>
                   <h2 className="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-ink">
-                    Strengthen your everyday security controls.
+                    {post.relatedService.heading}
                   </h2>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
-                    Get practical support for managed detection, vulnerability
-                    management, endpoint security, and SIEM operations.
+                    {post.relatedService.description}
                   </p>
                   <Link
                     href={post.relatedService.href}
@@ -334,16 +381,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                   On this page
                 </p>
                 <ol className="mt-5 space-y-3 border-l border-primary-200 pl-4">
-                  {post.sections.map((section) => (
-                    <li key={section.id}>
-                      <a
-                        href={`#${section.id}`}
-                        className="block text-xs font-bold leading-5 text-slate-500 transition-colors hover:text-primary-800"
-                      >
-                        {section.title}
-                      </a>
-                    </li>
-                  ))}
+                  {post.sections
+                    .filter((section) => section.showInToc !== false)
+                    .map((section) => (
+                      <li key={section.id}>
+                        <a
+                          href={`#${section.id}`}
+                          className="block text-xs font-bold leading-5 text-slate-500 transition-colors hover:text-primary-800"
+                        >
+                          {section.title}
+                        </a>
+                      </li>
+                    ))}
                 </ol>
               </nav>
             </aside>

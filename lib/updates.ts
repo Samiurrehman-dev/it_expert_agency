@@ -65,6 +65,28 @@ export const updatePosts: UpdatePost[] = [
   },
   {
     type: "Blog",
+    icon: Headphones,
+    category: "Managed IT",
+    title: "A Safer Path to Modern Collaboration Across Your Team",
+    excerpt:
+      "How Microsoft 365 brings communication, productivity, and security together into one connected environment — helping teams collaborate freely without losing control of business data.",
+    meta: "8 min read",
+    color: "from-slate-900 to-primary-800",
+    href: "/blog/safer-path-modern-collaboration-across-your-team",
+  },
+  {
+    type: "Blog",
+    icon: DatabaseBackup,
+    category: "Backup & Disaster Recovery",
+    title: "Backups Are Only Useful When Recovery Is Tested",
+    excerpt:
+      "A backup is only as valuable as your ability to restore it. A practical framework for RTOs, RPOs, backup resilience, and — most importantly — actually testing recovery before you need it.",
+    meta: "14 min read",
+    color: "from-primary-900 to-accent-700",
+    href: "/blog/backups-are-only-useful-when-recovery-is-tested",
+  },
+  {
+    type: "Blog",
     icon: CloudCog,
     category: "Cloud",
     title: "When is it time to move your business systems to the cloud?",
