@@ -121,11 +121,12 @@ export const updatePosts: UpdatePost[] = [
     type: "Blog",
     icon: Headphones,
     category: "Managed IT",
-    title: "What proactive IT support should look like in practice",
+    title: "What Proactive IT Support Should Look Like in Practice",
     excerpt:
-      "How monitoring, maintenance, and clear support processes prevent avoidable downtime.",
+      "How monitoring, maintenance, and clear support processes prevent avoidable downtime — and what separates a genuinely proactive IT team from one that just reacts faster.",
     meta: "7 min read",
     color: "from-slate-900 to-primary-800",
+    href: "/blog/what-proactive-it-support-should-look-like-in-practice",
   },
   {
     type: "Case Study",
