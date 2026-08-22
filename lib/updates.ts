@@ -87,6 +87,17 @@ export const updatePosts: UpdatePost[] = [
   },
   {
     type: "Blog",
+    icon: Sparkles,
+    category: "AI & Automation",
+    title: "Keep Your Data, Models and Decisions Under Your Control",
+    excerpt:
+      "Enterprise AI adoption isn't about choosing the most powerful model — it's about control. A principle-driven approach to keeping your data, models, policies, and decisions aligned with your own infrastructure and business goals.",
+    meta: "6 min read",
+    color: "from-accent-900 to-primary-800",
+    href: "/blog/keep-your-data-models-decisions-under-control",
+  },
+  {
+    type: "Blog",
     icon: CloudCog,
     category: "Cloud",
     title: "When is it time to move your business systems to the cloud?",
