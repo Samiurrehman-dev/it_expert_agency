@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -17,80 +16,18 @@ import { OurServicesSection } from "@/components/OurServicesSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/section-heading";
 import { StatsCounter } from "@/components/StatsCounter";
+import { updatePosts, type UpdatePost } from "@/lib/updates";
+
+type PublishedUpdate = UpdatePost & { href: string };
+
+const publishedUpdates = updatePosts.filter(
+  (post): post is PublishedUpdate =>
+    Boolean(post.href) && (post.type === "Blog" || post.type === "Case Study"),
+);
 
 const latestUpdates = [
-  {
-    contentType: "Ebook",
-    title: "Keep your data, models, and decisions under your control",
-    summary:
-      "Build enterprise AI around your own infrastructure, policies, and business goals—without giving up control of sensitive data.",
-    href: "/ebooks",
-    image: "/images/hero-ai-poster.jpg",
-    imageClass: "object-cover object-[68%_center]",
-  },
-  {
-    contentType: "Case Study",
-    title: "Turn infrastructure signals into faster, smarter action",
-    summary:
-      "Connect monitoring, automation, and decision-making so your IT operation can identify issues early and respond with confidence.",
-    href: "/case-studies",
-    image: "/images/hero-slide-data.jpg",
-    imageClass: "object-cover object-center",
-  },
-  {
-    contentType: "Ebook",
-    title: "A practical security checklist for growing businesses",
-    summary:
-      "Strengthen everyday security with practical controls that reduce risk while keeping your people productive and your business moving.",
-    href: "/ebooks",
-    image: "/images/hero-slide-control.jpg",
-    imageClass: "object-cover object-[63%_center]",
-  },
-  {
-    contentType: "Blog",
-    title: "What proactive IT support should look like in practice",
-    summary:
-      "Move beyond reactive fixes with continuous monitoring, preventive maintenance, and responsive support designed around your team.",
-    href: "/blog",
-    image: "/images/hero-ai-poster.jpg",
-    imageClass: "object-cover object-[38%_center]",
-  },
-  {
-    contentType: "Blog",
-    title: "When is it time to move your business systems to the cloud?",
-    summary:
-      "Explore the key signs, tradeoffs, and planning questions that can help you make your next cloud move with clarity.",
-    href: "/blog",
-    image: "/images/hero-slide-data.jpg",
-    imageClass: "object-cover object-[72%_center]",
-  },
-  {
-    contentType: "Case Study",
-    title: "A safer path to modern collaboration across your team",
-    summary:
-      "Bring communication, productivity, and security together with a Microsoft 365 environment designed for the way your team works.",
-    href: "/case-studies",
-    image: "/images/hero-slide-control.jpg",
-    imageClass: "object-cover object-[35%_center]",
-  },
-  {
-    contentType: "Case Study",
-    title: "Backups are only useful when recovery is tested",
-    summary:
-      "Create a resilient backup and recovery process that helps your organization return to work quickly after disruption.",
-    href: "/case-studies",
-    image: "/images/hero-ai-poster.jpg",
-    imageClass: "object-cover object-[82%_center]",
-  },
-  {
-    contentType: "Blog",
-    title: "Five warning signs your network is holding your team back",
-    summary:
-      "Spot the performance, coverage, and reliability issues that quietly slow down a growing business and affect daily work.",
-    href: "/blog",
-    image: "/images/hero-slide-data.jpg",
-    imageClass: "object-cover object-[32%_center]",
-  },
+  ...publishedUpdates.filter((post) => post.type === "Blog").slice(0, 6),
+  ...publishedUpdates.filter((post) => post.type === "Case Study").slice(0, 2),
 ];
 
 const reasons = [
@@ -139,13 +76,21 @@ export default function Home() {
                   Latest Updates
                 </h2>
               </div>
-              <Link
-                href="/blog"
-                className="group hidden items-center gap-2 rounded-full border border-primary-200 bg-white px-5 py-3 text-sm font-extrabold text-primary-800 shadow-card transition-all hover:border-primary-400 hover:text-primary-600 sm:inline-flex"
-              >
-                View all updates
-                <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Link>
+              <div className="hidden items-center gap-3 sm:flex">
+                {[
+                  { label: "View all blogs", href: "/blog" },
+                  { label: "Case studies", href: "/case-studies" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="group inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white px-5 py-3 text-sm font-extrabold text-primary-800 shadow-card transition-all hover:border-primary-400 hover:text-primary-600"
+                  >
+                    {item.label}
+                    <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </Link>
+                ))}
+              </div>
             </div>
           </ScrollReveal>
 
@@ -162,20 +107,21 @@ export default function Home() {
                 >
                   <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white p-3 shadow-card transition-all duration-500 group-hover:-translate-y-1.5 group-hover:border-primary-200 group-hover:shadow-soft">
                     <div className="relative aspect-[4/3] shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-950">
-                      <Image
-                        src={update.image}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1280px) 290px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className={`${update.imageClass} transition-transform duration-700 ease-out group-hover:scale-105`}
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${update.color}`}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+                      <div className="absolute -right-10 -top-12 size-40 rounded-full border-[34px] border-white/10 transition-transform duration-500 group-hover:scale-110" />
+                      <div className="absolute bottom-5 right-5 grid size-16 place-items-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105">
+                        <update.icon className="size-7" aria-hidden="true" />
+                      </div>
                       <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-primary-500 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
-                        {update.contentType}
+                        {update.type}
                       </span>
-                      <span className="absolute bottom-4 left-5 text-xs font-bold tracking-[0.12em] text-white/75">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                      <div className="absolute bottom-5 left-5 max-w-[65%]">
+                        <span className="text-xs font-bold leading-5 text-white/80">
+                          {update.category}
+                        </span>
+                      </div>
                     </div>
 
                     <div className="relative flex flex-1 flex-col px-4 pb-4 pt-6 sm:px-5 sm:pb-5">
@@ -183,11 +129,15 @@ export default function Home() {
                         {update.title}
                       </h3>
                       <p className="mt-3 line-clamp-3 text-sm font-medium leading-6 text-slate-600">
-                        {update.summary}
+                        {update.excerpt}
                       </p>
 
                       <div className="mt-auto flex items-center gap-3 pt-6 text-sm font-extrabold text-slate-800">
-                        <span>View Updates</span>
+                        <span>
+                          {update.type === "Case Study"
+                            ? "Read case study"
+                            : "Read article"}
+                        </span>
                         <span className="h-px flex-1 bg-slate-200 transition-colors group-hover:bg-primary-200" />
                         <span className="grid size-11 shrink-0 place-items-center rounded-full bg-slate-950 text-white transition-all duration-300 group-hover:rotate-[-8deg] group-hover:bg-primary-500">
                           <ArrowUpRight className="size-5" strokeWidth={1.8} />
@@ -202,13 +152,22 @@ export default function Home() {
             ))}
           </div>
 
-          <Link
-            href="/blog"
-            className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-primary-800 sm:hidden"
-          >
-            View all updates
-            <ArrowUpRight className="size-4" />
-          </Link>
+          <div className="mt-8 flex flex-wrap gap-5 sm:hidden">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 text-sm font-extrabold text-primary-800"
+            >
+              View all blogs
+              <ArrowUpRight className="size-4" />
+            </Link>
+            <Link
+              href="/case-studies"
+              className="inline-flex items-center gap-2 text-sm font-extrabold text-primary-800"
+            >
+              Case studies
+              <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
