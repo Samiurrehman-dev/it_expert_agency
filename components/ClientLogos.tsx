@@ -15,27 +15,27 @@ export type ClientLogosProps = {
 const defaultLogos: ClientLogo[] = [
   {
     name: "Performance Solution",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Performance-Solution.png",
+    src: "/images/Performance-Solution.png",
   },
   {
     name: "Modern Sense Furniture",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Modern-Sense-Furniture.png",
+    src: "/images/Modern-Sense-Furniture.png",
   },
   {
     name: "Meetpoint",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Meetpoint.png",
+    src: "/images/Meetpoint.png",
   },
   {
     name: "Orion Technologies",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Orion-Technologies.png",
+    src: "/images/Orion-Technologies.png",
   },
   {
     name: "Diesel Truck",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Diesel-Truck.png",
+    src: "/images/Diesel-Truck.png",
   },
   {
     name: "Premium Sweets",
-    src: "https://itexpertsagency.com/wp-content/uploads/2023/11/Premium-Sweets.png",
+    src: "/images/Premium-Sweets.png",
   },
 ];
 
