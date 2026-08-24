@@ -500,8 +500,8 @@ export const serviceCategories: readonly ServiceCategory[] = [
         title: "Compliance Automation",
         slug: "compliance-automation",
         description:
-          "Continuous control monitoring and automated evidence collection for audit readiness.",
-        tools: ["Drata", "Vanta", "OneTrust", "ServiceNow GRC"],
+          "Structured control monitoring, evidence mapping and gap reporting that keeps audit-readiness work visible and traceable.",
+        tools: ["Drata", "Vanta", "OneTrust", "Secureframe"],
         icon: ClipboardCheck,
       },
       {
@@ -509,7 +509,12 @@ export const serviceCategories: readonly ServiceCategory[] = [
         slug: "risk-management-assessments",
         description:
           "Enterprise and IT risk register management, vendor risk assessments, and third-party risk scoring.",
-        tools: ["LogicGate", "Archer (RSA)", "MetricStream"],
+        tools: [
+          "RSA Archer",
+          "ServiceNow GRC",
+          "LogicGate",
+          "Excel / GRC-lite",
+        ],
         icon: ShieldAlert,
       },
       {
@@ -522,7 +527,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
           "SOC 2",
           "NIST CSF",
           "HIPAA",
-          "PCI-DSS",
+          "PCI DSS",
           "GDPR",
           "NCA/SAMA (GCC)",
         ],
@@ -533,7 +538,7 @@ export const serviceCategories: readonly ServiceCategory[] = [
         slug: "policy-audit-support",
         description:
           "Policy authoring, control mapping, internal audit preparation, and auditor liaison support.",
-        tools: [],
+        tools: ["Confluence", "AuditBoard", "Attestation tools"],
         icon: FileCheck2,
       },
     ],

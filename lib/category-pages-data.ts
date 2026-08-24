@@ -291,7 +291,7 @@ export const categoryPageContent: readonly CategoryPageContent[] = [
   },
   {
     slug: "governance-risk-compliance",
-    h1: "Governance, Risk & Compliance Support for MSPs",
+    h1: "Governance, Risk & Compliance",
     metaTitle: "GRC & Compliance Support Staffing | IT Experts Agency",
     metaDescription:
       "GRC specialists for US, UK, Canada and GCC organisations across ISO 27001, SOC 2, NIST, HIPAA, PCI-DSS, GDPR and NCA/SAMA audit readiness support.",

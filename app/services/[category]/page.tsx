@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CategoryPillarPage } from "@/components/CategoryPillarPage";
+import { GovernanceRiskComplianceLandingPage } from "@/components/GovernanceRiskComplianceLandingPage";
 import { OperatingSystemsLandingPage } from "@/components/OperatingSystemsLandingPage";
 import {
   categoryPageContent,
@@ -127,6 +128,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         category={category}
         content={content}
         schemas={[serviceSchema, breadcrumbSchema]}
+      />
+    );
+  }
+
+  if (content.slug === "governance-risk-compliance") {
+    return (
+      <GovernanceRiskComplianceLandingPage
+        category={category}
+        schemas={[serviceSchema, breadcrumbSchema, faqSchema]}
       />
     );
   }

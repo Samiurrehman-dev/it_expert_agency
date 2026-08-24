@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { GRCServicePage } from "@/components/GRCServicePage";
 import { OperatingSystemServicePage } from "@/components/OperatingSystemServicePage";
+import {
+  getGRCServicePage,
+  grcCategorySlug,
+  grcServicePages,
+} from "@/lib/grc-service-pages-data";
 import {
   getOSServicePage,
   osCategorySlug,
@@ -13,18 +19,28 @@ type OSServicePageProps = {
 };
 
 export function generateStaticParams() {
-  return osServicePages.map((page) => ({
-    category: osCategorySlug,
-    service: page.slug,
-  }));
+  return [
+    ...osServicePages.map((page) => ({
+      category: osCategorySlug,
+      service: page.slug,
+    })),
+    ...grcServicePages.map((page) => ({
+      category: grcCategorySlug,
+      service: page.slug,
+    })),
+  ];
 }
 
 export function generateMetadata({ params }: OSServicePageProps): Metadata {
-  if (params.category !== osCategorySlug) return {};
-  const page = getOSServicePage(params.service);
+  const page =
+    params.category === osCategorySlug
+      ? getOSServicePage(params.service)
+      : params.category === grcCategorySlug
+        ? getGRCServicePage(params.service)
+        : undefined;
   if (!page) return {};
 
-  const canonical = `/services/${osCategorySlug}/${page.slug}`;
+  const canonical = `/services/${params.category}/${page.slug}`;
 
   return {
     title: { absolute: page.metaTitle },
@@ -41,11 +57,20 @@ export function generateMetadata({ params }: OSServicePageProps): Metadata {
 }
 
 export default function OSServiceDetailPage({ params }: OSServicePageProps) {
-  if (params.category !== osCategorySlug) notFound();
-  const page = getOSServicePage(params.service);
+  const isOSPage = params.category === osCategorySlug;
+  const isGRCPage = params.category === grcCategorySlug;
+  if (!isOSPage && !isGRCPage) notFound();
+
+  const page = isOSPage
+    ? getOSServicePage(params.service)
+    : getGRCServicePage(params.service);
   if (!page) notFound();
 
-  const pageUrl = `https://itexpertsagency.com/services/${osCategorySlug}/${page.slug}`;
+  const categorySlug = isOSPage ? osCategorySlug : grcCategorySlug;
+  const categoryName = isOSPage
+    ? "Operating Systems & Endpoint Management"
+    : "Governance, Risk & Compliance";
+  const pageUrl = `https://itexpertsagency.com/services/${categorySlug}/${page.slug}`;
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -84,8 +109,8 @@ export default function OSServiceDetailPage({ params }: OSServicePageProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Operating Systems & Endpoint Management",
-        item: `https://itexpertsagency.com/services/${osCategorySlug}`,
+        name: categoryName,
+        item: `https://itexpertsagency.com/services/${categorySlug}`,
       },
       {
         "@type": "ListItem",
@@ -96,9 +121,43 @@ export default function OSServiceDetailPage({ params }: OSServicePageProps) {
     ],
   };
 
+  if (isGRCPage) {
+    const grcPage = getGRCServicePage(params.service);
+    if (!grcPage) notFound();
+
+    const faqSchema = grcPage.faqs
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: grcPage.faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : undefined;
+
+    return (
+      <GRCServicePage
+        page={grcPage}
+        schemas={[
+          serviceSchema,
+          breadcrumbSchema,
+          ...(faqSchema ? [faqSchema] : []),
+        ]}
+      />
+    );
+  }
+
+  const osPage = getOSServicePage(params.service);
+  if (!osPage) notFound();
+
   return (
     <OperatingSystemServicePage
-      page={page}
+      page={osPage}
       schemas={[serviceSchema, breadcrumbSchema]}
     />
   );
