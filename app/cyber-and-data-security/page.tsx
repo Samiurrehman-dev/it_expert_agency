@@ -425,7 +425,7 @@ export default function CyberAndDataSecurityPage() {
           eyebrow="Let’s build your security posture"
           heading="Reduce security risk without carrying the cost of a full in-house security operation."
           description="Start with a no-pressure conversation about your risks, compliance needs, and the right next step for protecting your business."
-          buttonLabel="Get Free Consultation"
+          buttonLabel="Let’s Talk"
           buttonHref="/contact-us"
         />
       </main>

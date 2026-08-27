@@ -15,7 +15,7 @@ export function CTASection({
   eyebrow = "Ready to strengthen your IT?",
   heading = "Turn technology into an advantage for your business.",
   description = "Talk with an IT expert about a clear, practical plan for better support, stronger security, and less downtime.",
-  buttonLabel = "Get Free Consultation",
+  buttonLabel = "Let’s Talk",
   buttonHref = "#contact",
 }: CTASectionProps) {
   return (

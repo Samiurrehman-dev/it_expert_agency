@@ -493,7 +493,7 @@ export default function ITInfrastructurePage() {
           eyebrow="Infrastructure built for what’s next"
           heading="Scale with confidence while a dedicated team watches your infrastructure."
           description="Talk with an IT expert about improving availability, simplifying operations, and planning the next stage of your technology environment."
-          buttonLabel="Get Free Consultation"
+          buttonLabel="Let’s Talk"
           buttonHref="/contact-us"
         />
       </main>

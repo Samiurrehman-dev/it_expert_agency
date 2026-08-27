@@ -385,7 +385,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
                   : "bg-primary-900 hover:bg-primary-800",
               ].join(" ")}
             >
-              Free Consultation
+              Let’s Talk
             </a>
           </div>
 
@@ -491,7 +491,7 @@ export function Header({ overlay = false }: { overlay?: boolean }) {
             onClick={closeDrawer}
             className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-900 px-5 text-sm font-extrabold text-white"
           >
-            Free Consultation
+            Let’s Talk
             <ArrowRight className="size-4" />
           </a>
         </div>

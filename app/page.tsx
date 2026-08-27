@@ -272,7 +272,7 @@ export default function Home() {
           eyebrow="Let’s solve IT together"
           heading="Focus on your business. We’ll take care of the technology."
           description="Start with a no-pressure conversation about your support, infrastructure, cloud, or security needs."
-          buttonLabel="Get Free Consultation"
+          buttonLabel="Let’s Talk"
           buttonHref="/contact-us"
         />
       </ScrollReveal>

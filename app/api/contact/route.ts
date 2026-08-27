@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+import {
+  contactAutoReplyHtml,
+  contactAutoReplyText,
+  contactNotificationHtml,
+  contactNotificationText,
+} from "@/lib/emailTemplates/contact";
+
 export const runtime = "nodejs";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,20 +45,6 @@ type SmtpError = Error & {
 
 function getString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (character) => {
-    const entities: Record<string, string> = {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    };
-
-    return entities[character];
-  });
 }
 
 function getMailConfig(): MailConfig {
@@ -111,10 +104,7 @@ function getPublicMailError(error: unknown): string {
     return "The SMTP server address could not be resolved.";
   }
 
-  if (
-    smtpError.code === "ECONNECTION" ||
-    smtpError.code === "ETIMEDOUT"
-  ) {
+  if (smtpError.code === "ECONNECTION" || smtpError.code === "ETIMEDOUT") {
     return "Could not reach the SMTP server on port 587. Check network and endpoint access.";
   }
 
@@ -209,47 +199,32 @@ export async function POST(request: Request) {
       },
     });
 
-    const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safePhone = escapeHtml(phone || "Not provided");
-    const safeSubject = escapeHtml(subject);
-    const safeMessage = escapeHtml(message).replace(/\n/g, "<br />");
+    const submittedAt = new Date();
+    const templateData = {
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      submittedAt,
+    };
 
     await transporter.sendMail({
       from: config.from,
       to: config.to,
       replyTo: email,
       subject: `Website contact: ${subject}`,
-      text: [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Phone: ${phone || "Not provided"}`,
-        `Subject: ${subject}`,
-        "",
-        message,
-      ].join("\n"),
-      html: `
-        <h2>New website contact request</h2>
-        <p><strong>Name:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
-        <p><strong>Phone:</strong> ${safePhone}</p>
-        <p><strong>Subject:</strong> ${safeSubject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${safeMessage}</p>
-      `,
+      text: contactNotificationText(templateData),
+      html: contactNotificationHtml(templateData),
     });
 
     try {
       await transporter.sendMail({
         from: config.from,
         to: email,
-        subject: "Thank you for contacting us",
-        text: `Hi ${name},\n\nThank you for contacting us. We received your message and a member of our team will be in touch soon.\n\nBest regards,\nIT Experts Agency`,
-        html: `
-          <p>Hi ${safeName},</p>
-          <p>Thank you for contacting us. We received your message and a member of our team will be in touch soon.</p>
-          <p>Best regards,<br />IT Experts Agency</p>
-        `,
+        subject: "Thank you for contacting IT Experts Agency",
+        text: contactAutoReplyText({ name }),
+        html: contactAutoReplyHtml({ name }),
       });
     } catch (error) {
       // The business notification was delivered, so an auto-reply failure should
