@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -47,6 +48,7 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
       description: post.excerpt,
       url: canonical,
       siteName: "IT Experts Agency",
+      images: [{ url: post.image, alt: post.imageAlt }],
       publishedTime: post.publishedDate,
       authors: [post.author],
     },
@@ -231,6 +233,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
+    image: `https://itexpertsagency.com${post.image}`,
     datePublished: post.publishedDate,
     dateModified: post.publishedDate,
     mainEntityOfPage: pageUrl,
@@ -366,6 +369,17 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         <section className="bg-slate-50 py-14 sm:py-20">
           <div className="mx-auto grid max-w-7xl items-start gap-8 px-5 sm:px-8 lg:grid-cols-[minmax(0,1fr)_17rem] xl:gap-12">
             <article className="rounded-[2rem] border border-slate-200/80 bg-white px-6 py-9 shadow-card sm:px-10 sm:py-12 lg:px-12">
+              <figure className="relative mb-10 aspect-[16/9] overflow-hidden rounded-3xl bg-slate-200">
+                <Image
+                  src={post.image}
+                  alt={post.imageAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 820px, (min-width: 1024px) calc(100vw - 25rem), calc(100vw - 2.5rem)"
+                  className="object-cover"
+                />
+              </figure>
+
               <div className="space-y-5 border-b border-slate-200 pb-10">
                 {post.introBlocks
                   ? post.introBlocks.map((block, index) => (

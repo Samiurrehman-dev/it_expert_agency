@@ -5,6 +5,8 @@ type CaseStudyBase = {
   title: string;
   subtitle: string;
   excerpt: string;
+  image: string;
+  imageAlt: string;
   relatedService: {
     label: string;
     href: string;
@@ -62,6 +64,9 @@ export const caseStudies: CaseStudy[] = [
     category: "E-Commerce — Backup & Disaster Recovery",
     industry: "E-Commerce",
     title: "Backups Are Only Useful When Recovery Is Tested",
+    image: "/images/updates/case-study-tested-recovery.jpg",
+    imageAlt:
+      "Server room equipment and network cabling prepared for a recovery test",
     subtitle:
       "How a growing e-commerce company turned an untested backup into a reliable recovery plan.",
     publishedDate: "2026-08-22",
@@ -142,6 +147,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Professional Services — Monitoring & AIOps",
     industry: "Professional Services",
     title: "Turn Infrastructure Signals Into Faster, Smarter Action",
+    image: "/images/updates/case-study-aiops-monitoring.jpg",
+    imageAlt:
+      "Operations engineer reviewing alerts and system data across a wall of monitors",
     subtitle:
       "How One Growing Company Stopped Reacting to IT Problems and Started Preventing Them",
     excerpt:

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -107,17 +108,18 @@ export default function Home() {
                 >
                   <article className="relative flex h-full min-h-[500px] flex-col overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white p-3 shadow-card transition-all duration-500 group-hover:-translate-y-1.5 group-hover:border-primary-200 group-hover:shadow-soft">
                     <div className="relative aspect-[4/3] shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-950">
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${update.color}`}
+                      <Image
+                        src={update.image!}
+                        alt={update.imageAlt ?? ""}
+                        fill
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute -right-10 -top-12 size-40 rounded-full border-[34px] border-white/10 transition-transform duration-500 group-hover:scale-110" />
-                      <div className="absolute bottom-5 right-5 grid size-16 place-items-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105">
-                        <update.icon className="size-7" aria-hidden="true" />
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-primary-950/10 to-black/5" />
                       <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-primary-500 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-white shadow-sm">
                         {update.type}
                       </span>
-                      <div className="absolute bottom-5 left-5 max-w-[65%]">
+                      <div className="absolute bottom-5 left-5 max-w-[80%]">
                         <span className="text-xs font-bold leading-5 text-white/80">
                           {update.category}
                         </span>

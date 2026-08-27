@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -22,13 +23,34 @@ export function UpdatePostCard({
   const card = (
     <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-primary-200 hover:shadow-soft">
       <div
-        className={`relative flex h-48 items-end overflow-hidden bg-gradient-to-br ${post.color} p-6`}
+        className={`relative flex h-48 items-end overflow-hidden ${
+          post.image ? "bg-primary-950" : `bg-gradient-to-br ${post.color}`
+        } p-6`}
       >
-        <div className="absolute -right-10 -top-12 size-40 rounded-full border-[34px] border-white/10 transition-transform duration-500 group-hover:scale-110" />
-        <div className="absolute bottom-5 right-6 grid size-16 place-items-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm">
-          <post.icon className="size-7" aria-hidden="true" />
-        </div>
-        <div className="relative flex flex-wrap gap-2 pr-16">
+        {post.image ? (
+          <>
+            <Image
+              src={post.image}
+              alt={post.imageAlt ?? ""}
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-primary-950/20 to-black/5" />
+          </>
+        ) : (
+          <div className="absolute -right-10 -top-12 size-40 rounded-full border-[34px] border-white/10 transition-transform duration-500 group-hover:scale-110" />
+        )}
+        {post.type === "Ebook" && (
+          <div className="absolute bottom-5 right-6 grid size-16 place-items-center rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-sm">
+            <post.icon className="size-7" aria-hidden="true" />
+          </div>
+        )}
+        <div
+          className={`relative flex flex-wrap gap-2 ${
+            post.type === "Ebook" ? "pr-16" : ""
+          }`}
+        >
           <UpdateAccentPill>{post.category}</UpdateAccentPill>
           <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-extrabold text-white backdrop-blur-sm">
             {post.type}

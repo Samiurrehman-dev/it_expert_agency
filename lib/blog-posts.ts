@@ -42,6 +42,8 @@ export type BlogPost = {
   publishedLabel: string;
   readTime: string;
   excerpt: string;
+  image: string;
+  imageAlt: string;
   intro: string[];
   introBlocks?: BlogBlock[];
   sections: BlogSection[];
@@ -64,6 +66,9 @@ export const blogPosts: BlogPost[] = [
     slug: "practical-security-checklist-growing-business",
     category: "Security",
     title: "A Practical Security Checklist for a Growing Business",
+    image: "/images/updates/blog-security-checklist.jpg",
+    imageAlt:
+      "Cybersecurity professional monitoring several computer screens in a home office",
     author: "IT Experts Agency",
     publishedDate: "2026-08-22",
     publishedLabel: "August 22, 2026",
@@ -428,6 +433,9 @@ export const blogPosts: BlogPost[] = [
     slug: "safer-path-modern-collaboration-across-your-team",
     category: "Managed IT",
     title: "A Safer Path to Modern Collaboration Across Your Team",
+    image: "/images/updates/blog-modern-collaboration.jpg",
+    imageAlt:
+      "Colleagues collaborating around laptops and a digital presentation in a modern office",
     subtitle:
       "Bring Communication, Productivity, and Security Together with Microsoft 365",
     author: "IT Experts Agency",
@@ -760,6 +768,9 @@ export const blogPosts: BlogPost[] = [
     slug: "backups-are-only-useful-when-recovery-is-tested",
     category: "Backup & Disaster Recovery",
     title: "Backups Are Only Useful When Recovery Is Tested",
+    image: "/images/updates/blog-backup-recovery.jpg",
+    imageAlt:
+      "IT technician working at a computer inside a blue-lit server room",
     subtitle:
       "Build a Resilient Backup and Recovery Process That Helps Your Organization Return to Work",
     author: "IT Experts Agency",
@@ -1642,6 +1653,9 @@ export const blogPosts: BlogPost[] = [
     slug: "keep-your-data-models-decisions-under-control",
     category: "AI & Automation",
     title: "Keep Your Data, Models and Decisions Under Your Control",
+    image: "/images/updates/blog-ai-control.jpg",
+    imageAlt:
+      "Professional using an artificial intelligence and big data interface on a laptop",
     subtitle:
       "Build Enterprise AI Around Your Own Infrastructure, Policies and Business Goals",
     author: "IT Experts Agency",
@@ -1877,6 +1891,9 @@ export const blogPosts: BlogPost[] = [
     slug: "five-warning-signs-network-holding-team-back",
     category: "Infrastructure",
     title: "Five Warning Signs Your Network Is Holding Your Team Back",
+    image: "/images/updates/blog-network-warning-signs.jpg",
+    imageAlt:
+      "IT specialist carefully inspecting network cables in a server environment",
     author: "IT Experts Agency",
     publishedDate: "2026-08-22",
     publishedLabel: "August 22, 2026",
@@ -2089,6 +2106,9 @@ export const blogPosts: BlogPost[] = [
     slug: "what-proactive-it-support-should-look-like-in-practice",
     category: "Managed IT",
     title: "What Proactive IT Support Should Look Like in Practice",
+    image: "/images/updates/blog-proactive-it-support.jpg",
+    imageAlt:
+      "IT support specialists wearing headsets and working together at laptops",
     author: "IT Experts Agency",
     publishedDate: "2026-08-22",
     publishedLabel: "August 22, 2026",
@@ -2612,6 +2632,9 @@ export const blogPosts: BlogPost[] = [
     slug: "turn-infrastructure-signals-into-faster-smarter-action",
     category: "Observability & Automation",
     title: "Turn Infrastructure Signals into Faster and Smarter Action",
+    image: "/images/updates/blog-infrastructure-signals.jpg",
+    imageAlt:
+      "Operations specialist monitoring infrastructure signals across multiple screens",
     author: "IT Experts Agency",
     publishedDate: "2026-08-22",
     publishedLabel: "August 22, 2026",

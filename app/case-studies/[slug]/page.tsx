@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -51,6 +52,7 @@ export function generateMetadata({ params }: CaseStudyPageProps): Metadata {
       description: caseStudy.excerpt,
       url: canonical,
       siteName: "IT Experts Agency",
+      images: [{ url: caseStudy.image, alt: caseStudy.imageAlt }],
       ...(caseStudy.format === "structured"
         ? { publishedTime: caseStudy.publishedDate }
         : {}),
@@ -90,6 +92,7 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
     "@type": "Article",
     headline: caseStudy.title,
     description: caseStudy.excerpt,
+    image: `https://itexpertsagency.com${caseStudy.image}`,
     ...(caseStudy.format === "structured"
       ? {
           datePublished: caseStudy.publishedDate,
@@ -221,6 +224,17 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
         <section className="bg-slate-50 py-14 sm:py-20">
           <div className="mx-auto max-w-5xl px-5 sm:px-8">
             <article className="overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white shadow-card">
+              <figure className="relative aspect-[16/9] bg-slate-200">
+                <Image
+                  src={caseStudy.image}
+                  alt={caseStudy.imageAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 960px, calc(100vw - 2.5rem)"
+                  className="object-cover"
+                />
+              </figure>
+
               {caseStudy.format === "structured" ? (
                 <>
                   <div className="px-6 py-9 sm:px-10 sm:py-12 lg:px-14">
