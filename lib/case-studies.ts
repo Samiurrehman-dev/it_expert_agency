@@ -149,7 +149,7 @@ export const caseStudies: CaseStudy[] = [
     category: "Professional Services — Monitoring & AIOps",
     industry: "Professional Services",
     title: "Turn Infrastructure Signals Into Faster, Smarter Action",
-    image: "/images/updates/case-study-aiops-monitoring.jpg",
+    image: "/images/updates/case-study-aiops-monitoring-v2.jpg",
     imageAlt:
       "Operations engineer reviewing alerts and system data across a wall of monitors",
     subtitle:
