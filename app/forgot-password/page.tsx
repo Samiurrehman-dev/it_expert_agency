@@ -1,0 +1,7 @@
+"use client";
+import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { Loader2 } from "lucide-react";
+import { AuthCard } from "@/components/dashboard/auth-card";
+
+export default function ForgotPasswordPage(){const[busy,setBusy]=useState(false);const[message,setMessage]=useState("");const[error,setError]=useState("");async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setBusy(true);setError("");try{const r=await fetch("/api/auth/forgot-password",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:new FormData(e.currentTarget).get("email")})});const p=await r.json();if(!r.ok)throw new Error(p.error);setMessage(p.data.message)}catch(x){setError(x instanceof Error?x.message:"Request failed.")}finally{setBusy(false)}}return <AuthCard eyebrow="Account recovery" title="Reset your password" description="Enter your email and we’ll send a one-hour reset link." footer={<Link className="font-bold text-primary-700" href="/login">Back to sign in</Link>}><form onSubmit={submit} className="grid gap-5"><label><span className="field-label">Email address</span><input name="email" type="email" className="field" required/></label>{message&&<p className="rounded-xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-700">{message}</p>}{error&&<p className="rounded-xl bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}<button className="btn-primary" disabled={busy}>{busy&&<Loader2 className="size-4 animate-spin"/>}Send reset link</button></form></AuthCard>}

@@ -21,19 +21,22 @@ import {
   UpdateAccentPill,
   UpdatePostCard,
 } from "@/components/update-post-card";
-import { blogPosts, getBlogPost, type BlogBlock } from "@/lib/blog-posts";
-import { updatePosts } from "@/lib/updates";
+// MIGRATED TO DATABASE — static imports kept in their source files for rollback.
+// import { blogPosts, getBlogPost } from "@/lib/blog-posts";
+// import { updatePosts } from "@/lib/updates";
+import type { BlogBlock } from "@/lib/blog-posts";
+import { getPublishedBlog, getPublishedBlogs } from "@/lib/publicContent";
 
 type BlogPostPageProps = {
   params: { slug: string };
 };
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  return (await getPublishedBlogs()).map((post) => ({ slug: post.slug }));
 }
 
-export function generateMetadata({ params }: BlogPostPageProps): Metadata {
-  const post = getBlogPost(params.slug);
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const post = await getPublishedBlog(params.slug);
   if (!post) return {};
 
   const canonical = `/blog/${post.slug}`;
@@ -217,16 +220,25 @@ function ArticleBlock({ block }: { block: BlogBlock }) {
   );
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getPublishedBlog(params.slug);
   if (!post) notFound();
 
-  const relatedPosts = updatePosts
-    .filter(
-      (candidate) =>
-        candidate.type === "Blog" && candidate.href !== `/blog/${post.slug}`,
-    )
-    .slice(0, 3);
+  const relatedPosts = (await getPublishedBlogs())
+    .filter((candidate) => candidate.slug !== post.slug)
+    .slice(0, 3)
+    .map((candidate) => ({
+      type: "Blog" as const,
+      icon: ShieldCheck,
+      category: candidate.category,
+      title: candidate.title,
+      excerpt: candidate.excerpt,
+      meta: candidate.readTime,
+      color: "from-primary-950 to-primary-700",
+      image: candidate.image,
+      imageAlt: candidate.imageAlt,
+      href: `/blog/${candidate.slug}`,
+    }));
   const pageUrl = `https://itexpertsagency.com/blog/${post.slug}`;
   const articleSchema = {
     "@context": "https://schema.org",

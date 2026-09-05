@@ -1,0 +1,1 @@
+import {getAuthenticatedUser} from "@/lib/apiAuth";import {redirect} from "next/navigation";import {ContentList} from "@/components/dashboard/content-list";export default async function Page(){const u=await getAuthenticatedUser();if(!u)redirect("/login");return <ContentList kind="ebooks" user={u}/>}

@@ -1,0 +1,1 @@
+import {getAuthenticatedUser}from"@/lib/apiAuth";import{redirect}from"next/navigation";import{ContentForm}from"@/components/dashboard/content-form";export default async function Page(){const u=await getAuthenticatedUser();if(!u)redirect("/login");return <ContentForm kind="blogs" user={u}/>}

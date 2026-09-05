@@ -57,6 +57,8 @@ export type NarrativeCaseStudy = CaseStudyBase & {
 
 export type CaseStudy = StructuredCaseStudy | NarrativeCaseStudy;
 
+// MIGRATED TO DATABASE — kept here only for the idempotent one-time importer
+// and instant rollback. Public pages do not read this array.
 export const caseStudies: CaseStudy[] = [
   {
     format: "structured",

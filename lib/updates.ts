@@ -24,6 +24,9 @@ export type UpdatePost = {
   href?: string;
 };
 
+// MIGRATED TO DATABASE — kept here for reference/rollback.
+// Public listing/detail pages no longer read this array. Dummy ebooks and the
+// incomplete cloud-blog teaser are intentionally not migrated.
 export const updatePosts: UpdatePost[] = [
   {
     type: "Ebook",

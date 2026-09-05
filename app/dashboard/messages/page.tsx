@@ -1,0 +1,1 @@
+import{getAuthenticatedUser}from"@/lib/apiAuth";import{redirect}from"next/navigation";import{Messages}from"@/components/dashboard/messages";export default async function Page(){const u=await getAuthenticatedUser();if(!u)redirect("/login");if(u.role!=="ADMIN")redirect("/dashboard");return <Messages/>}

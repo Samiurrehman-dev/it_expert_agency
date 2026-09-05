@@ -1,0 +1,203 @@
+/**
+ * Derived from the real site on 2026-08-31:
+ * - BlogPost: lib/blog-posts.ts, app/blog/page.tsx, app/blog/[slug]/page.tsx,
+ * components/blog-table-of-contents.tsx, components/UpdatesPageTemplate.tsx,
+ * components/update-post-card.tsx, lib/updates.ts, app/page.tsx. Fields mirror
+ * BlogPost; body is exactly {intro, introBlocks?, sections}. Existing blocks are
+ * paragraph, checklist,]subheading, callout, contrast, highlights, priorities,
+ * steps, and metrics. Related JSON fields mirror the rendered link-card objects.
+ * - CaseStudy: lib/case-studies.ts, app/case-studies/page.tsx,
+ * app/case-studies/[slug]/page.tsx, the same listing/card files, and app/page.tsx.
+ * The format enum preserves the real discriminated union. STRUCTURED body holds
+ * introduction, snapshot, challenge, rootCauses, solutionIntroduction,
+ * solutionItems, result, pullQuote, keyTakeawaysIntroduction, keyTakeaways,
+ * conclusion, closingEmphasis. NARRATIVE body holds
+ * sections[{id,title,paragraphs}], results[{label,detail}], pullQuote.
+ * - Ebook: app/ebooks/page.tsx, components/UpdatesPageTemplate.tsx,
+ * components/update-post-card.tsx, lib/updates.ts. The original listing fields are
+ * preserved; Phase 2 adds slug and publication/lifecycle metadata for its API.
+ * - ContactMessage: components/contact-form.tsx, app/contact-us/page.tsx,
+ * app/api/contact/route.ts, lib/emailTemplates/contact.ts. Persisted form fields
+ * and lengths are exact; contact_check is transient. Status/createdAt are the only
+ * requested admin fields.
+ * - User: app/about-us/page.tsx and app/careers/page.tsx contain no real profiles
+ * (career roles are samples). It stays at requested identity, role and timestamps;
+ * password exists solely for the explicitly requested admin seed. Relations encode
+ * the stated ability for admins/employees to post each content type.
+ * - Category: category strings appear as badges and filters across lib/updates.ts and
+ * the listing/detail renderers. Every current item has one category, so no join model.
+ * Deliberately omitted: tags (none exist); employee bios/titles/photos; job models;
+ * generic SEO, download and audit fields. Phase 2 adds the shared content workflow,
+ * view count and timestamps plus ebook slugs; no ebook body, file or download flow exists.
+ * Assumptions to confirm: category normalization follows visible reused badges; the
+ * placeholder password has no auth behavior in this phase and must change before
+ * production. Configure the existing MySQL schema as utf8mb4 to preserve the real
+ * em dashes, curly punctuation and other Unicode content.
+ */
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+}
+
+enum CaseStudyFormat {
+  STRUCTURED
+  NARRATIVE
+}
+
+enum ContactMessageStatus {
+  NEW
+  READ
+  RESPONDED
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  email     String   @unique @db.VarChar(254)
+  password  String   @db.VarChar(255)
+  role      UserRole
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogPosts   BlogPost[]
+  caseStudies CaseStudy[]
+  ebooks      Ebook[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(191)
+
+  blogPosts   BlogPost[]
+  caseStudies CaseStudy[]
+  ebooks      Ebook[]
+}
+
+model BlogPost {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique @db.VarChar(191)
+  title            String   @db.VarChar(255)
+  subtitle         String?  @db.Text
+  publishedDate    DateTime @db.Date
+  publishedLabel   String   @db.VarChar(100)
+  readTime         String   @db.VarChar(50)
+  excerpt          String   @db.Text
+  image            String   @db.VarChar(500)
+  imageAlt         String   @db.VarChar(500)
+  body             Json
+  relatedService   Json
+  relatedCaseStudy Json?
+  authorId         Int
+  categoryId       Int
+  status           ContentStatus @default(DRAFT)
+  viewCount        Int           @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  author   User     @relation(fields: [authorId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([status, publishedDate])
+}
+
+model CaseStudy {
+  id             Int             @id @default(autoincrement())
+  slug           String          @unique @db.VarChar(191)
+  format         CaseStudyFormat
+  industry       String          @db.VarChar(191)
+  title          String          @db.VarChar(255)
+  subtitle       String          @db.Text
+  excerpt        String          @db.Text
+  image          String          @db.VarChar(500)
+  imageAlt       String          @db.VarChar(500)
+  publishedDate  DateTime?       @db.Date
+  publishedLabel String?         @db.VarChar(100)
+  readTime       String?         @db.VarChar(50)
+  clientProfile  String?         @db.Text
+  body           Json
+  relatedService Json
+  relatedContent Json?
+  authorId       Int
+  categoryId     Int
+  status         ContentStatus @default(DRAFT)
+  viewCount      Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  author   User     @relation(fields: [authorId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([format])
+  @@index([status, publishedDate])
+}
+
+model Ebook {
+  id            Int           @id @default(autoincrement())
+  slug          String        @unique @db.VarChar(191)
+  title         String        @db.VarChar(255)
+  excerpt       String        @db.Text
+  meta          String        @db.VarChar(100)
+  color         String        @db.VarChar(191)
+  icon          String        @db.VarChar(100)
+  publishedDate DateTime?     @db.Date
+  authorId      Int
+  categoryId    Int
+  status        ContentStatus @default(DRAFT)
+  viewCount     Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  author   User     @relation(fields: [authorId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([status, publishedDate])
+}
+
+model ContactMessage {
+  id        Int                  @id @default(autoincrement())
+  name      String               @db.VarChar(100)
+  email     String               @db.VarChar(254)
+  phone     String?              @db.VarChar(30)
+  subject   String               @db.VarChar(150)
+  message   String               @db.Text
+  status    ContactMessageStatus @default(NEW)
+  createdAt DateTime             @default(now())
+
+  @@index([status, createdAt])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid()) @db.VarChar(191)
+  tokenHash String   @unique @db.Char(64)
+  userId    Int
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}

@@ -61,6 +61,8 @@ export type BlogPost = {
   };
 };
 
+// MIGRATED TO DATABASE — kept here only for the idempotent one-time importer
+// and instant rollback. Public pages do not read this array.
 export const blogPosts: BlogPost[] = [
   {
     slug: "practical-security-checklist-growing-business",

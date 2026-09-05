@@ -17,19 +17,9 @@ import { OurServicesSection } from "@/components/OurServicesSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SectionHeading } from "@/components/section-heading";
 import { StatsCounter } from "@/components/StatsCounter";
-import { updatePosts, type UpdatePost } from "@/lib/updates";
-
-type PublishedUpdate = UpdatePost & { href: string };
-
-const publishedUpdates = updatePosts.filter(
-  (post): post is PublishedUpdate =>
-    Boolean(post.href) && (post.type === "Blog" || post.type === "Case Study"),
-);
-
-const latestUpdates = [
-  ...publishedUpdates.filter((post) => post.type === "Blog").slice(0, 6),
-  ...publishedUpdates.filter((post) => post.type === "Case Study").slice(0, 2),
-];
+// MIGRATED TO DATABASE — static updatePosts import remains commented for rollback.
+// import { updatePosts } from "@/lib/updates";
+import { getPublishedBlogs, getPublishedCaseStudies } from "@/lib/publicContent";
 
 const reasons = [
   {
@@ -52,7 +42,31 @@ const reasons = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [blogs, caseStudies] = await Promise.all([
+    getPublishedBlogs(),
+    getPublishedCaseStudies(),
+  ]);
+  const latestUpdates = [
+    ...blogs.slice(0, 6).map((post) => ({
+      type: "Blog" as const,
+      category: post.category,
+      title: post.title,
+      excerpt: post.excerpt,
+      image: post.image,
+      imageAlt: post.imageAlt,
+      href: `/blog/${post.slug}`,
+    })),
+    ...caseStudies.slice(0, 2).map((post) => ({
+      type: "Case Study" as const,
+      category: post.category,
+      title: post.title,
+      excerpt: post.excerpt,
+      image: post.image,
+      imageAlt: post.imageAlt,
+      href: `/case-studies/${post.slug}`,
+    })),
+  ];
   return (
     <main id="top" className="overflow-x-clip">
       <Header overlay />

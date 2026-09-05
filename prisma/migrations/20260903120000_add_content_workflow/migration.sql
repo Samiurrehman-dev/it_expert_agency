@@ -1,0 +1,32 @@
+-- Add lifecycle metadata needed by the content-management API.
+ALTER TABLE `BlogPost`
+  ADD COLUMN `status` ENUM('DRAFT', 'PUBLISHED', 'ARCHIVED') NOT NULL DEFAULT 'DRAFT',
+  ADD COLUMN `viewCount` INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  ADD COLUMN `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);
+
+CREATE INDEX `BlogPost_status_publishedDate_idx` ON `BlogPost`(`status`, `publishedDate`);
+
+ALTER TABLE `CaseStudy`
+  ADD COLUMN `status` ENUM('DRAFT', 'PUBLISHED', 'ARCHIVED') NOT NULL DEFAULT 'DRAFT',
+  ADD COLUMN `viewCount` INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  ADD COLUMN `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);
+
+CREATE INDEX `CaseStudy_status_publishedDate_idx` ON `CaseStudy`(`status`, `publishedDate`);
+
+ALTER TABLE `Ebook`
+  ADD COLUMN `slug` VARCHAR(191) NULL,
+  ADD COLUMN `publishedDate` DATE NULL,
+  ADD COLUMN `status` ENUM('DRAFT', 'PUBLISHED', 'ARCHIVED') NOT NULL DEFAULT 'DRAFT',
+  ADD COLUMN `viewCount` INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  ADD COLUMN `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);
+
+UPDATE `Ebook`
+SET `slug` = CONCAT('ebook-', `id`)
+WHERE `slug` IS NULL;
+
+ALTER TABLE `Ebook` MODIFY `slug` VARCHAR(191) NOT NULL;
+CREATE UNIQUE INDEX `Ebook_slug_key` ON `Ebook`(`slug`);
+CREATE INDEX `Ebook_status_publishedDate_idx` ON `Ebook`(`status`, `publishedDate`);

@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-
 import {
   contactAutoReplyHtml,
   contactAutoReplyText,
   contactNotificationHtml,
   contactNotificationText,
 } from "@/lib/emailTemplates/contact";
+import { prisma } from "@/lib/prisma";
+import { createMailTransport } from "@/lib/mail";
 
 export const runtime = "nodejs";
 
@@ -28,16 +28,6 @@ type ContactRequest = {
   contact_check?: unknown;
 };
 
-type MailConfig = {
-  host: string;
-  port: number;
-  secure: boolean;
-  user: string;
-  pass: string;
-  to: string;
-  from: string;
-};
-
 type SmtpError = Error & {
   code?: string;
   responseCode?: number;
@@ -45,44 +35,6 @@ type SmtpError = Error & {
 
 function getString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
-}
-
-function getMailConfig(): MailConfig {
-  const requiredKeys = [
-    "SMTP_HOST",
-    "SMTP_PORT",
-    "SMTP_SECURE",
-    "SMTP_USER",
-    "SMTP_PASS",
-    "MAIL_TO",
-    "MAIL_FROM",
-  ] as const;
-  const missingKeys = requiredKeys.filter((key) => !process.env[key]?.trim());
-
-  if (missingKeys.length > 0) {
-    throw new Error(`Missing mail configuration: ${missingKeys.join(", ")}`);
-  }
-
-  const port = Number(process.env.SMTP_PORT);
-  const secureValue = process.env.SMTP_SECURE?.toLowerCase();
-
-  if (!Number.isInteger(port) || port < 1 || port > 65_535) {
-    throw new Error("SMTP_PORT must be a valid port number.");
-  }
-
-  if (secureValue !== "true" && secureValue !== "false") {
-    throw new Error('SMTP_SECURE must be either "true" or "false".');
-  }
-
-  return {
-    host: process.env.SMTP_HOST!,
-    port,
-    secure: secureValue === "true",
-    user: process.env.SMTP_USER!,
-    pass: process.env.SMTP_PASS!,
-    to: process.env.MAIL_TO!,
-    from: process.env.MAIL_FROM!,
-  };
 }
 
 function getPublicMailError(error: unknown): string {
@@ -184,20 +136,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const config = getMailConfig();
-    const transporter = nodemailer.createTransport({
-      host: config.host,
-      port: config.port,
-      secure: config.secure,
-      requireTLS: !config.secure,
-      connectionTimeout: 10_000,
-      greetingTimeout: 10_000,
-      socketTimeout: 15_000,
-      auth: {
-        user: config.user,
-        pass: config.pass,
-      },
-    });
+    const { config, transporter } = createMailTransport();
 
     const submittedAt = new Date();
     const templateData = {
@@ -208,6 +147,12 @@ export async function POST(request: Request) {
       message,
       submittedAt,
     };
+
+    // Persist first so the enquiry remains available to administrators even if
+    // the external SMTP service is temporarily unavailable.
+    await prisma.contactMessage.create({
+      data: { name, email, phone: phone || null, subject, message },
+    });
 
     await transporter.sendMail({
       from: config.from,

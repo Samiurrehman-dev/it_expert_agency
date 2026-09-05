@@ -1,0 +1,1 @@
+import{getAuthenticatedUser}from"@/lib/apiAuth";import{redirect}from"next/navigation";import{Profile}from"@/components/dashboard/profile";export default async function Page(){const u=await getAuthenticatedUser();if(!u)redirect("/login");return <Profile user={u}/>}

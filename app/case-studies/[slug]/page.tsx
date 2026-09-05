@@ -25,19 +25,21 @@ import {
   UpdateAccentPill,
   UpdatePostCard,
 } from "@/components/update-post-card";
-import { caseStudies, getCaseStudy } from "@/lib/case-studies";
-import { updatePosts } from "@/lib/updates";
+// MIGRATED TO DATABASE — static imports kept in their source files for rollback.
+// import { caseStudies, getCaseStudy } from "@/lib/case-studies";
+// import { updatePosts } from "@/lib/updates";
+import { getPublishedCaseStudies, getPublishedCaseStudy } from "@/lib/publicContent";
 
 type CaseStudyPageProps = {
   params: { slug: string };
 };
 
-export function generateStaticParams() {
-  return caseStudies.map((caseStudy) => ({ slug: caseStudy.slug }));
+export async function generateStaticParams() {
+  return (await getPublishedCaseStudies()).map((caseStudy) => ({ slug: caseStudy.slug }));
 }
 
-export function generateMetadata({ params }: CaseStudyPageProps): Metadata {
-  const caseStudy = getCaseStudy(params.slug);
+export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+  const caseStudy = await getPublishedCaseStudy(params.slug);
   if (!caseStudy) return {};
 
   const canonical = `/case-studies/${caseStudy.slug}`;
@@ -75,18 +77,26 @@ function CheckList({ items }: { items: string[] }) {
   );
 }
 
-export default function CaseStudyPage({ params }: CaseStudyPageProps) {
-  const caseStudy = getCaseStudy(params.slug);
+export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
+  const caseStudy = await getPublishedCaseStudy(params.slug);
   if (!caseStudy) notFound();
 
   const pageUrl = `https://itexpertsagency.com/case-studies/${caseStudy.slug}`;
-  const relatedCaseStudies = updatePosts
-    .filter(
-      (post) =>
-        post.type === "Case Study" &&
-        post.href !== `/case-studies/${caseStudy.slug}`,
-    )
-    .slice(0, 3);
+  const relatedCaseStudies = (await getPublishedCaseStudies())
+    .filter((candidate) => candidate.slug !== caseStudy.slug)
+    .slice(0, 3)
+    .map((candidate) => ({
+      type: "Case Study" as const,
+      icon: DatabaseBackup,
+      category: candidate.category,
+      title: candidate.title,
+      excerpt: candidate.excerpt,
+      meta: candidate.format === "structured" ? candidate.readTime : "Client story",
+      color: "from-primary-950 to-accent-700",
+      image: candidate.image,
+      imageAlt: candidate.imageAlt,
+      href: `/case-studies/${candidate.slug}`,
+    }));
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
