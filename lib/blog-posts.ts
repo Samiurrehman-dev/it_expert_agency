@@ -1,5 +1,6 @@
 export type BlogBlock =
   | { type: "paragraph"; text: string }
+  | { type: "image"; url: string; caption?: string }
   | { type: "checklist"; items: string[] }
   | { type: "subheading"; title: string }
   | { type: "callout"; text: string; label?: string; compact?: boolean }
@@ -36,6 +37,8 @@ export type BlogPost = {
   slug: string;
   category: string;
   title: string;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
   subtitle?: string;
   author: string;
   publishedDate: string;

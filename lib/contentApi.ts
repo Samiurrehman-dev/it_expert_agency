@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Prisma model delegates have incompatible generated overloads; this module validates all boundary data before dispatch. */
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 import { apiError, apiSuccess } from "@/lib/apiResponse";
 import { getAuthenticatedUser } from "@/lib/apiAuth";
@@ -15,6 +16,19 @@ import { prisma } from "@/lib/prisma";
 
 type ContentKind = "blog" | "case-study" | "ebook";
 
+function revalidateContent(kind: ContentKind, ...slugs: string[]) {
+  const listing =
+    kind === "blog"
+      ? "/blog"
+      : kind === "case-study"
+        ? "/case-studies"
+        : "/ebooks";
+  revalidatePath("/", "page");
+  revalidatePath(listing, "page");
+  for (const slug of new Set(slugs.filter(Boolean)))
+    revalidatePath(`${listing}/${slug}`, "page");
+}
+
 const slugSchema = z.string().trim().min(1).max(191).optional();
 const commonSchema = z.object({
   slug: slugSchema,
@@ -26,6 +40,8 @@ const commonSchema = z.object({
 });
 
 const blogSchema = commonSchema.extend({
+  metaTitle: z.string().trim().max(255).nullable().optional(),
+  metaDescription: z.string().trim().nullable().optional(),
   subtitle: z.string().trim().nullable().optional(),
   publishedDate: z.coerce.date(),
   publishedLabel: z.string().trim().min(1).max(100),
@@ -38,6 +54,8 @@ const blogSchema = commonSchema.extend({
 });
 
 const caseStudySchema = commonSchema.extend({
+  metaTitle: z.string().trim().max(255).nullable().optional(),
+  metaDescription: z.string().trim().nullable().optional(),
   format: z.enum(["STRUCTURED", "NARRATIVE"]),
   industry: z.string().trim().min(1).max(191),
   subtitle: z.string().trim().min(1),
@@ -53,6 +71,11 @@ const caseStudySchema = commonSchema.extend({
 });
 
 const ebookSchema = commonSchema.extend({
+  body: jsonValueSchema.nullable().optional(),
+  metaTitle: z.string().trim().max(255).nullable().optional(),
+  metaDescription: z.string().trim().nullable().optional(),
+  promotionalDescription: z.string().trim().nullable().optional(),
+  fileUrl: z.string().trim().max(500).nullable().optional(),
   meta: z.string().trim().min(1).max(100),
   color: z.string().trim().min(1).max(191),
   icon: z.string().trim().min(1).max(100),
@@ -94,6 +117,13 @@ export async function createContent(kind: ContentKind, request: Request) {
   if (!result.success) {
     return apiError("Validation failed.", 400, validationFields(result.error));
   }
+  if (
+    kind === "ebook" &&
+    result.data.status === "PUBLISHED" &&
+    !("fileUrl" in result.data && result.data.fileUrl)
+  ) {
+    return apiError("Upload a PDF before publishing this ebook.", 400);
+  }
 
   try {
     const model = delegate(kind);
@@ -120,6 +150,7 @@ export async function createContent(kind: ContentKind, request: Request) {
         category: true,
       },
     });
+    revalidateContent(kind, created.slug);
     return apiSuccess(created, 201);
   } catch (error) {
     return serverError(`Create ${kind} failed`, error);
@@ -246,11 +277,23 @@ export async function updateContent(
     const model = delegate(kind);
     const current = await model.findUnique({
       where: { id: id.data },
-      select: { id: true, slug: true, title: true, authorId: true },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        authorId: true,
+        ...(kind === "ebook" ? { fileUrl: true } : {}),
+      },
     });
     if (!current) return apiError("Content entry not found.", 404);
     if (actor.role !== "ADMIN" && current.authorId !== actor.id)
       return apiError("You can only update your own content.", 403);
+    if (
+      kind === "ebook" &&
+      result.data.status === "PUBLISHED" &&
+      !("fileUrl" in result.data ? result.data.fileUrl : current.fileUrl)
+    )
+      return apiError("Upload a PDF before publishing this ebook.", 400);
     const input: any = { ...result.data };
     if (actor.role !== "ADMIN") input.authorId = actor.id;
     if (result.data.slug !== undefined) {
@@ -275,6 +318,7 @@ export async function updateContent(
         category: true,
       },
     });
+    revalidateContent(kind, current.slug, updated.slug);
     return apiSuccess(updated);
   } catch (error) {
     return serverError(`Update ${kind} failed`, error);
@@ -299,6 +343,7 @@ export async function archiveContent(kind: ContentKind, rawId: string) {
       where: { id: id.data },
       data: { status: "ARCHIVED" },
     });
+    revalidateContent(kind, archived.slug);
     return apiSuccess(archived);
   } catch (error: any) {
     if (error?.code === "P2025")
@@ -328,17 +373,29 @@ export async function updateContentStatus(
     const model = delegate(kind);
     const current = await model.findUnique({
       where: { id: id.data },
-      select: { authorId: true },
+      select: {
+        authorId: true,
+        ...(kind === "ebook" ? { fileUrl: true } : {}),
+      },
     });
     if (!current) return apiError("Content entry not found.", 404);
     if (actor.role !== "ADMIN" && current.authorId !== actor.id)
-      return apiError("You can only change the status of your own content.", 403);
-    return apiSuccess(
-      await model.update({
-        where: { id: id.data },
-        data: result.data,
-      }),
-    );
+      return apiError(
+        "You can only change the status of your own content.",
+        403,
+      );
+    if (
+      kind === "ebook" &&
+      result.data.status === "PUBLISHED" &&
+      !current.fileUrl
+    )
+      return apiError("Upload a PDF before publishing this ebook.", 400);
+    const updated = await model.update({
+      where: { id: id.data },
+      data: result.data,
+    });
+    revalidateContent(kind, updated.slug);
+    return apiSuccess(updated);
   } catch (error: any) {
     if (error?.code === "P2025")
       return apiError("Content entry not found.", 404);

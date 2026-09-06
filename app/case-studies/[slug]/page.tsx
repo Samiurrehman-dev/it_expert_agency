@@ -28,30 +28,37 @@ import {
 // MIGRATED TO DATABASE — static imports kept in their source files for rollback.
 // import { caseStudies, getCaseStudy } from "@/lib/case-studies";
 // import { updatePosts } from "@/lib/updates";
-import { getPublishedCaseStudies, getPublishedCaseStudy } from "@/lib/publicContent";
+import {
+  getPublishedCaseStudies,
+  getPublishedCaseStudy,
+} from "@/lib/publicContent";
 
 type CaseStudyPageProps = {
   params: { slug: string };
 };
 
 export async function generateStaticParams() {
-  return (await getPublishedCaseStudies()).map((caseStudy) => ({ slug: caseStudy.slug }));
+  return (await getPublishedCaseStudies()).map((caseStudy) => ({
+    slug: caseStudy.slug,
+  }));
 }
 
-export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CaseStudyPageProps): Promise<Metadata> {
   const caseStudy = await getPublishedCaseStudy(params.slug);
   if (!caseStudy) return {};
 
   const canonical = `/case-studies/${caseStudy.slug}`;
 
   return {
-    title: caseStudy.title,
-    description: caseStudy.excerpt,
+    title: caseStudy.metaTitle || caseStudy.title,
+    description: caseStudy.metaDescription || caseStudy.excerpt,
     alternates: { canonical },
     openGraph: {
       type: "article",
-      title: caseStudy.title,
-      description: caseStudy.excerpt,
+      title: caseStudy.metaTitle || caseStudy.title,
+      description: caseStudy.metaDescription || caseStudy.excerpt,
       url: canonical,
       siteName: "IT Experts Agency",
       images: [{ url: caseStudy.image, alt: caseStudy.imageAlt }],
@@ -91,7 +98,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       category: candidate.category,
       title: candidate.title,
       excerpt: candidate.excerpt,
-      meta: candidate.format === "structured" ? candidate.readTime : "Client story",
+      meta:
+        candidate.format === "structured" ? candidate.readTime : "Client story",
       color: "from-primary-950 to-accent-700",
       image: candidate.image,
       imageAlt: candidate.imageAlt,
@@ -102,7 +110,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     "@type": "Article",
     headline: caseStudy.title,
     description: caseStudy.excerpt,
-    image: `https://itexpertsagency.com${caseStudy.image}`,
+    image: caseStudy.image.startsWith("http")
+      ? caseStudy.image
+      : `https://itexpertsagency.com${caseStudy.image}`,
     ...(caseStudy.format === "structured"
       ? {
           datePublished: caseStudy.publishedDate,

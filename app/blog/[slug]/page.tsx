@@ -35,20 +35,22 @@ export async function generateStaticParams() {
   return (await getPublishedBlogs()).map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
   const post = await getPublishedBlog(params.slug);
   if (!post) return {};
 
   const canonical = `/blog/${post.slug}`;
 
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.metaTitle || post.title,
+    description: post.metaDescription || post.excerpt,
     alternates: { canonical },
     openGraph: {
       type: "article",
-      title: post.title,
-      description: post.excerpt,
+      title: post.metaTitle || post.title,
+      description: post.metaDescription || post.excerpt,
       url: canonical,
       siteName: "IT Experts Agency",
       images: [{ url: post.image, alt: post.imageAlt }],
@@ -59,6 +61,25 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 function ArticleBlock({ block }: { block: BlogBlock }) {
+  if (block.type === "image") {
+    return (
+      <figure>
+        <Image
+          src={block.url}
+          alt={block.caption || "Article image"}
+          width={1200}
+          height={675}
+          sizes="(min-width: 1024px) 760px, calc(100vw - 3rem)"
+          className="h-auto w-full rounded-2xl object-cover"
+        />
+        {block.caption && (
+          <figcaption className="mt-2 text-center text-sm text-slate-500">
+            {block.caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
   if (block.type === "paragraph") {
     return <p className="text-base leading-8 text-slate-600">{block.text}</p>;
   }
@@ -245,7 +266,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    image: `https://itexpertsagency.com${post.image}`,
+    image: post.image.startsWith("http")
+      ? post.image
+      : `https://itexpertsagency.com${post.image}`,
     datePublished: post.publishedDate,
     dateModified: post.publishedDate,
     mainEntityOfPage: pageUrl,

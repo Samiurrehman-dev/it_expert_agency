@@ -8,7 +8,19 @@ export type ApiEnvelope<T> = { success: true; data: T } | { success: false; erro
 export async function api<T>(url: string, init?: RequestInit): Promise<T> {
   const response = await fetch(url, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
   const payload = (await response.json()) as ApiEnvelope<T>;
-  if (!response.ok || !payload.success) throw new Error("error" in payload ? payload.error : "Request failed.");
+  if (!response.ok || !payload.success) {
+    if ("error" in payload) {
+      const details = payload.fields
+        ? Object.entries(payload.fields)
+            .flatMap(([field, messages]) =>
+              messages.map((message) => `${field}: ${message}`),
+            )
+            .join(" ")
+        : "";
+      throw new Error(details ? `${payload.error} ${details}` : payload.error);
+    }
+    throw new Error("Request failed.");
+  }
   return payload.data;
 }
 

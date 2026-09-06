@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { FormEvent, useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Save } from "lucide-react";
+import { FileText, Save, Sparkles, Upload } from "lucide-react";
 import { api, ErrorState, useToast } from "./ui";
 import { PageHeading } from "./page-heading";
+import { FileUploader } from "./file-uploader";
+import { ContentBodyEditor } from "./content-body-editor";
 import type { Kind } from "./content-list";
 type Item = Record<string, unknown> & {
   id: number;
@@ -52,8 +53,19 @@ export function ContentForm({
   const [loading, setLoading] = useState(Boolean(slug));
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiMode, setAiMode] = useState<"text" | "pdf">("text");
+  const [aiText, setAiText] = useState("");
+  const [aiFile, setAiFile] = useState<File | null>(null);
+  const [aiBusy, setAiBusy] = useState(false);
+  const [aiError, setAiError] = useState("");
+  const [generated, setGenerated] = useState<Record<string, unknown> | null>(
+    null,
+  );
+  const [formVersion, setFormVersion] = useState(0);
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   useEffect(() => {
     if (!slug) return;
     api<Item>(`${c.api}/${encodeURIComponent(slug)}`)
@@ -61,6 +73,7 @@ export function ContentForm({
         setItem(x);
         setTitle(x.title);
         setImage(String(x.image || ""));
+        setFileUrl(String(x.fileUrl || ""));
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
@@ -91,6 +104,8 @@ export function ContentForm({
       if (kind === "blogs")
         payload = {
           ...common,
+          metaTitle: value("metaTitle") || null,
+          metaDescription: value("metaDescription") || null,
           subtitle: value("subtitle") || null,
           publishedDate: value("publishedDate"),
           publishedLabel: value("publishedLabel"),
@@ -104,6 +119,8 @@ export function ContentForm({
       if (kind === "case-studies")
         payload = {
           ...common,
+          metaTitle: value("metaTitle") || null,
+          metaDescription: value("metaDescription") || null,
           format: value("format"),
           industry: value("industry"),
           subtitle: value("subtitle"),
@@ -120,6 +137,11 @@ export function ContentForm({
       if (kind === "ebooks")
         payload = {
           ...common,
+          body: json("body", null),
+          metaTitle: value("metaTitle") || null,
+          metaDescription: value("metaDescription") || null,
+          promotionalDescription: value("promotionalDescription") || null,
+          fileUrl: value("fileUrl") || null,
           meta: value("meta"),
           color: value("color"),
           icon: value("icon"),
@@ -147,18 +169,167 @@ export function ContentForm({
       setBusy(false);
     }
   }
+  async function generateWithAi() {
+    setAiBusy(true);
+    setAiError("");
+    try {
+      const contentType =
+        kind === "blogs"
+          ? "BLOG"
+          : kind === "case-studies"
+            ? "CASE_STUDY"
+            : "EBOOK";
+      let response: Response;
+      if (aiMode === "pdf") {
+        if (!aiFile) throw new Error("Choose a PDF file first.");
+        const form = new FormData();
+        form.set("contentType", contentType);
+        form.set("file", aiFile);
+        response = await fetch("/api/ai/generate-content", {
+          method: "POST",
+          body: form,
+        });
+      } else {
+        if (aiText.trim().length < 50)
+          throw new Error("Paste at least 50 characters of source material.");
+        response = await fetch("/api/ai/generate-content", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: "text", content: aiText, contentType }),
+        });
+      }
+      const result = (await response.json()) as {
+        success: boolean;
+        data?: Record<string, unknown>;
+        error?: string;
+      };
+      if (!response.ok || !result.success || !result.data)
+        throw new Error(result.error || "Content generation failed.");
+      setGenerated(result.data);
+      setTitle(String(result.data.title || ""));
+      setImage("");
+      setFileUrl(String(result.data.fileUrl || ""));
+      setFormVersion((version) => version + 1);
+      setAiOpen(false);
+      toast("AI draft generated. Review every field before saving.");
+    } catch (e) {
+      setAiError(e instanceof Error ? e.message : "Content generation failed.");
+    } finally {
+      setAiBusy(false);
+    }
+  }
   if (loading) return <p className="animate-pulse text-sm">Loading editor…</p>;
   if (slug && error && !item) return <ErrorState message={error} />;
-  const v = (key: string, fallback = "") => String(item?.[key] ?? fallback);
+  const source = generated ?? item;
+  const v = (key: string, fallback = "") => String(source?.[key] ?? fallback);
   const j = (key: string, fallback = "") =>
-    item?.[key] !== undefined ? JSON.stringify(item[key], null, 2) : fallback;
+    source?.[key] !== undefined
+      ? JSON.stringify(source[key], null, 2)
+      : fallback;
   return (
     <>
       <PageHeading
         title={`${item ? "Edit" : "New"} ${c.label.toLowerCase()}`}
         description="Fields map directly to the existing Prisma/API contract. JSON shapes are preserved exactly."
       />
-      <form className="grid gap-6" onSubmit={(e) => submit(e, "DRAFT")}>
+      {!item && (
+        <section className="dash-card mb-6 p-5 sm:p-7">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="flex items-center gap-2 text-lg font-extrabold">
+                <Sparkles className="size-5 text-primary-600" /> Generate with
+                AI
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Start from source text or a PDF, then review the generated draft
+                in this same form.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => setAiOpen((open) => !open)}
+            >
+              <Sparkles className="size-4" />
+              {aiOpen ? "Close generator" : "Generate with AI"}
+            </button>
+          </div>
+          {aiOpen && (
+            <div className="mt-6 grid gap-5 border-t pt-5">
+              <div className="flex gap-2" role="tablist" aria-label="AI source">
+                <button
+                  type="button"
+                  className={
+                    aiMode === "text" ? "btn-primary" : "btn-secondary"
+                  }
+                  onClick={() => setAiMode("text")}
+                >
+                  <FileText className="size-4" /> Paste text
+                </button>
+                <button
+                  type="button"
+                  className={aiMode === "pdf" ? "btn-primary" : "btn-secondary"}
+                  onClick={() => setAiMode("pdf")}
+                >
+                  <Upload className="size-4" /> Upload PDF
+                </button>
+              </div>
+              {aiMode === "text" ? (
+                <label>
+                  <span className="field-label">Source material</span>
+                  <textarea
+                    className="field min-h-48"
+                    value={aiText}
+                    maxLength={100000}
+                    onChange={(event) => setAiText(event.target.value)}
+                    placeholder="Paste at least 50 characters…"
+                  />
+                </label>
+              ) : (
+                <label>
+                  <span className="field-label">PDF source (maximum 20MB)</span>
+                  <input
+                    className="field"
+                    type="file"
+                    accept="application/pdf,.pdf"
+                    onChange={(event) =>
+                      setAiFile(event.target.files?.[0] ?? null)
+                    }
+                  />
+                </label>
+              )}
+              {aiError && (
+                <p className="rounded-xl bg-red-50 p-4 text-sm font-bold text-red-700">
+                  {aiError}
+                </p>
+              )}
+              <div>
+                <button
+                  type="button"
+                  className="btn-primary"
+                  disabled={aiBusy}
+                  onClick={() => void generateWithAi()}
+                >
+                  <Sparkles
+                    className={aiBusy ? "size-4 animate-pulse" : "size-4"}
+                  />
+                  {aiBusy ? "Generating your content…" : "Generate"}
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+      {generated && !item && (
+        <p className="mb-6 rounded-xl bg-emerald-50 p-4 text-sm font-bold text-emerald-800">
+          AI-generated draft loaded below. It has not been saved or published.
+        </p>
+      )}
+      <form
+        key={formVersion}
+        className="grid gap-6"
+        onSubmit={(e) => submit(e, "DRAFT")}
+      >
         <section className="dash-card grid gap-5 p-5 sm:p-7">
           <h2 className="text-lg font-extrabold">Essentials</h2>
           <label>
@@ -209,6 +380,34 @@ export function ContentForm({
             </small>
           </label>
         </section>
+        <section className="dash-card grid gap-5 p-5 sm:p-7">
+          <div>
+            <h2 className="text-lg font-extrabold">Search metadata</h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Optional SEO overrides. Public pages use the title and excerpt
+              when these fields are empty.
+            </p>
+          </div>
+          <label>
+            <span className="field-label">Meta title</span>
+            <input
+              className="field"
+              name="metaTitle"
+              maxLength={255}
+              defaultValue={v("metaTitle")}
+              placeholder={title || "SEO page title"}
+            />
+          </label>
+          <label>
+            <span className="field-label">Meta description</span>
+            <textarea
+              className="field min-h-24"
+              name="metaDescription"
+              defaultValue={v("metaDescription")}
+              placeholder="Concise description for search results"
+            />
+          </label>
+        </section>
         {kind !== "ebooks" && (
           <section className="dash-card grid gap-5 p-5 sm:p-7">
             <h2 className="text-lg font-extrabold">Presentation</h2>
@@ -221,17 +420,16 @@ export function ContentForm({
                 required={kind === "case-studies"}
               />
             </label>
+            <input type="hidden" name="image" value={image} />
+            <FileUploader
+              mode="image"
+              contentType={kind === "blogs" ? "blog" : "case-study"}
+              value={image}
+              label="Cover image"
+              required
+              onChange={(url) => setImage(url)}
+            />
             <div className="grid gap-5 sm:grid-cols-2">
-              <label>
-                <span className="field-label">Cover image URL</span>
-                <input
-                  className="field"
-                  name="image"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  required
-                />
-              </label>
               <label>
                 <span className="field-label">Image alt text</span>
                 <input
@@ -242,17 +440,6 @@ export function ContentForm({
                 />
               </label>
             </div>
-            {image && (
-              <div className="relative aspect-[16/7] max-w-xl overflow-hidden rounded-2xl bg-slate-100">
-                <Image
-                  src={image}
-                  alt="Cover preview"
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            )}
             <div className="grid gap-5 sm:grid-cols-3">
               <label>
                 <span className="field-label">Publish date</span>
@@ -359,10 +546,26 @@ export function ContentForm({
                 />
               </label>
             </div>
-            <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-              PDF upload and download count are unavailable in the current Ebook
-              schema/API.
-            </p>
+            <label>
+              <span className="field-label">Promotional description</span>
+              <textarea
+                className="field min-h-24"
+                name="promotionalDescription"
+                defaultValue={v("promotionalDescription")}
+              />
+            </label>
+            <input type="hidden" name="fileUrl" value={fileUrl} />
+            <FileUploader
+              mode="pdf"
+              contentType="ebook"
+              value={fileUrl}
+              label="Ebook PDF"
+              onChange={(url) => setFileUrl(url)}
+            />
+            <ContentBodyEditor
+              initialValue={j("body", defaults.body)}
+              contentType="ebook"
+            />
           </section>
         )}
         {kind !== "ebooks" && (
@@ -374,15 +577,23 @@ export function ContentForm({
                 renderers.
               </p>
             </div>
-            <label>
-              <span className="field-label">Body JSON</span>
-              <textarea
-                className="field min-h-80 font-mono text-xs leading-5"
-                name="body"
-                defaultValue={j("body", defaults.body)}
+            {kind === "blogs" ? (
+              <ContentBodyEditor
+                initialValue={j("body", defaults.body)}
+                contentType="blog"
                 required
               />
-            </label>
+            ) : (
+              <label>
+                <span className="field-label">Body JSON</span>
+                <textarea
+                  className="field min-h-80 font-mono text-xs leading-5"
+                  name="body"
+                  defaultValue={j("body", defaults.body)}
+                  required
+                />
+              </label>
+            )}
             <label>
               <span className="field-label">Related service JSON</span>
               <textarea
@@ -423,6 +634,16 @@ export function ContentForm({
             disabled={busy}
             onClick={(e) => {
               const form = e.currentTarget.form;
+              if (form && !form.reportValidity()) {
+                setError(
+                  "Complete the required fields before publishing. AI drafts leave the cover image URL empty for manual upload.",
+                );
+                return;
+              }
+              if (kind === "ebooks" && !fileUrl) {
+                setError("Upload a PDF before publishing this ebook.");
+                return;
+              }
               if (form)
                 void submit(
                   {

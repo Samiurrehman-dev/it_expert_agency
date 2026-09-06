@@ -3,6 +3,8 @@ type CaseStudyBase = {
   category: string;
   industry: string;
   title: string;
+  metaTitle?: string | null;
+  metaDescription?: string | null;
   subtitle: string;
   excerpt: string;
   image: string;
