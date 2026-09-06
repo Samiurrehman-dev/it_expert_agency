@@ -5,6 +5,11 @@ import type { CaseStudy } from "@/lib/case-studies";
 
 type JsonObject = Record<string, unknown>;
 
+const caseStudyImageOverrides: Record<string, string> = {
+  "turn-infrastructure-signals-into-faster-smarter-action":
+    "/images/updates/case-study-aiops-monitoring-v3.jpg",
+};
+
 function object(value: unknown): JsonObject {
   return (value ?? {}) as JsonObject;
 }
@@ -48,6 +53,7 @@ export async function getPublishedCaseStudies() {
 
   return rows.map((row) => ({
     ...row,
+    image: caseStudyImageOverrides[row.slug] ?? row.image,
     format: row.format === "STRUCTURED" ? "structured" : "narrative",
     category: row.category.name,
     publishedDate: row.publishedDate?.toISOString().slice(0, 10) ?? undefined,

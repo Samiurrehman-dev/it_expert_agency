@@ -17,6 +17,6 @@ Both assets are used under the [Pexels license](https://www.pexels.com/license/)
 - `images/updates/blog-proactive-it-support.jpg`: [Call Center Agents Using Laptops](https://www.pexels.com/photo/call-center-agents-using-laptops-7682087/) by Mikhail Nilov.
 - `images/updates/blog-infrastructure-signals.jpg`: [Woman in Control Room Monitoring Screens](https://www.pexels.com/photo/woman-in-control-room-monitoring-screens-39071423/) by Caleb Oquendo.
 - `images/updates/case-study-tested-recovery.jpg`: [Monitor and Wires Behind](https://www.pexels.com/photo/monitor-and-wires-behind-17489155/) by panumas nikhomkhai.
-- `images/updates/case-study-aiops-monitoring.jpg`: [Engineer at Control Room Monitoring Screens](https://www.pexels.com/photo/engineer-at-control-room-monitoring-screens-32845700/) by Sergey Sergeev.
+- `images/updates/case-study-aiops-monitoring.jpg` and branded derivative `images/updates/case-study-aiops-monitoring-v3.jpg`: [Engineer at Control Room Monitoring Screens](https://www.pexels.com/photo/engineer-at-control-room-monitoring-screens-32845700/) by Sergey Sergeev.
 
 These images are used under the [Pexels license](https://www.pexels.com/license/).

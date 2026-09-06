@@ -175,7 +175,7 @@ export const updatePosts: UpdatePost[] = [
       "How a growing professional services firm connected its monitoring, prioritized critical alerts, and automated predictable fixes to prevent disruption.",
     meta: "Client story",
     color: "from-primary-950 to-accent-700",
-    image: "/images/updates/case-study-aiops-monitoring-v2.jpg",
+    image: "/images/updates/case-study-aiops-monitoring-v3.jpg",
     imageAlt:
       "Operations engineer reviewing alerts and system data across a wall of monitors",
     href: "/case-studies/turn-infrastructure-signals-into-faster-smarter-action",
