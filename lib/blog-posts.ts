@@ -762,8 +762,8 @@ export const blogPosts: BlogPost[] = [
       },
     ],
     relatedService: {
-      label: "Explore our Managed IT Services",
-      href: "/managed-it-services",
+      label: "Explore our Microsoft Solutions",
+      href: "/microsoft-solutions",
       heading: "Build a safer, more connected workplace.",
       description:
         "Bring support, cloud collaboration, endpoint management, and security together with a practical managed IT strategy.",
