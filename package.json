@@ -54,8 +54,10 @@
     "typescript": "^5.7.2"
   },
   "allowScripts": {
+    "@google/genai@2.21.0": true,
     "@prisma/engines@7.10.0": true,
     "esbuild@0.28.2": true,
+    "protobufjs@7.6.6": true,
     "prisma@7.10.0": true,
     "unrs-resolver@1.12.2": true,
     "fsevents@2.3.3": true
