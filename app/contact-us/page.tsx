@@ -31,14 +31,15 @@ const contactActions = [
 
 const locations = [
   {
-    city: "Waterloo",
-    address: "2–94 Churchill St, Waterloo, ON N2L 2X2",
-    map: "https://www.google.com/maps/search/?api=1&query=2-94+Churchill+St+Waterloo+Ontario+N2L+2X2",
+    name: "IT Experts Agency",
+    address: "4320 Broadway #1029\nNew York, NY 10033\nUnited States",
+    map: "https://www.google.com/maps/search/?api=1&query=4320+Broadway+%231029+New+York+NY+10033+United+States",
   },
   {
-    city: "Cambridge",
-    address: "130 Guelph Ave, Unit 9, Cambridge, ON N3C 1A4",
-    map: "https://www.google.com/maps/search/?api=1&query=130+Guelph+Ave+Unit+9+Cambridge+Ontario+N3C+1A4",
+    name: "IT Experts Agency",
+    address:
+      "Shop # 8, Ground Floor, Building THEME, 1\nNear Malik Square, Precinct-4\nBahria Town Karachi, Karachi, 75340\nPakistan",
+    map: "https://www.google.com/maps/search/?api=1&query=Shop+%23+8+Ground+Floor+Building+THEME+1+near+Malik+Square+Precinct-4+Bahria+Town+Karachi+Karachi+75340+Pakistan",
   },
 ];
 
@@ -98,14 +99,14 @@ export default function ContactUsPage() {
                       Our locations
                     </p>
                     <h2 className="mt-3 text-2xl font-extrabold tracking-[-0.03em] text-ink">
-                      Serving businesses across Ontario and beyond.
+                      Serving businesses from New York and Karachi.
                     </h2>
                   </div>
 
                   <div className="relative mt-8 grid gap-3">
                     {locations.map((location, index) => (
                       <a
-                        key={location.city}
+                        key={location.address}
                         href={location.map}
                         target="_blank"
                         rel="noreferrer"
@@ -119,9 +120,9 @@ export default function ContactUsPage() {
                         </span>
                         <span className="min-w-0 flex-1">
                           <span className="block font-extrabold text-ink">
-                            {location.city}
+                            {location.name}
                           </span>
-                          <span className="mt-1 block text-sm leading-6 text-slate-600">
+                          <span className="mt-1 block whitespace-pre-line text-sm leading-6 text-slate-600">
                             {location.address}
                           </span>
                         </span>
