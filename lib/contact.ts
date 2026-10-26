@@ -1,4 +1,4 @@
-export const WHATSAPP_PHONE = "923233959043";
+export const WHATSAPP_PHONE = "16464620179";
 
 export const WHATSAPP_MESSAGE =
   "Hi, I found your website and I'd like to know more about your services.";

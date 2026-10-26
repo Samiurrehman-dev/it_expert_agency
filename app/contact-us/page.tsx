@@ -20,7 +20,7 @@ const contactActions = [
   {
     icon: Phone,
     label: "Call us",
-    href: "tel:+19095456727",
+    href: "tel:+16464620179",
   },
   {
     icon: Mail,

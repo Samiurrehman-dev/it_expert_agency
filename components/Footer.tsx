@@ -74,7 +74,7 @@ export function Footer() {
 
             <div className="mt-6 flex items-center gap-2">
               <a
-                href="tel:+19095456727"
+                href="tel:+16464620179"
                 aria-label="Call IT Experts Agency"
                 className="grid size-10 place-items-center rounded-full border border-white/10 text-accent-400 transition-all hover:-translate-y-0.5 hover:border-accent-400/50 hover:bg-white/5 hover:text-accent-300"
               >
