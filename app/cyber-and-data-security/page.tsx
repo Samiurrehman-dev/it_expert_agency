@@ -196,7 +196,7 @@ export default function CyberAndDataSecurityPage() {
       <main>
         <section className="relative isolate flex min-h-[500px] items-end overflow-hidden bg-primary-950 py-20 sm:min-h-[560px] sm:py-24 lg:min-h-[620px]">
           <Image
-            src="https://itexpertsagency.com/wp-content/uploads/2021/01/image-65.jpg"
+            src="/images/hero-cyber-security.jpg"
             alt=""
             fill
             priority

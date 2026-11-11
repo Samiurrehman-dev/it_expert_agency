@@ -244,7 +244,7 @@ export default function ITInfrastructurePage() {
       <main>
         <section className="relative isolate flex min-h-[500px] items-end overflow-hidden bg-primary-950 py-20 sm:min-h-[560px] sm:py-24 lg:min-h-[620px]">
           <Image
-            src="https://itexpertsagency.com/wp-content/uploads/2020/06/managed-service-provider-1-opj2godi2628in9vt7molhpfpma3uz5wa7w5k6jxd8.png"
+            src="/images/hero-managed-services.png"
             alt=""
             fill
             priority

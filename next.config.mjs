@@ -9,13 +9,6 @@ const createNextConfig = (phase) => ({
   reactStrictMode: true,
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "itexpertsagency.com",
-        pathname: "/wp-content/uploads/**",
-      },
-    ],
   },
 });
 
